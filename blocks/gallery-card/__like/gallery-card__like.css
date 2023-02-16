@@ -1,0 +1,13 @@
+.gallery-card__like {    
+    display: block;
+    min-width: 28px;
+    min-height: 28px;
+    margin: 30px;
+    background-image: url(../../../image/heart.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.gallery-card__like:hover {
+    opacity: 0.6;
+}

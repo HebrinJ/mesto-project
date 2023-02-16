@@ -1,0 +1,29 @@
+.profile__major {
+    margin: 0;
+    padding-left: 30px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .profile__major {
+        padding-bottom: 36px;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
+@media screen and (width: 320px) {
+    .profile__major {
+        font-size: 14px;        
+    }
+}

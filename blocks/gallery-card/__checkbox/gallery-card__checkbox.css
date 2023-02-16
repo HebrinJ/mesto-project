@@ -1,0 +1,11 @@
+.gallery-card__checkbox {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(0 0 0 0);
+    overflow: hidden; 
+}
+
+.gallery-card__checkbox:checked + .gallery-card__like {
+    background-image: url(../../../image/heart_fill.svg);
+}

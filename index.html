@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="page">
+    <div class="popup">
+        <form class="popup-container">
+            <p class="popup-container__label">Редактировать профиль</p>
+                <fieldset class="popup-container__fields">
+                    <input type="text" class="popup-container__input" placeholder="Жак-Ив Кусто">
+                    <input type="text" class="popup-container__input" placeholder="Исследователь океана">
+                </fieldset>
+            <button class="popup-container__save-btn">Сохранить</button>
+            <button class="popup-container__close-btn"></button>
+        </form>
+    </div>
+    <header class="header">
+        <img src="./image/logo.png" alt="logo">
+        <hr class="header__separator">
+    </header>
+    <main>        
+        <div class="profile">
+            <img class="profile__pict" src="./image/custo.jpg" alt="profile_picture">
+            <div class="profile__text-container">
+                <div class="profile__name-container">
+                    <h3 class="profile__name">Жак-Ив Кустонычев</h3>
+                    <button class="profile__edit-button"></button>
+                </div>
+                <p class="profile__major">Исследователь океана</p>
+            </div>
+            <button class="profile__add-button"></button>
+        </div>
+        <ul class="gallery">
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/karach.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Карачаевск</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>                    
+                </div>
+            </li>
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Гора Эльбрус</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>
+                </div>
+            </li>
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/dombai.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Домбай</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>
+                </div>
+            </li>
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Гора Эльбрус</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>
+                </div>
+            </li>
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/dombai.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Домбай</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>
+                </div>
+            </li>
+            <li class="gallery-card">
+                <img class="gallery-card__pict" src="./image/karach.jpg" alt="">
+                <div class="gallery-card__label">
+                    <p class="gallery-card__label-text">Карачаево-Черкессия</p>
+                    <label>
+                        <input class="gallery-card__checkbox" type="checkbox">
+                        <span class="gallery-card__like"></span>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </main>
+    <footer class="footer">
+        <p class="footer__author">2023 Mesto Russia</p>
+    </footer>    
+</body>
+</html>
