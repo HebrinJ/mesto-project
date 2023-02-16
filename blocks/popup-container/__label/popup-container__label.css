@@ -5,3 +5,10 @@
     color: black;
     padding-bottom: 54px;
 }
+
+@media screen and (max-width: 320px) {
+    .popup-container__label {
+        font-size: 18px;
+        padding-bottom: 75px;
+    }
+}

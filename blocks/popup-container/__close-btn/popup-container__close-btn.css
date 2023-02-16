@@ -2,6 +2,8 @@
     width: 32px;
     height: 32px;
     background-image: url(../../../image/close_icon.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 0;
     border: none;
     background-color: transparent;
@@ -12,4 +14,12 @@
 
 .popup-container__close-btn:hover {
     opacity: 0.8;
+}
+
+@media screen and (max-width: 320px) {
+    .popup-container__close-btn {
+        width: 20px;
+        height: 20px;
+        right: 0;
+    }
 }

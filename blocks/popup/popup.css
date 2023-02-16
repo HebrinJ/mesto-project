@@ -1,9 +1,7 @@
 .popup {
-    display: block;
+    display: none;
     position: fixed;
     width: 100%;
     height: 100%;
     background-color: #00000080;
-
-    border: 1px dashed red;
 }

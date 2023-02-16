@@ -4,3 +4,8 @@
     min-height: 27px;
     margin-bottom: 30px;
 }
+
+.popup-container__input::placeholder {
+    color: black;
+    font-size: 14px;
+}
