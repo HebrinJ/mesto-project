@@ -9,3 +9,7 @@
     color: black;
     font-size: 14px;
 }
+
+.popup-container__input:focus {
+    outline: none;
+}
