@@ -1,8 +1,11 @@
 .gallery-card__label-text {
+    margin: 0;
+    padding: 0;
     font-size: 24px;
     font-weight: 900;
-    color: black;
-    padding-left: 21px;
+    line-height: 29px;
+    color: #000;
+    margin-left: 21px;
 
     text-overflow: ellipsis;
     white-space: nowrap;

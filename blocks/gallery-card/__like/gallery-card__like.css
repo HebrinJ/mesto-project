@@ -1,13 +1,19 @@
 .gallery-card__like {    
     display: block;
-    min-width: 28px;
-    min-height: 28px;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    width: 22px;
+    height: 19px;
     margin: 30px;
     background-image: url(../../../image/heart.svg);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
+    cursor: pointer;
+    transition: opacity 0.5s linear;
 }
 
 .gallery-card__like:hover {
-    opacity: 0.6;
+    opacity: 0.5;
 }

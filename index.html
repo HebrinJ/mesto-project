@@ -4,104 +4,99 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesto</title>
+    <title>Место. Сайт о России</title>
     <link rel="stylesheet" href="./pages/index.css">
 </head>
-<body class="content">
-    <div class="popup">
-        <form class="popup-container">
-            <p class="popup-container__label">Редактировать профиль</p>
-                <fieldset class="popup-container__fields">
-                    <input type="text" class="popup-container__input" placeholder="Жак-Ив Кусто">
-                    <input type="text" class="popup-container__input" placeholder="Исследователь океана">
-                </fieldset>
-            <button class="popup-container__save-btn">Сохранить</button>
-            <button class="popup-container__close-btn"></button>
-        </form>
-    </div>
+<body class="content">    
     <div class="page">    
         <header class="header">
-            <img src="./image/logo.png" alt="logo">
-            <hr class="header__separator">
+            <img class="header__logo" src="./image/logo.svg" alt="логотип проекта место">
         </header>
         <main>        
-            <div class="profile">
-                <img class="profile__pict" src="./image/custo.jpg" alt="profile_picture">
+            <section class="profile">
+                <img class="profile__pict" src="./image/custo.jpg" alt="фото профиля пользователя">
                 <div class="profile__text-container">
                     <div class="profile__name-container">
-                        <h3 class="profile__name">Жак-Ив Кустонычев</h3>
-                        <button class="profile__edit-button"></button>
+                        <h2 class="profile__name">Жак-Ив Кустонычев</h2>
+                        <button type="button" aria-label="Кнопка редактирования профиля" class="profile__edit-button"></button>
                     </div>
                     <p class="profile__major">Исследователь океана</p>
                 </div>
-                <button class="profile__add-button"></button>
-            </div>
-            <ul class="gallery">
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/karach.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Карачаевск</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>                    
-                    </div>
-                </li>
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Гора Эльбрус</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>
-                    </div>
-                </li>
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/dombai.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Домбай</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>
-                    </div>
-                </li>
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Гора Эльбрус</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>
-                    </div>
-                </li>
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/dombai.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Домбай</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>
-                    </div>
-                </li>
-                <li class="gallery-card">
-                    <img class="gallery-card__pict" src="./image/karach.jpg" alt="">
-                    <div class="gallery-card__label">
-                        <p class="gallery-card__label-text">Карачаево-Черкессия</p>
-                        <label>
-                            <input class="gallery-card__checkbox" type="checkbox">
-                            <span class="gallery-card__like"></span>
-                        </label>
-                    </div>
-                </li>
-            </ul>
+                <button aria-label="Кнопка добавить фото" type="button" class="profile__add-button"></button>
+            </section>
+            <section>
+                <ul class="gallery">
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/karach.jpg" alt="фото Карачаевска">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Карачаевск</h2>                        
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="фото Эльбруса">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Гора Эльбрус</h2>
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/dombai.jpg" alt="фото Домбай">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Домбай</h2>
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/elbrus.jpg" alt="фото Эльбруса">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Гора Эльбрус</h2>
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/dombai.jpg" alt="фото Домбай">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Домбай</h2>
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                    <li>
+                        <article class="gallery-card">
+                            <img class="gallery-card__pict" src="./image/karach.jpg" alt="фото Карачаевска">
+                            <div class="gallery-card__label">
+                                <h2 class="gallery-card__label-text">Карачаево-Черкессия</h2>
+                                <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                            </div>
+                        </article>
+                    </li>
+                </ul>
+            </section>
         </main>
         <footer class="footer">
-            <p class="footer__author">2023 Mesto Russia</p>
+            <p class="footer__author">&#169; 2023 Mesto Russia</p>
         </footer>
+        <div class="popup">
+            <form class="popup__container" name="profileForm">
+                <h2 class="popup__container-label">Редактировать профиль</h2>
+                    <fieldset class="popup__container-fields">
+                        <input type="text" class="popup__container-input" placeholder="Имя" name="inputName">
+                        <input type="text" class="popup__container-input" placeholder="Профессия" name="inputMajor">
+                    </fieldset>
+                <button type="submit" class="popup__container-save-btn">Сохранить</button>
+                <button type="button" class="popup__container-close-btn"></button>
+            </form>
+        </div>
     </div>    
 </body>
 </html>
