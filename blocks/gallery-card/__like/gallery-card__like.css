@@ -3,7 +3,7 @@
     border: none;
     background-color: transparent;
     padding: 0;
-    width: 22px;
+    min-width: 22px;
     height: 19px;
     margin: 30px;
     background-image: url(../../../image/heart.svg);
