@@ -6,6 +6,8 @@
     line-height: 48px;
     font-weight: 500;
     color: #fff;
+    /* width: 100%; */
+    max-width: 500px;
     
     text-overflow: ellipsis;
     white-space: nowrap;

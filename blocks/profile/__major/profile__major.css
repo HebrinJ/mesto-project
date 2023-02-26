@@ -6,6 +6,7 @@
     line-height: 22px;
     color: #fff;
     width: 100%;
+    max-width: 500px;
     box-sizing: border-box;
 
     text-overflow: ellipsis;
@@ -24,6 +25,7 @@
 @media screen and (width: 320px) {
     .profile__major {
         font-size: 14px;
-        line-height: 17px;        
+        line-height: 17px;
+        max-width: 282px;        
     }
 }

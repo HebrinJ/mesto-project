@@ -31,7 +31,7 @@
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__container-close-btn/popup__container-close-btn.css);
-@import url(../blocks/popup/__container-fields/popup__container-fields.css);
+@import url(../blocks/popup/__container-form/popup__container-form.css);
 @import url(../blocks/popup/__container-input/popup__container-input.css);
 @import url(../blocks/popup/__container-label/popup__container-label.css);
 @import url(../blocks/popup/__container-save-btn/popup__container-save-btn.css);

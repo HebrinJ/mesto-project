@@ -7,7 +7,7 @@
     background-image: url(../../../image/cross.svg);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: center;
+    background-size: 22px 22px;
     border: 2px solid #fff;
     border-radius: 2px;
     transition: opacity 0.3s linear;
@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 768px) {
     .profile__add-button {
-        width: 100%;
         max-width: 282px;
+        background-size: 16px 16px;
     }
 }

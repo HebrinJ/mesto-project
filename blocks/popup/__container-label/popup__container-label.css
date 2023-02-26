@@ -5,13 +5,13 @@
     font-weight: 900;
     line-height: 29px;
     color: #000;
-    padding-bottom: 54px;
+    margin-bottom: 54px;
 }
 
 @media screen and (max-width: 320px) {
     .popup__container-label {
         font-size: 18px;
-        padding-bottom: 75px;
+        margin-bottom: 75px;
         line-height: 22px;
     }
 }
