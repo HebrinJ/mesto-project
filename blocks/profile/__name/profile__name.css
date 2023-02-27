@@ -6,7 +6,6 @@
     line-height: 48px;
     font-weight: 500;
     color: #fff;
-    /* width: 100%; */
     max-width: 500px;
     
     text-overflow: ellipsis;
@@ -14,7 +13,7 @@
     overflow: hidden;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
     .profile__name {
         text-align: center;
     }

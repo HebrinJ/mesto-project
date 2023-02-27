@@ -5,7 +5,7 @@
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
     .profile__text-container {
         align-items: center;
     }
