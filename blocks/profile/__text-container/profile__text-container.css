@@ -3,10 +3,18 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    max-width: 610px;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 946px) {
     .profile__text-container {
         align-items: center;
     }
 }
+
+/*
+
+Ограничил ширину контейнера. Более повторить искажения изображений не удаётся
+В случае проблем, укажите пожалуйста размеры изображения при котором происходит искажение.
+
+*/

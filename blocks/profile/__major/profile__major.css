@@ -14,7 +14,7 @@
     overflow: hidden;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 946px) {
     .profile__major {
         margin-bottom: 36px;
         margin-left: 0;
