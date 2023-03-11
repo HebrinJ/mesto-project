@@ -1,18 +1,26 @@
 /*  Open-close Popup  */
 
 const editBtn = document.querySelector('.profile__edit-button');
-const popupWindow = document.querySelector('.popup');
-const popupCloseBtn = document.querySelector('.popup__container-close-btn');
+const addCardBtn = document.querySelector('.profile__add-button');
+const popupProfile = document.querySelector('#profile-popup');
+const popupAddCard = document.querySelector('#add-card-popup');
+const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 
 editBtn.addEventListener('click', function() {
-    popupWindow.classList.add('popup_opened')
+    popupProfile.classList.add('popup_opened')
 });
 
-popupCloseBtn.addEventListener('click', function() {
-    popupWindow.classList.remove('popup_opened')
+addCardBtn.addEventListener('click', function() {
+    popupAddCard.classList.add('popup_opened')
 });
 
-/*  Popup changed data  */
+popupCloseBtns.forEach(function (elem) {
+    elem.addEventListener('click', function() {
+        document.querySelector('.popup_opened').classList.remove('popup_opened');
+    })
+});
+
+/*  Profile changing data  */
 
 const formElement = document.querySelector('.popup__container-form');
 const inputFieldName = document.querySelector('.popup__container-input_field_name');
