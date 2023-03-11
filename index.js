@@ -22,7 +22,7 @@ popupCloseBtns.forEach(function (elem) {
 
 /*  Profile changing data  */
 
-const formElement = document.querySelector('.popup__container-form');
+const profileForm = document.querySelector('#profileForm');
 const inputFieldName = document.querySelector('.popup__container-input_field_name');
 const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
 const profileName = document.querySelector('.profile__name');
@@ -36,10 +36,10 @@ function formSubmitHandler (evt) {
 
 profileName.textContent = inputFieldName.value;
 profileMajor.textContent = inputFieldMajor.value;
-popupWindow.classList.remove('popup_opened');
+document.querySelector('.popup_opened').classList.remove('popup_opened');
 }
 
-formElement.addEventListener('submit', formSubmitHandler);
+profileForm.addEventListener('submit', formSubmitHandler);
 
 /*  Initializing default cards  */
 
@@ -71,12 +71,12 @@ const initialCards = [
     ];
 
     initialCards.forEach( function(card) {
-        AddNewCard(card.link, card.name);
+        addNewCard(card.link, card.name);
     })
 
 /*  Adding cards  */
 
-function AddNewCard(cardPic, cardName) {
+function addNewCard(cardPic, cardName) {
     const templateCard = document.querySelector('#card-template').content;
     const newCard = templateCard.querySelector('li').cloneNode(true);
     const cardGallery = document.querySelector('.gallery');
@@ -85,3 +85,20 @@ function AddNewCard(cardPic, cardName) {
     newCard.querySelector('.gallery-card__label-text').textContent = cardName;
     cardGallery.append(newCard);
 }
+
+const cardForm = document.querySelector('#cardForm');
+
+function createUserCard(evt) {
+    evt.preventDefault();
+
+    const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
+    const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
+
+    addNewCard(inputFieldPict.value, inputFieldPlace.value);
+    document.querySelector('.popup_opened').classList.remove('popup_opened');
+}
+
+cardForm.addEventListener('submit', createUserCard);
+
+/*  Cards Like  */
+
