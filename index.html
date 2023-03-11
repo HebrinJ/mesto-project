@@ -26,7 +26,7 @@
             </section>
             <section>
                 <ul class="gallery">
-                    <li>
+                    <!-- <li>
                         <article class="gallery-card">
                             <img class="gallery-card__pict" src="./image/karach.jpg" alt="фото Карачаевска">
                             <div class="gallery-card__label">
@@ -79,7 +79,7 @@
                                 <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
                             </div>
                         </article>
-                    </li>
+                    </li> -->
                 </ul>
             </section>
         </main>
@@ -97,6 +97,17 @@
                 <button type="button" class="popup__container-close-btn"></button>
             </div>
         </div>
+        <template id="card-template">
+            <li>
+                <article class="gallery-card">
+                    <img class="gallery-card__pict" src="" alt="">
+                    <div class="gallery-card__label">
+                        <h2 class="gallery-card__label-text"></h2>                        
+                        <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
+                    </div>
+                </article>
+            </li>
+        </template>
     </div>
     <script src="./index.js"></script>    
 </body>

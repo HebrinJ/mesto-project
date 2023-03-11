@@ -33,4 +33,47 @@ popupWindow.classList.remove('popup_opened');
 
 formElement.addEventListener('submit', formSubmitHandler);
 
-/*  Added cards  */
+/*  Initializing default cards  */
+
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+    ];
+
+    initialCards.forEach( function(card) {
+        AddNewCard(card.link, card.name);
+    })
+
+/*  Adding cards  */
+
+function AddNewCard(cardPic, cardName) {
+    const templateCard = document.querySelector('#card-template').content;
+    const newCard = templateCard.querySelector('li').cloneNode(true);
+    const cardGallery = document.querySelector('.gallery');
+
+    newCard.querySelector('.gallery-card__pict').src = cardPic;
+    newCard.querySelector('.gallery-card__label-text').textContent = cardName;
+    cardGallery.append(newCard);
+}
