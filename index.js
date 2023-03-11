@@ -102,3 +102,20 @@ cardForm.addEventListener('submit', createUserCard);
 
 /*  Cards Like  */
 
+const likeBtns = document.querySelectorAll('.gallery-card__like');
+
+likeBtns.forEach(function(likeBtn) {
+    likeBtn.addEventListener('click', function () {
+        toggleLike(likeBtn);
+    });
+})
+
+function toggleLike(card) {
+    card.classList.toggle('gallery-card__like_active');
+}
+
+/*  Remove card  */
+
+
+
+/*  Open fullsize card   */
