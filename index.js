@@ -7,16 +7,19 @@ const popupAddCard = document.querySelector('#add-card-popup');
 const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 
 editBtn.addEventListener('click', function() {
-    popupProfile.classList.add('popup_opened')
+    popupProfile.classList.add('popup_opened');
+    setTimeout(visible, 50, popupProfile);
 });
 
 addCardBtn.addEventListener('click', function() {
-    popupAddCard.classList.add('popup_opened')
+    popupAddCard.classList.add('popup_opened');
+    setTimeout(visible, 50, popupAddCard);
 });
 
 popupCloseBtns.forEach(function (elem) {
     elem.addEventListener('click', function() {
-        document.querySelector('.popup_opened').classList.remove('popup_opened');
+        document.querySelector('.popup_opened').classList.remove('popup_visibility');
+        setTimeout(togglePopup, 300, elem);
     })
 });
 
@@ -83,6 +86,12 @@ function addNewCard(cardPic, cardName) {
 
     newCard.querySelector('.gallery-card__pict').src = cardPic;
     newCard.querySelector('.gallery-card__label-text').textContent = cardName;
+    const likeBtn = newCard.querySelector('.gallery-card__like');
+    
+    likeBtn.addEventListener('click', function () {
+        toggleLike(likeBtn);
+    });
+
     cardGallery.append(newCard);
 }
 
@@ -100,22 +109,41 @@ function createUserCard(evt) {
 
 cardForm.addEventListener('submit', createUserCard);
 
-/*  Cards Like  */
-
-const likeBtns = document.querySelectorAll('.gallery-card__like');
-
-likeBtns.forEach(function(likeBtn) {
-    likeBtn.addEventListener('click', function () {
-        toggleLike(likeBtn);
-    });
-})
-
 function toggleLike(card) {
     card.classList.toggle('gallery-card__like_active');
 }
 
 /*  Remove card  */
 
+const deleteBtns = document.querySelectorAll('.gallery-card__delete');
 
+deleteBtns.forEach(function(delBtn) {
+    delBtn.addEventListener('click', function () {
+        delBtn.parentElement.parentElement.remove();
+    });
+});
 
 /*  Open fullsize card   */
+
+const pictPopup = document.querySelector('#pict-popup');
+const pictContainer = document.querySelector('.popup__pict-container');
+const pict = document.querySelector('.popup__full-pict');
+const gallery = document.querySelectorAll('.gallery-card__pict');
+
+gallery.forEach(function(card) {
+    card.addEventListener('click', function() {
+        pictPopup.classList.add('popup_opened');
+        setTimeout(visible, 50, pictPopup);
+        pict.src = card.src;
+    });
+});
+
+function visible (element)
+{
+    element.classList.add('popup_visibility');
+}
+
+function togglePopup(element)
+{
+    element.classList.toggle('popup_opened');
+}

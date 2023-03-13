@@ -1,0 +1,13 @@
+.gallery-card__delete {
+    width: 18px;
+    height: 19px;
+    
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    border: none;
+    background-color: transparent;
+    background-image: url(../../../image/Trash.svg);
+    cursor: pointer;
+}

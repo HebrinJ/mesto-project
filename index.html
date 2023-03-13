@@ -10,9 +10,9 @@
 <body class="content">    
     <div class="page">    
         <header class="header">
-            <img class="header__logo" src="./image/logo.svg" alt="логотип проекта место">
+            <img class="header__logo" src="./image/logo.svg" alt="логотип проекта место">            
         </header>
-        <main>        
+        <main>       
             <section class="profile">
                 <img class="profile__pict" src="./image/custo.jpg" alt="фото профиля пользователя">
                 <div class="profile__text-container">
@@ -108,6 +108,12 @@
                 <button type="button" class="popup__container-close-btn"></button>
             </div>
         </div>
+        <div class="popup" id="pict-popup">
+            <div class="popup__pict-container">
+                <img class="popup__full-pict" src="" alt="">
+                <button type="button" class="popup__container-close-btn"></button>
+            </div>
+        </div>
         <template id="card-template">
             <li>
                 <article class="gallery-card">
@@ -116,6 +122,7 @@
                         <h2 class="gallery-card__label-text"></h2>                        
                         <button aria-label="Кнопка лайк" type="button" class="gallery-card__like"></button>
                     </div>
+                    <button aria-label="Кнопка удалить" type="button" class="gallery-card__delete"></button>
                 </article>
             </li>
         </template>
