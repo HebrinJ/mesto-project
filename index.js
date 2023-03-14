@@ -108,9 +108,14 @@ function addNewCard(cardPic, cardName) {
     
     addListenerToCard(newCardPic);
     
-    const likeBtn = newCard.querySelector('.gallery-card__like');    
+    const likeBtn = newCard.querySelector('.gallery-card__like');
+    const delBtn = newCard.querySelector('.gallery-card__delete');
+    
     likeBtn.addEventListener('click', function () {
         toggleLike(likeBtn);
+    });
+    delBtn.addEventListener('click', function () {
+        delBtn.parentElement.parentElement.remove();
     });
 
     cardGallery.append(newCard);
@@ -124,6 +129,9 @@ function createUserCard(evt) {
 
     addNewCard(inputFieldPict.value, inputFieldPlace.value);
     document.querySelector('.popup_opened').classList.remove('popup_opened');
+
+    inputFieldPlace.value = '';
+    inputFieldPict.value = '';
 }
 
 function toggleLike(card) {
