@@ -18,7 +18,7 @@ addCardBtn.addEventListener('click', function() {
 
 popupCloseBtns.forEach(function (btn) {
     btn.addEventListener('click', function() {
-        closePopup();
+        closePopup(btn.closest('.popup'));
     });
 });
 
@@ -26,8 +26,7 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
 
-function closePopup() {
-    popup = document.querySelector('.popup_opened');
+function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
@@ -41,7 +40,7 @@ function addListenerToCard(card) {
     card.addEventListener('click', function() {
         openPopup(cardPicturePopup);
         fullSizePicture.src = card.src;
-        fullSizePicture.alt = 'user_picture';
+        fullSizePicture.alt = 'Фотография места';
     });
 }
 
@@ -55,7 +54,7 @@ function createCard(cardPic, cardName) {
     const newCardPic = newCard.querySelector('.gallery-card__pict');
 
     newCardPic.src = cardPic;
-    newCardPic.alt = 'user_picture';
+    newCardPic.alt = `Фотография места: ${cardName}`;
     newCard.querySelector('.gallery-card__label-text').textContent = cardName;
     
     addListenerToCard(newCardPic);
@@ -69,7 +68,7 @@ function createCard(cardPic, cardName) {
     delBtn.addEventListener('click', function () {
         delBtn.parentElement.parentElement.remove();
     });
-
+    console.log(popupCloseBtns);
     return newCard;
 }
 
@@ -86,7 +85,7 @@ function createUserCard(evt) {
     const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
 
     addCard(newCard);
-    closePopup();
+    closePopup(popupAddCard);
     
     cardForm.reset();
 }
@@ -102,9 +101,9 @@ profileForm.addEventListener('submit', profileSubmitHandler);
 function profileSubmitHandler (evt) {
   evt.preventDefault(); 
 
-profileName.textContent = inputFieldName.value;
-profileMajor.textContent = inputFieldMajor.value;
-closePopup();
+    profileName.textContent = inputFieldName.value;
+    profileMajor.textContent = inputFieldMajor.value;
+    closePopup(popupProfile);
 }
 
 function fillProfileFields() {
