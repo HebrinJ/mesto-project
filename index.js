@@ -16,18 +16,33 @@ addCardBtn.addEventListener('click', function() {
     openPopup(popupAddCard);
 });
 
-popupCloseBtns.forEach(function (btn) {
-    btn.addEventListener('click', function() {
-        closePopup(btn.closest('.popup'));
-    });
+popupCloseBtns.forEach(function (btn) {    
+    btn.addEventListener('click', clickClosePopup);    
 });
 
 function openPopup(popup) {
-    popup.classList.add('popup_opened');
+    popup.classList.add('popup_opened');    
+
+    popup.addEventListener('click', clickClosePopup);
+    window.addEventListener('keydown', keyClosePopup);
 }
 
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
+function clickClosePopup(event) {
+    event.currentTarget.removeEventListener('click', clickClosePopup);
+    window.removeEventListener('keydown', keyClosePopup);
+    
+    event.currentTarget.classList.remove('popup_opened');
+}
+
+function keyClosePopup(event) {  
+    
+    if(event.key === 'Escape') {        
+        const popup = document.querySelector('.popup_opened');
+        popup.classList.remove('popup_opened');
+
+        window.removeEventListener('keydown', keyClosePopup);
+        popup.removeEventListener('click', clickClosePopup);
+    }
 }
 
 /*  Open fullsize card event listeners  */
@@ -68,7 +83,7 @@ function createCard(cardPic, cardName) {
     delBtn.addEventListener('click', function () {
         delBtn.parentElement.parentElement.remove();
     });
-    console.log(popupCloseBtns);
+    
     return newCard;
 }
 
@@ -85,7 +100,7 @@ function createUserCard(evt) {
     const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
 
     addCard(newCard);
-    closePopup(popupAddCard);
+    clickClosePopup(popupAddCard);
     
     cardForm.reset();
 }
@@ -103,7 +118,7 @@ function profileSubmitHandler (evt) {
 
     profileName.textContent = inputFieldName.value;
     profileMajor.textContent = inputFieldMajor.value;
-    closePopup(popupProfile);
+    clickClosePopup(popupProfile);
 }
 
 function fillProfileFields() {
@@ -111,4 +126,5 @@ function fillProfileFields() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
+// cardPicturePopup.addEventListener('click', () => closePopup(cardPicturePopup));
 
