@@ -1,5 +1,4 @@
-.popup {
-    /* display: none; */
+.popup {    
     display: flex;
     position: fixed;
     width: 100%;

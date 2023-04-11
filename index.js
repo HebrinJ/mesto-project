@@ -30,7 +30,7 @@ function openPopup(popup) {
 function clickClosePopup(event) {
     event.currentTarget.removeEventListener('click', clickClosePopup);
     window.removeEventListener('keydown', keyClosePopup);
-    
+
     event.currentTarget.classList.remove('popup_opened');
 }
 
@@ -126,5 +126,4 @@ function fillProfileFields() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
-// cardPicturePopup.addEventListener('click', () => closePopup(cardPicturePopup));
 
