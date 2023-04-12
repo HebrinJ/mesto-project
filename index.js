@@ -17,17 +17,24 @@ addCardBtn.addEventListener('click', function() {
 });
 
 popupCloseBtns.forEach(function (btn) {    
-    btn.addEventListener('click', clickClosePopup);    
+    btn.addEventListener('mousedown', clickClosePopup);    
 });
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');    
 
-    popup.addEventListener('click', clickClosePopup);
+    popup.addEventListener('mousedown', clickClosePopup);
     window.addEventListener('keydown', keyClosePopup);
 }
 
 function clickClosePopup(event) {
+    const isItPopup = event.target.classList.contains('popup');
+    const isItCloseButton = event.target.classList.contains('popup__container-close-btn');
+    
+    if(!isItPopup && !isItCloseButton) {
+        return;
+    }
+    
     event.currentTarget.removeEventListener('click', clickClosePopup);
     window.removeEventListener('keydown', keyClosePopup);
 
@@ -126,4 +133,19 @@ function fillProfileFields() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
+/*  Validation form  */
+
+const profileInputFields = document.querySelectorAll('.popup__container-input');
+
+function setValidationListeners(elementList) {
+    elementList.forEach((element) => {
+        element.addEventListener('input', validationForm);        
+    })
+}
+
+function validationForm(event) {
+    console.log(event.target.validationMessage);
+}
+
+setValidationListeners(profileInputFields);
 
