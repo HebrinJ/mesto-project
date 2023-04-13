@@ -137,8 +137,6 @@ function fillProfileFields() {
 
 const profileInputFields = document.querySelectorAll('.popup__input-profile');
 const cardInputFields = document.querySelectorAll('.popup__input-card');
-// const profileForm = document.querySelector('#profileForm');
-const addCardForm = document.querySelector('#cardForm');
 
 function setValidationListeners(elementList) {
     elementList.forEach((element) => {
@@ -147,10 +145,11 @@ function setValidationListeners(elementList) {
 }
 
 function validationForm(event) {
+    
     const inputElement = event.target;
     const form = inputElement.parentElement;
     const inputFields = form.querySelectorAll('.popup__container-input');
-    const button = form.querySelector('.popup__container-save-btn');
+    const button = form.querySelector('.popup__container-save-btn');    
     
     if(!inputElement.validity.valid) {
         showInputError(inputElement, inputElement.validationMessage);
@@ -176,6 +175,16 @@ function hideInputError(element) {
 function toggleButtonState(button, state) {
     button.disabled = state;
 }
+
+function setDefaultButtonsState() {
+    const buttons = document.querySelectorAll('.popup__container-save-btn');
+    
+    buttons.forEach((button) => {
+        toggleButtonState(button, true);
+    })
+}
+
+setDefaultButtonsState();
 
 setValidationListeners(profileInputFields);
 setValidationListeners(cardInputFields);
