@@ -36,8 +36,10 @@
             <div class="popup__container">
                 <h2 class="popup__container-label">Редактировать профиль</h2>
                     <form class="popup__container-form" name="profileForm" id="profileForm" novalidate>
-                        <input type="text" class="popup__container-input popup__container-input_field_name" placeholder="Имя" name="inputName" minlength="2" maxlength="40" required>
-                        <input type="text" class="popup__container-input popup__container-input_field_major" placeholder="Профессия" name="inputMajor" required>
+                        <input type="text" class="popup__container-input popup__container-input_field_name popup__input-profile" placeholder="Имя" id="inputName" minlength="2" maxlength="40" required>
+                        <span class="popup__container-input-error-message popup__container-input_field_name-error" id="inputName-error"></span>
+                        <input type="text" class="popup__container-input popup__container-input_field_major popup__input-profile" placeholder="Профессия" id="inputMajor" minlength="2" maxlength="200" required>
+                        <span class="popup__container-input-error-message popup__container-input_field_major-error" id="inputMajor-error"></span>
                         <button type="submit" class="popup__container-save-btn">Сохранить</button>
                     </form>
                 <button type="button" class="popup__container-close-btn"></button>
@@ -47,8 +49,8 @@
             <div class="popup__container">
                 <h2 class="popup__container-label">Новое место</h2>
                     <form class="popup__container-form" name="cardForm" id="cardForm">
-                        <input type="text" class="popup__container-input popup__container-input_field_place" placeholder="Название" name="inputPlace">
-                        <input type="url" class="popup__container-input popup__container-input_field_pict" placeholder="Ссылка на картинку" name="inputPict">
+                        <input type="text" class="popup__container-input popup__container-input_field_place popup__input-card" placeholder="Название" id="inputPlace">
+                        <input type="url" class="popup__container-input popup__container-input_field_pict popup__input-card" placeholder="Ссылка на картинку" id="inputPict">
                         <button type="submit" class="popup__container-save-btn">Создать</button>
                     </form>
                 <button type="button" class="popup__container-close-btn"></button>

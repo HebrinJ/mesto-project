@@ -135,7 +135,10 @@ function fillProfileFields() {
 
 /*  Validation form  */
 
-const profileInputFields = document.querySelectorAll('.popup__container-input');
+const profileInputFields = document.querySelectorAll('.popup__input-profile');
+const cardInputFields = document.querySelectorAll('.popup__input-card');
+// const profileForm = document.querySelector('#profileForm');
+const addCardForm = document.querySelector('#cardForm');
 
 function setValidationListeners(elementList) {
     elementList.forEach((element) => {
@@ -144,8 +147,36 @@ function setValidationListeners(elementList) {
 }
 
 function validationForm(event) {
-    console.log(event.target.validationMessage);
+    const inputElement = event.target;
+    const form = inputElement.parentElement;
+    const inputFields = form.querySelectorAll('.popup__container-input');
+    const button = form.querySelector('.popup__container-save-btn');
+    
+    if(!inputElement.validity.valid) {
+        showInputError(inputElement, inputElement.validationMessage);
+    } else {
+        hideInputError(inputElement);
+    }
+
+    let isFormInvalid = Array.from(inputFields).some((element) => {return element.validity.valid === false})
+    
+    toggleButtonState(button, isFormInvalid);
+}
+
+function showInputError(element, errorMessage) {
+    element.classList.add('popup__container-input_error'); 
+    document.querySelector(`#${element.id}-error`).textContent = errorMessage;
+}
+
+function hideInputError(element) {
+    element.classList.remove('popup__container-input_error');
+    document.querySelector(`#${element.id}-error`).textContent = '';
+}
+
+function toggleButtonState(button, state) {
+    button.disabled = state;
 }
 
 setValidationListeners(profileInputFields);
+setValidationListeners(cardInputFields);
 
