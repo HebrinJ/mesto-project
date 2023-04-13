@@ -48,9 +48,11 @@
         <div class="popup" id="add-card-popup">
             <div class="popup__container">
                 <h2 class="popup__container-label">Новое место</h2>
-                    <form class="popup__container-form" name="cardForm" id="cardForm">
-                        <input type="text" class="popup__container-input popup__container-input_field_place popup__input-card" placeholder="Название" id="inputPlace">
-                        <input type="url" class="popup__container-input popup__container-input_field_pict popup__input-card" placeholder="Ссылка на картинку" id="inputPict">
+                    <form class="popup__container-form" name="cardForm" id="cardForm" novalidate>
+                        <input type="text" class="popup__container-input popup__container-input_field_place popup__input-card" placeholder="Название" id="inputPlace" minlength="2" maxlength="30" required>
+                        <span class="popup__container-input-error-message popup__container-input_field_place-error" id="inputPlace-error"></span>
+                        <input type="url" class="popup__container-input popup__container-input_field_pict popup__input-card" placeholder="Ссылка на картинку" id="inputPict" required>
+                        <span class="popup__container-input-error-message popup__container-input_field_pict-error" id="inputPict-error"></span>
                         <button type="submit" class="popup__container-save-btn">Создать</button>
                     </form>
                 <button type="button" class="popup__container-close-btn"></button>
