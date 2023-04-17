@@ -1,6 +1,6 @@
 .profile__name-container {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
 }
 
