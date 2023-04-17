@@ -60,8 +60,7 @@ function createUserCard(evt) {
     const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
 
     addCard(newCard);
-    clickClosePopup(popupAddCard);
-    
+    popupController.submitClosePopup(popupController.popupAddCard);
     cardForm.reset();
 }
 
