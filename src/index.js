@@ -5,6 +5,7 @@ import { popupController } from './components/modal.js';
 import './pages/index.css';
 
 cardForm.addEventListener('submit', createUserCard);
+profileForm.addEventListener('submit', profileSubmitHandler);
 
 const cardGallery = document.querySelector('.gallery');
 const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
@@ -30,4 +31,12 @@ function createUserCard(evt) {
     addCard(newCard);
     popupController.submitClosePopup(popupController.popupAddCard);
     cardForm.reset();
+}
+
+function profileSubmitHandler (evt) {
+    evt.preventDefault(); 
+
+    profileName.textContent = inputFieldName.value;
+    profileMajor.textContent = inputFieldMajor.value;
+    submitClosePopup(popupProfile);
 }

@@ -14,10 +14,11 @@ import { validationController  } from "./validate";
 export const popupController = {
     openPopup,
     submitClosePopup,
+    profileSubmitHandler,
     popupAddCard
 }
 
-profileForm.addEventListener('submit', profileSubmitHandler);
+//profileForm.addEventListener('submit', profileSubmitHandler);
 
 editBtn.addEventListener('click', function() {
     openPopup(popupProfile);
@@ -68,13 +69,13 @@ function submitClosePopup(popup) {
     popup.classList.remove('popup_opened');
 }
 
-function profileSubmitHandler (evt) {
-    evt.preventDefault(); 
+// function profileSubmitHandler (evt) {
+//     evt.preventDefault(); 
 
-    profileName.textContent = inputFieldName.value;
-    profileMajor.textContent = inputFieldMajor.value;
-    submitClosePopup(popupProfile);
-}
+//     profileName.textContent = inputFieldName.value;
+//     profileMajor.textContent = inputFieldMajor.value;
+//     submitClosePopup(popupProfile);
+// }
 
 function fillProfileFields() {
     inputFieldName.value = profileName.textContent;
