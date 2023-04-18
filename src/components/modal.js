@@ -13,12 +13,9 @@ import { validationController  } from "./validate";
 
 export const popupController = {
     openPopup,
-    submitClosePopup,
-    profileSubmitHandler,
+    closePopup,
     popupAddCard
 }
-
-//profileForm.addEventListener('submit', profileSubmitHandler);
 
 editBtn.addEventListener('click', function() {
     openPopup(popupProfile);
@@ -30,52 +27,43 @@ addCardBtn.addEventListener('click', function() {
 });
 
 popupCloseBtns.forEach(function (btn) {    
-    btn.addEventListener('mousedown', dynamicClosePopup);    
+    btn.addEventListener('mousedown', clickCloseHandler);    
 });
+
+const clickCloseHandler = function (event) {
+    const popup = document.querySelector('.popup_opened');   
+    
+    const isItPopup = event.target.classList.contains('popup');
+    const isItCloseButton = event.target.classList.contains('popup__container-close-btn');
+        
+    if(!isItPopup && !isItCloseButton) {        
+        return;
+    }    
+    
+    closePopup(popup);
+}
+
+const keyCloseHandler = function (event) {
+    const popup = document.querySelector('.popup_opened');
+
+    if(event.key === 'Escape') {
+        closePopup(popup);
+    }
+}
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');    
+    popup.addEventListener('mousedown', clickCloseHandler);
+    window.addEventListener('keydown', keyCloseHandler);
+
     validationController.setDefaultButtonsState();
-    popup.addEventListener('mousedown', dynamicClosePopup);
-    window.addEventListener('keydown', keyClosePopup);
 }
 
-function dynamicClosePopup(event) {
-    const isItPopup = event.target.classList.contains('popup');
-    const isItCloseButton = event.target.classList.contains('popup__container-close-btn');
-    
-    if(!isItPopup && !isItCloseButton) {
-        return;
-    }
-    
-    event.currentTarget.removeEventListener('click', dynamicClosePopup);
-    window.removeEventListener('keydown', keyClosePopup);
-
-    event.currentTarget.classList.remove('popup_opened');
+function closePopup(popup) {    
+    popup.removeEventListener('mousedown', clickCloseHandler);
+    window.removeEventListener('keydown', keyCloseHandler);
+    popup.classList.remove('popup_opened'); 
 }
-
-function keyClosePopup(event) {  
-    
-    if(event.key === 'Escape') {        
-        const popup = document.querySelector('.popup_opened');
-        popup.classList.remove('popup_opened');
-
-        window.removeEventListener('keydown', keyClosePopup);
-        popup.removeEventListener('click', dynamicClosePopup);
-    }
-}
-
-function submitClosePopup(popup) {
-    popup.classList.remove('popup_opened');
-}
-
-// function profileSubmitHandler (evt) {
-//     evt.preventDefault(); 
-
-//     profileName.textContent = inputFieldName.value;
-//     profileMajor.textContent = inputFieldMajor.value;
-//     submitClosePopup(popupProfile);
-// }
 
 function fillProfileFields() {
     inputFieldName.value = profileName.textContent;

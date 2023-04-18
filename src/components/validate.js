@@ -24,7 +24,7 @@ function validationForm(event) {
     if(!inputElement.validity.valid) {
         showInputError(inputElement, inputElement.validationMessage);
     } else if (patternMatch && inputElement.id != 'inputPict') {
-        showInputError(inputElement, 'Допустимы только буквы, пробелы и дефисы');
+        showInputError(inputElement, 'Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы');
         toggleButtonState(button, true);
         return;
     } else {
