@@ -38,5 +38,5 @@ function profileSubmitHandler (evt) {
 
     profileName.textContent = inputFieldName.value;
     profileMajor.textContent = inputFieldMajor.value;
-    submitClosePopup(popupProfile);
+    popupController.closePopup(popupProfile);
 }
