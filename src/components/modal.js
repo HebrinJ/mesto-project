@@ -9,6 +9,8 @@ const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
 const popupAddCard = document.querySelector('#add-card-popup');
 
+import { validationController  } from "./validate";
+
 export const popupController = {
     openPopup,
     submitClosePopup,
@@ -32,7 +34,7 @@ popupCloseBtns.forEach(function (btn) {
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');    
-
+    validationController.setDefaultButtonsState();
     popup.addEventListener('mousedown', dynamicClosePopup);
     window.addEventListener('keydown', keyClosePopup);
 }

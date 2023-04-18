@@ -7,6 +7,8 @@
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 
+@import url(../blocks/main/main.css);
+
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__pict/profile__pict.css);
 @import url(../blocks/profile/__text-container/profile__text-container.css);
@@ -41,3 +43,4 @@
 @import url(../blocks/popup/__container-save-btn/popup__container-save-btn.css);
 @import url(../blocks/popup/__pict-container/popup__pict-container.css);
 @import url(../blocks/popup/__full-pict/popup__full-pict.css);
+@import url(../blocks/popup/_pict-background/popup_pict-background.css);
