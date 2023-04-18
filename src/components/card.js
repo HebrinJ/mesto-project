@@ -29,8 +29,15 @@ function createCard(cardPic, cardName) {
     likeBtn.addEventListener('click', function () {
         toggleLike(likeBtn);
     });
-    delBtn.addEventListener('click', function () {
-        delBtn.parentElement.parentElement.remove();
+    
+    delBtn.addEventListener('click', function (event) {        
+        let element = event.target;
+
+        while (!element.classList.contains('gallery-card-list-element')) {
+            element = element.parentElement;
+        }
+        
+        element.remove();
     });
     
     return newCard;
