@@ -1,14 +1,12 @@
 import { popupController } from './modal.js';
 
-const cardGallery = document.querySelector('.gallery');
 const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
 const fullSizePicture = document.querySelector('.popup__full-pict');
 
-cardForm.addEventListener('submit', createUserCard);
+// cardForm.addEventListener('submit', createUserCard);
 
-export const cardController = {
-    addCard,
+export const cardController = {    
     createCard,
 }
 
@@ -29,7 +27,7 @@ function createCard(cardPic, cardName) {
     likeBtn.addEventListener('click', function () {
         toggleLike(likeBtn);
     });
-    
+
     delBtn.addEventListener('click', function (event) {        
         let element = event.target;
 
@@ -43,12 +41,12 @@ function createCard(cardPic, cardName) {
     return newCard;
 }
 
-function addCard(card) {    
-    cardGallery.prepend(card);
+// function addCard(card) {    
+//     cardGallery.prepend(card);
 
-    const cardPict = card.querySelector('.gallery-card__pict');
-    addListenerToCard(cardPict);
-}
+//     const cardPict = card.querySelector('.gallery-card__pict');
+//     addListenerToCard(cardPict);
+// }
 
 function addListenerToCard(card) {
     card.addEventListener('click', function() {
@@ -58,18 +56,18 @@ function addListenerToCard(card) {
     });
 }
 
-function createUserCard(evt) {
-    evt.preventDefault();
+// function createUserCard(evt) {
+//     evt.preventDefault();
 
-    const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
-    const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
+//     const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
+//     const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
 
-    const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
+//     const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
 
-    addCard(newCard);
-    popupController.submitClosePopup(popupController.popupAddCard);
-    cardForm.reset();
-}
+//     addCard(newCard);
+//     popupController.submitClosePopup(popupController.popupAddCard);
+//     cardForm.reset();
+// }
 
 function toggleLike(card) {
     card.classList.toggle('gallery-card__like_active');
