@@ -6,6 +6,12 @@ export const validationController = {
 
 const validationPattern = /[^a-zа-я\s\-]/i;
 
+function enableValidation(validationSetting)  {
+    const forms = Array.from(document.querySelectorAll(validationSetting.formSelector));
+
+    forms.forEach((form) => { setValidationListeners(form, validationSetting.inputSelector, validationSetting.submitButtonSelector, validationSetting.errorContainerSelector) });
+}
+
 function setValidationListeners(form, inputFieldSelector, submitButtonSelector) {
     const inputList = Array.from(form.querySelectorAll(inputFieldSelector));  
     const submitButton = form.querySelector(submitButtonSelector);
@@ -61,8 +67,3 @@ function setDefaultButtonsState() {
     })
 }
 
-function enableValidation(validationSetting)  {
-    const forms = Array.from(document.querySelectorAll(validationSetting.formSelector));
-
-    forms.forEach((form) => { setValidationListeners(form, validationSetting.inputSelector, validationSetting.submitButtonSelector, validationSetting.errorContainerSelector) });
-}

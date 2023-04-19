@@ -4,12 +4,12 @@ import { validationController } from './components/validate.js'
 import { popupController } from './components/modal.js';
 import './pages/index.css';
 
-cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', profileSubmitHandler);
-
 const cardGallery = document.querySelector('.gallery');
 const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
 const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
+
+cardForm.addEventListener('submit', createUserCard);
+profileForm.addEventListener('submit', profileSubmitHandler);
 
 const validationSetting = {
     formSelector: '.popup__container-form',
