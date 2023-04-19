@@ -10,11 +10,6 @@ profileForm.addEventListener('submit', profileSubmitHandler);
 const cardGallery = document.querySelector('.gallery');
 const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
 const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
-const profileName = document.querySelector('.profile__name');
-const profileMajor = document.querySelector('.profile__major');
-const inputFieldName = document.querySelector('.popup__container-input_field_name');
-const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
-const popupProfile = document.querySelector('#profile-popup');
 
 const validationSetting = {
     formSelector: '.popup__container-form',
@@ -48,8 +43,7 @@ function createUserCard(evt) {
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    profileName.textContent = inputFieldName.value;
-    profileMajor.textContent = inputFieldMajor.value;
-    popupController.closePopup(popupProfile);
+    popupController.setNewProfile();
+    popupController.closePopup(popupController.popupProfile);
 }
 

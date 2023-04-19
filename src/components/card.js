@@ -4,8 +4,6 @@ const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
 const fullSizePicture = document.querySelector('.popup__full-pict');
 
-// cardForm.addEventListener('submit', createUserCard);
-
 export const cardController = {    
     createCard,
 }
@@ -41,13 +39,6 @@ function createCard(cardPic, cardName) {
     return newCard;
 }
 
-// function addCard(card) {    
-//     cardGallery.prepend(card);
-
-//     const cardPict = card.querySelector('.gallery-card__pict');
-//     addListenerToCard(cardPict);
-// }
-
 function addListenerToCard(card) {
     card.addEventListener('click', function() {
         popupController.openPopup(cardPicturePopup);
@@ -55,19 +46,6 @@ function addListenerToCard(card) {
         fullSizePicture.alt = 'Фотография места';
     });
 }
-
-// function createUserCard(evt) {
-//     evt.preventDefault();
-
-//     const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
-//     const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
-
-//     const newCard = createCard(inputFieldPict.value, inputFieldPlace.value);
-
-//     addCard(newCard);
-//     popupController.submitClosePopup(popupController.popupAddCard);
-//     cardForm.reset();
-// }
 
 function toggleLike(card) {
     card.classList.toggle('gallery-card__like_active');

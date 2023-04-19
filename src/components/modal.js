@@ -13,12 +13,14 @@ import { validationController  } from "./validate";
 export const popupController = {
     openPopup,
     closePopup,
-    popupAddCard
+    setNewProfile,
+    popupAddCard,
+    popupProfile
 }
 
 editBtn.addEventListener('click', function() {
     openPopup(popupProfile);
-    fillProfileFields();
+    fillProfileFieldsWhenOpen();
 });
 
 addCardBtn.addEventListener('click', function() {
@@ -64,7 +66,12 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened'); 
 }
 
-function fillProfileFields() {
+function fillProfileFieldsWhenOpen() {
     inputFieldName.value = profileName.textContent;
     inputFieldMajor.value = profileMajor.textContent;
+}
+
+function setNewProfile() {
+    profileName.textContent = inputFieldName.value;
+    profileMajor.textContent = inputFieldMajor.value;
 }
