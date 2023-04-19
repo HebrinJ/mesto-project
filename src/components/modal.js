@@ -2,7 +2,6 @@ const editBtn = document.querySelector('.profile__edit-button');
 const addCardBtn = document.querySelector('.profile__add-button');
 const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 const popupProfile = document.querySelector('#profile-popup');
-const profileForm = document.querySelector('#profileForm');
 const inputFieldName = document.querySelector('.popup__container-input_field_name');
 const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
 const profileName = document.querySelector('.profile__name');

@@ -10,13 +10,25 @@ profileForm.addEventListener('submit', profileSubmitHandler);
 const cardGallery = document.querySelector('.gallery');
 const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
 const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
+const profileName = document.querySelector('.profile__name');
+const profileMajor = document.querySelector('.profile__major');
+const inputFieldName = document.querySelector('.popup__container-input_field_name');
+const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
+const popupProfile = document.querySelector('#profile-popup');
+
+const validationSetting = {
+    formSelector: '.popup__container-form',
+    inputSelector: '.popup__container-input',
+    submitButtonSelector: '.popup__container-save-btn',
+    errorContainerSelector: '.popup__container-input-error-message'
+}
 
 initialCards.forEach( function(card) {
     const newCard = cardController.createCard(card.link, card.name);
     addCard(newCard);
 });
 
-validationController.setAllValidationListeners();
+validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState();
 
 function addCard(card) {    
@@ -29,7 +41,7 @@ function createUserCard(evt) {
     const newCard = cardController.createCard(inputFieldPict.value, inputFieldPlace.value);
 
     addCard(newCard);
-    popupController.submitClosePopup(popupController.popupAddCard);
+    popupController.closePopup(popupController.popupAddCard);
     cardForm.reset();
 }
 
@@ -40,3 +52,4 @@ function profileSubmitHandler (evt) {
     profileMajor.textContent = inputFieldMajor.value;
     popupController.closePopup(popupProfile);
 }
+
