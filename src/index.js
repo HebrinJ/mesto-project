@@ -11,11 +11,12 @@ const inputFieldPict = document.querySelector('.popup__container-input_field_pic
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', profileSubmitHandler);
 
-const validationSetting = {
+export const validationSetting = {
     formSelector: '.popup__container-form',
     inputSelector: '.popup__container-input',
     submitButtonSelector: '.popup__container-save-btn',
-    errorContainerSelector: '.popup__container-input-error-message'
+    errorContainerSelector: '.popup__container-input-error-message',
+    inputErrorStyleSelector: 'popup__container-input_error'
 }
 
 initialCards.forEach( function(card) {

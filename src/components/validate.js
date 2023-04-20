@@ -4,6 +4,8 @@ export const validationController = {
     enableValidation
 }
 
+import { validationSetting } from "../index";
+
 const validationPattern = /[^a-zа-я\s\-]/i;
 
 function enableValidation(validationSetting)  {
@@ -37,21 +39,21 @@ function validateInput(form, inputField, errorContainer, submitButton) {
         hideInputError(inputField, errorContainer);         
     }
     
-    toggleButtonState(submitButton, isFormValid(form));
+    toggleButtonState(submitButton, isFormValid(form, validationSetting.inputSelector));
 }
 
-function isFormValid(form) {    
-    const formFields = form.querySelectorAll('.popup__container-input');
+function isFormValid(form, inputSelector) {    
+    const formFields = form.querySelectorAll(inputSelector);
     return Array.from(formFields).some((element) => {return element.validity.valid === false})
 }
 
 function showInputError(inputField, errorContainer, errorMessage) { 
-    inputField.classList.add('popup__container-input_error');   
+    inputField.classList.add(validationSetting.inputErrorStyleSelector);   
     errorContainer.textContent = errorMessage;
 }
 
 function hideInputError(inputField, errorContainer) {
-    inputField.classList.remove('popup__container-input_error');
+    inputField.classList.remove(validationSetting.inputErrorStyleSelector);
     errorContainer.textContent = '';
 }
 
@@ -60,7 +62,7 @@ function toggleButtonState(button, state) {
 }
 
 function setDefaultButtonsState() {
-    const buttons = document.querySelectorAll('.popup__container-save-btn');
+    const buttons = document.querySelectorAll(validationSetting.submitButtonSelector);
     
     buttons.forEach((button) => {
         toggleButtonState(button, true);
