@@ -1,31 +1,13 @@
-const editBtn = document.querySelector('.profile__edit-button');
-const addCardBtn = document.querySelector('.profile__add-button');
-const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 const popupProfile = document.querySelector('#profile-popup');
-const inputFieldName = document.querySelector('.popup__container-input_field_name');
-const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
-const profileName = document.querySelector('.profile__name');
-const profileMajor = document.querySelector('.profile__major');
 const popupAddCard = document.querySelector('#add-card-popup');
-
-import { validationController  } from "./validate";
+const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 
 export const popupController = {
     openPopup,
     closePopup,
-    setNewProfile,
-    popupAddCard,
-    popupProfile
+    popupProfile,
+    popupAddCard
 }
-
-editBtn.addEventListener('click', function() {
-    openPopup(popupProfile);
-    fillProfileFieldsWhenOpen();
-});
-
-addCardBtn.addEventListener('click', function() {
-    openPopup(popupAddCard);
-});
 
 popupCloseBtns.forEach(function (btn) {    
     btn.addEventListener('mousedown', clickCloseHandler);    
@@ -56,22 +38,10 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');    
     popup.addEventListener('mousedown', clickCloseHandler);
     window.addEventListener('keydown', keyCloseHandler);
-
-    validationController.setDefaultButtonsState();
 }
 
 function closePopup(popup) {    
     popup.removeEventListener('mousedown', clickCloseHandler);
     window.removeEventListener('keydown', keyCloseHandler);
     popup.classList.remove('popup_opened'); 
-}
-
-function fillProfileFieldsWhenOpen() {
-    inputFieldName.value = profileName.textContent;
-    inputFieldMajor.value = profileMajor.textContent;
-}
-
-function setNewProfile() {
-    profileName.textContent = inputFieldName.value;
-    profileMajor.textContent = inputFieldMajor.value;
 }

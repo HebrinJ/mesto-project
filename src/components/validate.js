@@ -20,31 +20,72 @@ function setValidationListeners(form, inputFieldSelector, submitButtonSelector) 
     
     inputList.forEach((inputField) => {
         const errorContainer = document.querySelector(`#${inputField.id}-error`)
-        inputField.addEventListener('input', () => { validateInput(form, inputField, errorContainer, submitButton) });        
+        inputField.addEventListener('input', () => { isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton) });        
     })
 }
 
-function validateInput(form, inputField, errorContainer, submitButton) {
-    const patternMatch = validationPattern.test(inputField.value);
-
-    if(!inputField.validity.valid) {
-        showInputError(inputField, errorContainer, inputField.validationMessage);
-
-    } else if (patternMatch && inputField.id != 'inputPict') {
-        showInputError(inputField, errorContainer, 'Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы');
-        toggleButtonState(submitButton, true);
-        return;
-        
-    } else {
-        hideInputError(inputField, errorContainer);         
-    }
+function isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton) {    
+    //Проверка и форматирование текущего поля 
+    currentFieldValidation(inputField, errorContainer);
     
-    toggleButtonState(submitButton, isFormValid(form, validationSetting.inputSelector));
+    //Проверка всей формы на валидность
+    const formFields = form.querySelectorAll(inputFieldSelector);
+    toggleButtonState(submitButton, false);
+
+    formFields.forEach(field => {
+        if(isFieldValid(field).validState === false) {
+            toggleButtonState(submitButton, true);  //true - активация состояния disabled
+        }
+    });
 }
 
-function isFormValid(form, inputSelector) {    
-    const formFields = form.querySelectorAll(inputSelector);
-    return Array.from(formFields).some((element) => {return element.validity.valid === false})
+function currentFieldValidation(inputField, errorContainer) {
+    let validationResult = isFieldValid(inputField);
+    
+    if(validationResult.validState === true) {
+        hideInputError(inputField, errorContainer);
+    } else {
+        showInputError(inputField, errorContainer, validationResult.errorMessage);
+    }
+}
+
+function isFieldValid(inputField, errorContainer) {
+    
+    if (inputField.getAttribute('type') === 'text') {
+        return textFieldValidation(inputField, errorContainer);
+
+    } else if (inputField.getAttribute('type') === 'url') {
+        return urlFieldValidation(inputField, errorContainer);
+    }
+}
+
+function urlFieldValidation(inputField) {    
+    const validationResult = { 
+        validState: inputField.validity.valid,
+        errorMessage: inputField.validationMessage };
+    return validationResult;
+}
+
+function textFieldValidation(inputField) {
+    const patternMatch = validationPattern.test(inputField.value);
+
+    if(inputField.validity.valid === false) {
+        const validationResult = { 
+            validState: inputField.validity.valid,
+            errorMessage: inputField.validationMessage };
+        return validationResult;
+    } else if (patternMatch) {
+        const validationResult = { 
+            validState: false,
+            errorMessage: 'Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы' };
+        return validationResult;
+    } else {
+        const validationResult = { 
+            validState: true,
+            errorMessage: '' };
+        return validationResult;
+    }
+    
 }
 
 function showInputError(inputField, errorContainer, errorMessage) { 

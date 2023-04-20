@@ -4,13 +4,6 @@ import { validationController } from './components/validate.js'
 import { popupController } from './components/modal.js';
 import './pages/index.css';
 
-const cardGallery = document.querySelector('.gallery');
-const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
-const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
-
-cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', profileSubmitHandler);
-
 export const validationSetting = {
     formSelector: '.popup__container-form',
     inputSelector: '.popup__container-input',
@@ -18,6 +11,30 @@ export const validationSetting = {
     errorContainerSelector: '.popup__container-input-error-message',
     inputErrorStyleSelector: 'popup__container-input_error'
 }
+
+const cardGallery = document.querySelector('.gallery');
+const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
+const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
+const editBtn = document.querySelector('.profile__edit-button');
+const addCardBtn = document.querySelector('.profile__add-button');
+const inputFieldName = document.querySelector('.popup__container-input_field_name');
+const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
+const profileName = document.querySelector('.profile__name');
+const profileMajor = document.querySelector('.profile__major');
+
+cardForm.addEventListener('submit', createUserCard);
+profileForm.addEventListener('submit', profileSubmitHandler);
+
+editBtn.addEventListener('click', function() {
+    popupController.openPopup(popupController.popupProfile);
+    fillProfileFieldsWhenOpen();
+    validationController.setDefaultButtonsState();
+});
+
+addCardBtn.addEventListener('click', function() {
+    popupController.openPopup(popupController.popupAddCard);
+    validationController.setDefaultButtonsState();
+});
 
 initialCards.forEach( function(card) {
     const newCard = cardController.createCard(card.link, card.name);
@@ -44,7 +61,17 @@ function createUserCard(evt) {
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    popupController.setNewProfile();
+    setNewProfile();
     popupController.closePopup(popupController.popupProfile);
+}
+
+function fillProfileFieldsWhenOpen() {
+    inputFieldName.value = profileName.textContent;
+    inputFieldMajor.value = profileMajor.textContent;
+}
+
+function setNewProfile() {
+    profileName.textContent = inputFieldName.value;
+    profileMajor.textContent = inputFieldMajor.value;
 }
 
