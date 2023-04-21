@@ -2,6 +2,7 @@ import { cardController } from './components/card.js';
 import { initialCards } from './components/utils.js';
 import { validationController } from './components/validate.js'
 import { popupController } from './components/modal.js';
+import { apiController } from './components/api.js';
 import './pages/index.css';
 
 export const validationSetting = {
@@ -44,6 +45,21 @@ initialCards.forEach( function(card) {
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState();
 
+apiController.getProfileData()
+    .then((res) => {
+        if(res.ok) {
+            return res.json()
+        } else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }})
+    .then((data) => setProfileData(data.name, data.about))
+    .catch(() => Promise.reject(`Ошибка: ${res.status}`));
+
+function setProfileData(name, major) {
+    profileName.textContent = name;
+    profileMajor.textContent = major;
+}
+
 function addCard(card) {    
     cardGallery.prepend(card);
 }
@@ -61,7 +77,7 @@ function createUserCard(evt) {
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    setNewProfile();
+    setProfileData(inputFieldName.value, inputFieldMajor.value);
     popupController.closePopup(popupController.popupProfile);
 }
 
@@ -70,8 +86,4 @@ function fillProfileFieldsWhenOpen() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
-function setNewProfile() {
-    profileName.textContent = inputFieldName.value;
-    profileMajor.textContent = inputFieldMajor.value;
-}
 
