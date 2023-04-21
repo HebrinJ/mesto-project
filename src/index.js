@@ -4,6 +4,7 @@ import { validationController } from './components/validate.js'
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
 import './pages/index.css';
+import { reverse } from 'lodash';
 
 export const validationSetting = {
     formSelector: '.popup__container-form',
@@ -67,6 +68,8 @@ apiController.getCards()
     
 
 function setCards(cards) {
+    cards = cards.reverse();
+
     cards.forEach( function(card) {
         const newCard = cardController.createCard(card.link, card.name);
         addCard(newCard);
@@ -83,13 +86,24 @@ function addCard(card) {
 }
 
 function createUserCard(evt) {
-    evt.preventDefault();    
-
-    const newCard = cardController.createCard(inputFieldPict.value, inputFieldPlace.value);
-
-    addCard(newCard);
-    popupController.closePopup(popupController.popupAddCard);
-    cardForm.reset();
+    evt.preventDefault();
+    
+    apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
+        .then((res) => {
+            if(res.ok) {
+                return res.json()
+            } else {
+                return Promise.reject(`Ошибка: ${res.status}`);
+            }})
+        .then(function (card) {
+            const newCard = cardController.createCard(card.link, card.name);
+            addCard(newCard);
+        })
+        .catch()
+        .finally(() => {
+            popupController.closePopup(popupController.popupAddCard);
+            cardForm.reset();
+        })    
 }
 
 function profileSubmitHandler (evt) {
