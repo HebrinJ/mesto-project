@@ -37,10 +37,10 @@ addCardBtn.addEventListener('click', function() {
     validationController.setDefaultButtonsState();
 });
 
-initialCards.forEach( function(card) {
-    const newCard = cardController.createCard(card.link, card.name);
-    addCard(newCard);
-});
+// initialCards.forEach( function(card) {
+//     const newCard = cardController.createCard(card.link, card.name);
+//     addCard(newCard);
+// });
 
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState();
@@ -54,6 +54,24 @@ apiController.getProfileData()
         }})
     .then((data) => setProfileData(data.name, data.about))
     .catch(() => Promise.reject(`Ошибка: ${res.status}`));
+
+apiController.getCards()
+    .then((res) => {
+        if(res.ok) {
+            return res.json()
+        } else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }})
+    .then((cards) => setCards(cards))
+    .catch()
+    
+
+function setCards(cards) {
+    cards.forEach( function(card) {
+        const newCard = cardController.createCard(card.link, card.name);
+        addCard(newCard);
+    });
+}
 
 function setProfileData(name, major) {
     profileName.textContent = name;
@@ -77,7 +95,15 @@ function createUserCard(evt) {
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    setProfileData(inputFieldName.value, inputFieldMajor.value);
+    apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
+        .then((res) => {
+            if(res.ok) {
+                return res.json()
+            } else {
+                return Promise.reject(`Ошибка: ${res.status}`);
+            }})
+        .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value))
+    
     popupController.closePopup(popupController.popupProfile);
 }
 
