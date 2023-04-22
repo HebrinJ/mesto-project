@@ -1,0 +1,4 @@
+.gallery-card__like-container {
+    display: flex;
+    flex-direction: column;
+}
