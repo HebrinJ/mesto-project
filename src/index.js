@@ -73,12 +73,19 @@ function setCards(cards) {
     cards.forEach( function(card) {
         const newCard = cardController.createCard(card.link, card.name);
         addCard(newCard);
+        setLikeCountToCard(newCard, card.likes.length);
     });
 }
 
 function setProfileData(name, major) {
     profileName.textContent = name;
     profileMajor.textContent = major;
+}
+
+function setLikeCountToCard(card, count) {
+    const countElement = card.querySelector('.gallery-card__like-count');
+
+    countElement.textContent = count;
 }
 
 function addCard(card) {    
@@ -97,7 +104,7 @@ function createUserCard(evt) {
             }})
         .then(function (card) {
             const newCard = cardController.createCard(card.link, card.name);
-            addCard(newCard);
+            addCard(newCard);            
         })
         .catch()
         .finally(() => {

@@ -5,7 +5,7 @@ const cardPicturePopup = document.querySelector('#pict-popup');
 const fullSizePicture = document.querySelector('.popup__full-pict');
 
 export const cardController = {    
-    createCard,
+    createCard
 }
 
 function createCard(cardPic, cardName) {
