@@ -4,7 +4,7 @@ export const validationController = {
     enableValidation
 }
 
-import { validationSetting } from "../index";
+import { validationSetting } from '../index';
 
 const validationPattern = /[^a-zа-я\s\-]/i;
 

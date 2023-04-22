@@ -1,10 +1,8 @@
 import { cardController } from './components/card.js';
-import { initialCards } from './components/utils.js';
 import { validationController } from './components/validate.js'
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
 import './pages/index.css';
-import { reverse } from 'lodash';
 
 export const validationSetting = {
     formSelector: '.popup__container-form',
@@ -13,6 +11,8 @@ export const validationSetting = {
     errorContainerSelector: '.popup__container-input-error-message',
     inputErrorStyleSelector: 'popup__container-input_error'
 }
+
+export let profileId = '';
 
 const cardGallery = document.querySelector('.gallery');
 const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
@@ -38,11 +38,6 @@ addCardBtn.addEventListener('click', function() {
     validationController.setDefaultButtonsState();
 });
 
-// initialCards.forEach( function(card) {
-//     const newCard = cardController.createCard(card.link, card.name);
-//     addCard(newCard);
-// });
-
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState();
 
@@ -53,7 +48,7 @@ apiController.getProfileData()
         } else {
             return Promise.reject(`Ошибка: ${res.status}`);
         }})
-    .then((data) => setProfileData(data.name, data.about))
+    .then((data) => setProfileData(data.name, data.about, data._id))
     .catch(() => Promise.reject(`Ошибка: ${res.status}`));
 
 apiController.getCards()
@@ -71,15 +66,17 @@ function setCards(cards) {
     cards = cards.reverse();
 
     cards.forEach( function(card) {
-        const newCard = cardController.createCard(card.link, card.name);
+        // const newCard = cardController.createCard(card.link, card.name);
+        const newCard = cardController.createCard(card);
         addCard(newCard);
         setLikeCountToCard(newCard, card.likes.length);
     });
 }
 
-function setProfileData(name, major) {
+function setProfileData(name, major, id) {
     profileName.textContent = name;
     profileMajor.textContent = major;
+    profileId = id;
 }
 
 function setLikeCountToCard(card, count) {

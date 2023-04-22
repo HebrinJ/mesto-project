@@ -53,14 +53,13 @@ function sendNewCard(cardLink, cardName) {
     })
 }
 
-function getLikeCount(cardId) {
-    return fetch(`${PATH}${cohortId}/cards/likes/cardId`, { 
-        method: 'PUT',
-        headers: {
-            authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
-          }
-    })  
-}
+// function getLikeCount(cardId) {
+//     return fetch(`${PATH}${cohortId}/cards/likes/cardId`, {
+//         headers: {
+//             authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
+//           }
+//     })  
+// }
 
 // function setLike(cardId) {
 //     return fetch(`${PATH}${cohortId}/cards/likes/cardId`, { 

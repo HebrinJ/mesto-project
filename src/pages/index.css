@@ -28,6 +28,7 @@
 @import url(../blocks/gallery-card/__like/gallery-card__like.css);
 @import url(../blocks/gallery-card/__like/_active/gallery-card__like_active.css);
 @import url(../blocks/gallery-card/__delete/gallery-card__delete.css);
+@import url(../blocks/gallery-card/__delete/_restrict/gallery-card__delete_restrict.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__author/footer__author.css);
