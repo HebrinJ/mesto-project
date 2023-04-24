@@ -102,9 +102,8 @@ function toggleButtonState(button, state) {
     button.disabled = state;
 }
 
-function setDefaultButtonsState() {
-    const buttons = document.querySelectorAll(validationSetting.submitButtonSelector);
-    
+function setDefaultButtonsState(buttons) {
+       
     buttons.forEach((button) => {
         toggleButtonState(button, true);
     })

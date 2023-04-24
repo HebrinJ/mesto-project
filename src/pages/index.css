@@ -42,6 +42,7 @@
 @import url(../blocks/popup/__container-input/popup__container-input.css);
 @import url(../blocks/popup/__container-input/_error/popup__container-input_error.css);
 @import url(../blocks/popup/__container-label/popup__container-label.css);
+@import url(../blocks/popup/__container-label-delete/popup__container-label-delete.css);
 @import url(../blocks/popup/__container-save-btn/popup__container-save-btn.css);
 @import url(../blocks/popup/__pict-container/popup__pict-container.css);
 @import url(../blocks/popup/__full-pict/popup__full-pict.css);

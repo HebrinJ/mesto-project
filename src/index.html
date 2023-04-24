@@ -41,7 +41,7 @@
                         <input type="text" class="popup__container-input popup__container-input_field_major popup__input-profile" placeholder="Профессия" 
                         id="inputMajor" minlength="2" maxlength="200" required>
                         <span class="popup__container-input-error-message popup__container-input_field_major-error" id="inputMajor-error"></span>
-                        <button type="submit" class="popup__container-save-btn">Сохранить</button>
+                        <button type="submit" class="popup__container-save-btn default-disabled">Сохранить</button>
                     </form>
                 <button type="button" class="popup__container-close-btn"></button>
             </div>
@@ -56,8 +56,15 @@
                         <input type="url" class="popup__container-input popup__container-input_field_pict popup__input-card" placeholder="Ссылка на картинку" 
                         id="inputPict" required>
                         <span class="popup__container-input-error-message popup__container-input_field_pict-error" id="inputPict-error"></span>
-                        <button type="submit" class="popup__container-save-btn">Создать</button>
+                        <button type="submit" class="popup__container-save-btn default-disabled">Создать</button>
                     </form>
+                <button type="button" class="popup__container-close-btn"></button>
+            </div>
+        </div>
+        <div class="popup" id="card-delete">
+            <div class="popup__container">
+                <h2 class="popup__container-label popup__container-label-delete">Вы уверены?</h2>
+                <button type="submit" class="popup__container-save-btn">Да</button>
                 <button type="button" class="popup__container-close-btn"></button>
             </div>
         </div>

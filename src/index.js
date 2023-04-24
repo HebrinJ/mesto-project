@@ -23,6 +23,7 @@ const inputFieldName = document.querySelector('.popup__container-input_field_nam
 const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
 const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
+const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
 
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', profileSubmitHandler);
@@ -30,16 +31,16 @@ profileForm.addEventListener('submit', profileSubmitHandler);
 editBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupProfile);
     fillProfileFieldsWhenOpen();
-    validationController.setDefaultButtonsState();
+    validationController.setDefaultButtonsState(disabledButtons);
 });
 
 addCardBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupAddCard);
-    validationController.setDefaultButtonsState();
+    validationController.setDefaultButtonsState(disabledButtons);
 });
 
 validationController.enableValidation(validationSetting);
-validationController.setDefaultButtonsState();
+validationController.setDefaultButtonsState(disabledButtons);
 
 apiController.getProfileData()
     .then((res) => {
@@ -66,7 +67,6 @@ function setCards(cards) {
     cards = cards.reverse();
 
     cards.forEach( function(card) {
-        // const newCard = cardController.createCard(card.link, card.name);
         const newCard = cardController.createCard(card);
         addCard(newCard);
         setLikeCountToCard(newCard, card.likes.length);

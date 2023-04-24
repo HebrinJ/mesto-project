@@ -6,7 +6,8 @@ export const apiController = {
     getProfileData,
     getCards,
     editProfileData,
-    sendNewCard
+    sendNewCard,
+    deleteCard
 }
 
 function getProfileData() {
@@ -50,6 +51,15 @@ function sendNewCard(cardLink, cardName) {
           name: cardName,
           link: cardLink
         })
+    })
+}
+
+function deleteCard(cardId) {
+    return fetch(`${PATH}${cohortId}/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
+              }
     })
 }
 

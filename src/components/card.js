@@ -1,5 +1,6 @@
 import { popupController } from './modal.js';
 import { profileId } from '../index';
+import { apiController } from './api.js';
 
 const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
@@ -29,19 +30,25 @@ function createCard(cardData) {
     if(availableToDelete(cardData)) {
         const delBtn = newCard.querySelector('.gallery-card__delete');
         toggleDeleteButton(delBtn);
-
-        delBtn.addEventListener('click', function (event) {        
-            let element = event.target;
-    
-            while (!element.classList.contains('gallery-card-list-element')) {
-                element = element.parentElement;
-            }
-            
-            element.remove();
+        
+        delBtn.addEventListener('click', function () {            
+            deleteCard(cardData, newCard);
         });
     }    
     
     return newCard;
+}
+
+function deleteCard(cardData, card) {
+    console.log(cardData);
+    apiController.deleteCard(cardData._id)
+        .then((res) => {
+            if(res.ok) {
+                card.remove();
+            } else {
+                return Promise.reject(`Ошибка: ${res.status}`);
+            }
+        })
 }
 
 function availableToDelete(cardData) {    
