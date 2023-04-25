@@ -19,6 +19,8 @@ const inputFieldPlace = document.querySelector('.popup__container-input_field_pl
 const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
 const editBtn = document.querySelector('.profile__edit-button');
 const addCardBtn = document.querySelector('.profile__add-button');
+const editAvatarButton = document.querySelector('.profile__overlay');
+const editAvatarField = document.querySelector('.popup__container-input_field_avatar');
 const inputFieldName = document.querySelector('.popup__container-input_field_name');
 const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
 const profileName = document.querySelector('.profile__name');
@@ -27,17 +29,22 @@ const disabledButtons = document.querySelectorAll(validationSetting.submitButton
 
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', profileSubmitHandler);
+avatarForm.addEventListener('submit', avatarSubmitHandler);
 
 editBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupProfile);
     fillProfileFieldsWhenOpen();
-    validationController.setDefaultButtonsState(disabledButtons);
+    // validationController.setDefaultButtonsState(disabledButtons);
 });
 
 addCardBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupAddCard);
-    validationController.setDefaultButtonsState(disabledButtons);
+    // validationController.setDefaultButtonsState(disabledButtons);
 });
+
+editAvatarButton.addEventListener('click', function() {
+    popupController.openPopup(popupController.popupAvatar);
+})
 
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState(disabledButtons);
@@ -49,7 +56,7 @@ apiController.getProfileData()
         } else {
             return Promise.reject(`Ошибка: ${res.status}`);
         }})
-    .then((data) => setProfileData(data.name, data.about, data._id))
+    .then((data) => setProfileData(data.name, data.about, data._id, data.avatar))
     .catch(() => Promise.reject(`Ошибка: ${res.status}`));
 
 apiController.getCards()
@@ -77,10 +84,11 @@ function setCards(cards) {
     });
 }
 
-function setProfileData(name, major, id) {
+function setProfileData(name, major, id, avatarLink) {
+    profileId = id;
     profileName.textContent = name;
     profileMajor.textContent = major;
-    profileId = id;
+    setAvatar(avatarLink);
 }
 
 function addCard(card) {    
@@ -119,8 +127,33 @@ function profileSubmitHandler (evt) {
                 return Promise.reject(`Ошибка: ${res.status}`);
             }})
         .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value))
-    
-    popupController.closePopup(popupController.popupProfile);
+        .finally(() => {
+            popupController.closePopup(popupController.popupProfile);
+        })    
+}
+
+function avatarSubmitHandler (evt) {
+    evt.preventDefault(); 
+
+    const avatarLink = editAvatarField.value;    
+    apiController.changeAvatar(avatarLink)
+        .then((res) => {
+            if(res.ok) {
+                setAvatar(avatarLink)
+            } else {
+                return Promise.reject(`Ошибка: ${res.status}`);
+            }
+        })
+        .catch()
+        .finally(() => {
+            popupController.closePopup(popupController.popupAvatar);
+        })
+}
+
+function setAvatar(link) {
+    const avatar = document.querySelector('.profile__pict');
+
+    avatar.setAttribute('src', link);
 }
 
 function fillProfileFieldsWhenOpen() {

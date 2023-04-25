@@ -11,7 +11,8 @@ export const apiController = {
     deleteCard,
     setLike,
     removeLike,
-    getCardData
+    getCardData,
+    changeAvatar
 }
 
 function getProfileData() {
@@ -101,4 +102,17 @@ function getCardData(cardId) {
         }
     })
     .catch()
+}
+
+function changeAvatar(avatarLink) {    
+    return fetch(`${PATH}${cohortId}/users/me/avatar`, { 
+        method: 'PATCH',
+        headers: {
+            authorization: auth,
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({
+            avatar: avatarLink
+          })
+    }) 
 }
