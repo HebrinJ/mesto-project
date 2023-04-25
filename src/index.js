@@ -26,6 +26,8 @@ const inputFieldMajor = document.querySelector('.popup__container-input_field_ma
 const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
 const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
+const loadingText = 'Сохранение...';
+let tempLoadingText = '';
 
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', profileSubmitHandler);
@@ -57,7 +59,7 @@ apiController.getProfileData()
             return Promise.reject(`Ошибка: ${res.status}`);
         }})
     .then((data) => setProfileData(data.name, data.about, data._id, data.avatar))
-    .catch(() => Promise.reject(`Ошибка: ${res.status}`));
+    .catch((err) => console.log(err));
 
 apiController.getCards()
     .then((res) => {
@@ -67,7 +69,7 @@ apiController.getCards()
             return Promise.reject(`Ошибка: ${res.status}`);
         }})
     .then((cards) => setCards(cards))
-    .catch()
+    .catch((err) => console.log(err))
     
 
 function setCards(cards) {
@@ -97,7 +99,8 @@ function addCard(card) {
 
 function createUserCard(evt) {
     evt.preventDefault();
-    // setLoadingStateText(evt.target, 'Сохранение...');
+
+    setLoadingStateText(evt.target, loadingText, evt.target.textContent);
     apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then((res) => {
             if(res.ok) {
@@ -109,16 +112,18 @@ function createUserCard(evt) {
             const newCard = cardController.createCard(card);
             addCard(newCard);            
         })
-        .catch()
+        .catch((err) => console.log(err))
         .finally(() => {
             popupController.closePopup(popupController.popupAddCard);
             cardForm.reset();
+            removeLoadingText(evt.target);
         })    
 }
 
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
+    setLoadingStateText(evt.target, loadingText, evt.target.textContent);
     apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
         .then((res) => {
             if(res.ok) {
@@ -127,8 +132,10 @@ function profileSubmitHandler (evt) {
                 return Promise.reject(`Ошибка: ${res.status}`);
             }})
         .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value))
+        .catch((err) => console.log(err))
         .finally(() => {
             popupController.closePopup(popupController.popupProfile);
+            removeLoadingText(evt.target);
         })    
 }
 
@@ -144,7 +151,7 @@ function avatarSubmitHandler (evt) {
                 return Promise.reject(`Ошибка: ${res.status}`);
             }
         })
-        .catch()
+        .catch((err) => console.log(err))
         .finally(() => {
             popupController.closePopup(popupController.popupAvatar);
         })
@@ -161,6 +168,11 @@ function fillProfileFieldsWhenOpen() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
-function setLoadingStateText(element, text) {
-    element.textContent = text;
+function setLoadingStateText(element, newText, oldText) {
+    tempLoadingText = oldText;
+    element.textContent = newText;
+}
+
+function removeLoadingText(element) {
+    element.textContent = oldText;
 }

@@ -99,6 +99,7 @@ function likeHandler(card, cardId) {
                 renderLike(card, true);
                 setLikeCountToCard(card, newCardData.likes.length);            
             })
+            .catch((err) => console.log(err))
         } else {
             //Свой лайк есть, удаляем его
             apiController.removeLike(cardId)
@@ -109,10 +110,12 @@ function likeHandler(card, cardId) {
                 else {
                     return Promise.reject(`Ошибка: ${res.status}`);
                 }
-            }).then ((newCardData) => {
+            })
+            .then ((newCardData) => {
                 setLikeCountToCard(card, newCardData.likes.length);
                 renderLike(card, false);
             })
+            .catch((err) => console.log(err))
         }        
     })    
 }

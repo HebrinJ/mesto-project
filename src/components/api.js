@@ -101,7 +101,7 @@ function getCardData(cardId) {
             }
         }
     })
-    .catch()
+    .catch((err) => console.log(err))
 }
 
 function changeAvatar(avatarLink) {    
