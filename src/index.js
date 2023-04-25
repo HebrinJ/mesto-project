@@ -97,7 +97,7 @@ function addCard(card) {
 
 function createUserCard(evt) {
     evt.preventDefault();
-    
+    // setLoadingStateText(evt.target, 'Сохранение...');
     apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then((res) => {
             if(res.ok) {
@@ -106,7 +106,7 @@ function createUserCard(evt) {
                 return Promise.reject(`Ошибка: ${res.status}`);
             }})
         .then(function (card) {
-            const newCard = cardController.createCard(card.link, card.name);
+            const newCard = cardController.createCard(card);
             addCard(newCard);            
         })
         .catch()
@@ -159,4 +159,8 @@ function setAvatar(link) {
 function fillProfileFieldsWhenOpen() {
     inputFieldName.value = profileName.textContent;
     inputFieldMajor.value = profileMajor.textContent;
+}
+
+function setLoadingStateText(element, text) {
+    element.textContent = text;
 }

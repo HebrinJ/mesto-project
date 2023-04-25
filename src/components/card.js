@@ -48,7 +48,7 @@ function setCardDataToTemplate(cardData) {
 }
 
 function deleteCard(cardData, card) {
-    console.log(cardData);
+    
     apiController.deleteCard(cardData._id)
         .then((res) => {
             if(res.ok) {
@@ -59,7 +59,8 @@ function deleteCard(cardData, card) {
         })
 }
 
-function availableToDelete(cardData) {    
+function availableToDelete(cardData) { 
+      
     if(cardData.owner._id === profileId) {        
         return true;
     }
