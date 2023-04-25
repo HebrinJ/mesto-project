@@ -59,8 +59,7 @@ function deleteCard(cardData, card) {
         })
 }
 
-function availableToDelete(cardData) { 
-      
+function availableToDelete(cardData) {         
     if(cardData.owner._id === profileId) {        
         return true;
     }

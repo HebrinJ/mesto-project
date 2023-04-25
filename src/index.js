@@ -27,7 +27,8 @@ const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
 const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
 const loadingText = 'Сохранение...';
-let tempLoadingText = '';
+let avatarLink = '';
+let cachedLoadingText = '';
 
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', profileSubmitHandler);
@@ -58,7 +59,10 @@ apiController.getProfileData()
         } else {
             return Promise.reject(`Ошибка: ${res.status}`);
         }})
-    .then((data) => setProfileData(data.name, data.about, data._id, data.avatar))
+    .then((data) => {
+        setProfileData(data.name, data.about, data._id, data.avatar)
+        avatarLink = data.avatar;        
+    })
     .catch((err) => console.log(err));
 
 apiController.getCards()
@@ -90,6 +94,7 @@ function setProfileData(name, major, id, avatarLink) {
     profileId = id;
     profileName.textContent = name;
     profileMajor.textContent = major;
+    
     setAvatar(avatarLink);
 }
 
@@ -100,7 +105,9 @@ function addCard(card) {
 function createUserCard(evt) {
     evt.preventDefault();
 
-    setLoadingStateText(evt.target, loadingText, evt.target.textContent);
+    const cachedButton = evt.target.querySelector(validationSetting.submitButtonSelector);
+    
+    setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
     apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then((res) => {
             if(res.ok) {
@@ -116,14 +123,16 @@ function createUserCard(evt) {
         .finally(() => {
             popupController.closePopup(popupController.popupAddCard);
             cardForm.reset();
-            removeLoadingText(evt.target);
+            removeLoadingText(cachedButton);
         })    
 }
 
 function profileSubmitHandler (evt) {
     evt.preventDefault(); 
 
-    setLoadingStateText(evt.target, loadingText, evt.target.textContent);
+    const cachedButton = evt.target.querySelector(validationSetting.submitButtonSelector);
+
+    setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
     apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
         .then((res) => {
             if(res.ok) {
@@ -131,11 +140,11 @@ function profileSubmitHandler (evt) {
             } else {
                 return Promise.reject(`Ошибка: ${res.status}`);
             }})
-        .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value))
+        .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, avatarLink))
         .catch((err) => console.log(err))
         .finally(() => {
             popupController.closePopup(popupController.popupProfile);
-            removeLoadingText(evt.target);
+            removeLoadingText(cachedButton);
         })    
 }
 
@@ -159,7 +168,7 @@ function avatarSubmitHandler (evt) {
 
 function setAvatar(link) {
     const avatar = document.querySelector('.profile__pict');
-
+   
     avatar.setAttribute('src', link);
 }
 
@@ -169,10 +178,10 @@ function fillProfileFieldsWhenOpen() {
 }
 
 function setLoadingStateText(element, newText, oldText) {
-    tempLoadingText = oldText;
+    cachedLoadingText = oldText;
     element.textContent = newText;
 }
 
 function removeLoadingText(element) {
-    element.textContent = oldText;
+    element.textContent = cachedLoadingText;
 }
