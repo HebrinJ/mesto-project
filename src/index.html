@@ -13,7 +13,12 @@
         </header>
         <main class="main">       
             <section class="profile">
-                <img class="profile__pict" src="<%=require('./image/custo.jpg')%>" alt="фото профиля пользователя">
+                <div class="profile__avatar-container">
+                    <img class="profile__pict" src="<%=require('./image/custo.jpg')%>" alt="фото профиля пользователя">
+                    <div class="profile__overlay">
+                        <img class="profile__edit-avatar" src="<%=require('./image/edit_pict.svg')%>" alt="аватар">
+                    </div>
+                </div>
                 <div class="profile__text-container">
                     <div class="profile__name-container">
                         <h2 class="profile__name">Жак-Ив Кусто</h2>
@@ -56,6 +61,18 @@
                         <input type="url" class="popup__container-input popup__container-input_field_pict popup__input-card" placeholder="Ссылка на картинку" 
                         id="inputPict" required>
                         <span class="popup__container-input-error-message popup__container-input_field_pict-error" id="inputPict-error"></span>
+                        <button type="submit" class="popup__container-save-btn default-disabled">Создать</button>
+                    </form>
+                <button type="button" class="popup__container-close-btn"></button>
+            </div>
+        </div>
+        <div class="popup popup_opened" id="change-avatar">
+            <div class="popup__container">
+                <h2 class="popup__container-label">Обновить аватар</h2>
+                    <form class="popup__container-form" name="changeAvatar" id="changeAvatar" novalidate>
+                        <input type="url" class="popup__container-input popup__container-input_field_avatar" placeholder="Ссылка на картинку" 
+                        id="inputPict" required>
+                        <span class="popup__container-input-error-message popup__container-input_field_avatar-error" id="inputAvatar-error"></span>                       
                         <button type="submit" class="popup__container-save-btn default-disabled">Создать</button>
                     </form>
                 <button type="button" class="popup__container-close-btn"></button>

@@ -127,5 +127,3 @@ function fillProfileFieldsWhenOpen() {
     inputFieldName.value = profileName.textContent;
     inputFieldMajor.value = profileMajor.textContent;
 }
-
-

@@ -1,0 +1,18 @@
+.profile__overlay {
+    display: flex;
+    justify-content: center;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.profile__overlay:hover {
+    visibility: visible;
+    opacity: 0.8;
+}
