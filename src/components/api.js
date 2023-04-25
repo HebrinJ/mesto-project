@@ -7,7 +7,10 @@ export const apiController = {
     getCards,
     editProfileData,
     sendNewCard,
-    deleteCard
+    deleteCard,
+    setLike,
+    removeLike,
+    getCardData
 }
 
 function getProfileData() {
@@ -63,6 +66,7 @@ function deleteCard(cardId) {
     })
 }
 
+
 // function getLikeCount(cardId) {
 //     return fetch(`${PATH}${cohortId}/cards/likes/cardId`, {
 //         headers: {
@@ -71,11 +75,38 @@ function deleteCard(cardId) {
 //     })  
 // }
 
-// function setLike(cardId) {
-//     return fetch(`${PATH}${cohortId}/cards/likes/cardId`, { 
-//         method: 'PUT',
-//         headers: {
-//             authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
-//           }
-//     })  
-// }
+function setLike(cardId) {
+    return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+        method: 'PUT',
+        headers: {
+            authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
+          }
+    })  
+}
+
+function removeLike(cardId) {
+    return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+        method: 'DELETE',
+        headers: {
+            authorization: '020effc4-1211-4deb-93d9-11a33dcdf1a5'
+          }
+    })  
+}
+
+function getCardData(cardId) {    
+    return getCards()
+    .then((res) => {
+        if(res.ok) {
+            return res.json()
+        } else {            
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }})
+    .then((cards) => {
+        for (let i = 0; i < cards.length; i++) {
+            if(cards[i]._id === cardId) {                
+                return cards[i];
+            }
+        }
+    })
+    .catch()
+}

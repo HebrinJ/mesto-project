@@ -66,10 +66,14 @@ apiController.getCards()
 function setCards(cards) {
     cards = cards.reverse();
 
-    cards.forEach( function(card) {
-        const newCard = cardController.createCard(card);
+    cards.forEach( function(cardData) {
+        const newCard = cardController.createCard(cardData);
         addCard(newCard);
-        setLikeCountToCard(newCard, card.likes.length);
+        cardController.setLikeCountToCard(newCard, cardData.likes.length);
+        
+        if(cardController.isItLikeOwner(cardData)) {
+            cardController.renderLike(newCard, true)
+        }
     });
 }
 
@@ -79,11 +83,13 @@ function setProfileData(name, major, id) {
     profileId = id;
 }
 
-function setLikeCountToCard(card, count) {
-    const countElement = card.querySelector('.gallery-card__like-count');
+// function setLikeCountToCard(card, count) {
+//     const countElement = card.querySelector('.gallery-card__like-count');
 
-    countElement.textContent = count;
-}
+//     countElement.textContent = count;
+// }
+
+
 
 function addCard(card) {    
     cardGallery.prepend(card);
