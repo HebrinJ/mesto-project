@@ -83,14 +83,6 @@ function setProfileData(name, major, id) {
     profileId = id;
 }
 
-// function setLikeCountToCard(card, count) {
-//     const countElement = card.querySelector('.gallery-card__like-count');
-
-//     countElement.textContent = count;
-// }
-
-
-
 function addCard(card) {    
     cardGallery.prepend(card);
 }

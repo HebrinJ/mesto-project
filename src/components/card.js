@@ -5,6 +5,8 @@ import { apiController } from './api.js';
 const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
 const fullSizePicture = document.querySelector('.popup__full-pict');
+const likeActiveSelector = 'gallery-card__like_active';
+const likeSelector = 'gallery-card__like';
 
 export const cardController = {    
     createCard,
@@ -13,23 +15,11 @@ export const cardController = {
     isItLikeOwner
 }
 
-function createCard(cardData) {
-    const cardId = cardData._id;
-    const cardOwner = cardData.owner._id;
+function createCard(cardData) {        
+    const newCard = setCardDataToTemplate(cardData);    
+    const likeBtn = newCard.querySelector(`.${likeSelector}`);
     
-    const newCard = templateCard.querySelector('.gallery-card-list-element').cloneNode(true);    
-    const newCardPic = newCard.querySelector('.gallery-card__pict');
-
-    newCardPic.src = cardData.link;
-    newCardPic.alt = `Фотография места: ${cardData.name}`;
-    newCard.querySelector('.gallery-card__label-text').textContent = cardData.name;
-    
-    addListenerToCard(newCardPic);
-    
-    const likeBtn = newCard.querySelector('.gallery-card__like');
-    
-    likeBtn.addEventListener('click', function () {
-        // toggleLike(likeBtn);
+    likeBtn.addEventListener('click', function () {        
         likeHandler(newCard, cardData._id);
     });
 
@@ -42,6 +32,18 @@ function createCard(cardData) {
         });
     }    
     
+    return newCard;
+}
+
+function setCardDataToTemplate(cardData) {
+    const newCard = templateCard.querySelector('.gallery-card-list-element').cloneNode(true);    
+    const newCardPic = newCard.querySelector('.gallery-card__pict');
+
+    newCardPic.src = cardData.link;
+    newCardPic.alt = `Фотография места: ${cardData.name}`;
+    newCard.querySelector('.gallery-card__label-text').textContent = cardData.name;
+    addListenerToCard(newCardPic);
+
     return newCard;
 }
 
@@ -73,10 +75,6 @@ function addListenerToCard(card) {
     });
 }
 
-function toggleLike(card) {
-    card.classList.toggle('gallery-card__like_active');
-}
-
 function toggleDeleteButton(element) {
     element.classList.remove('gallery-card__delete_restrict');
 }
@@ -85,10 +83,9 @@ function likeHandler(card, cardId) {
     
     apiController.getCardData(cardId)
     
-    .then ((newCardData) => {    
-        console.log(newCardData)           
+    .then ((newCardData) => {
         if(isItLikeOwner(newCardData) === false) {
-            console.log('Своего лайка нет, добавляем');
+            // Своего лайка нет - добавляем
             apiController.setLike(cardId)
             .then((res) => {
                 if(res.ok) {
@@ -97,14 +94,12 @@ function likeHandler(card, cardId) {
                     return Promise.reject(`Ошибка: ${res.status}`);
                 }
             })
-            .then((newCardData) => {                             
-                // const likeButton = card.querySelector('.gallery-card__like')
-                // likeButton.classList.add('gallery-card__like_active');
+            .then((newCardData) => {
                 renderLike(card, true);
                 setLikeCountToCard(card, newCardData.likes.length);            
             })
         } else {
-            console.log('Свой лайк есть, удаляем');
+            //Свой лайк есть, удаляем его
             apiController.removeLike(cardId)
             .then((res) => {
                 if(res.ok) {
@@ -115,15 +110,13 @@ function likeHandler(card, cardId) {
                 }
             }).then ((newCardData) => {
                 setLikeCountToCard(card, newCardData.likes.length);
-                const likeButton = card.querySelector('.gallery-card__like')
-                likeButton.classList.remove('gallery-card__like_active');
+                renderLike(card, false);
             })
         }        
     })    
 }
 
 function isItLikeOwner(cardData) {    
-
     const likes = cardData.likes;
 
     if(cardData.likes.length === 0) {
@@ -141,28 +134,15 @@ function isItLikeOwner(cardData) {
 
 function setLikeCountToCard(card, count) {
     const countElement = card.querySelector('.gallery-card__like-count');
-console.log('Устанавливаем количество лайков '+count);
     countElement.textContent = count;
 }
 
 function renderLike (card, state) {
-    const like = card.querySelector('.gallery-card__like');    
+    const like = card.querySelector(`.${likeSelector}`);    
 
     if(state) {
-        like.classList.add('gallery-card__like_active');
+        like.classList.add(likeActiveSelector);
     } else {
-        like.classList.remove('gallery-card__like_active');
+        like.classList.remove(likeActiveSelector);
     }
 }
-
-
-// function setLike(card) {
-//     apiController.setLike(card)
-//     .then((res) => {
-//         if(res.ok) {
-//             card.classList.add('gallery-card__like_active');
-
-//         }
-//     })
-// }
-
