@@ -1,5 +1,5 @@
 import { cardController } from './components/card.js';
-import { validationController } from './components/validate.js'
+import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
 import './pages/index.css';
@@ -37,12 +37,10 @@ avatarForm.addEventListener('submit', avatarSubmitHandler);
 editBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupProfile);
     fillProfileFieldsWhenOpen();
-    // validationController.setDefaultButtonsState(disabledButtons);
 });
 
 addCardBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupAddCard);
-    // validationController.setDefaultButtonsState(disabledButtons);
 });
 
 editAvatarButton.addEventListener('click', function() {
