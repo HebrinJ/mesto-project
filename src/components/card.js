@@ -47,16 +47,17 @@ function setCardDataToTemplate(cardData) {
     return newCard;
 }
 
-function deleteCard(cardData, card) {
-    
+function deleteCard(cardData, card) {    
     apiController.deleteCard(cardData._id)
-        .then((res) => {
-            if(res.ok) {
-                card.remove();
-            } else {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-        })
+        // .then((res) => {
+        //     if(res.ok) {
+        //         card.remove();
+        //     } else {
+        //         return Promise.reject(`Ошибка: ${res.status}`);
+        //     }
+        // })
+        .then(() => card.remove())
+        .catch((err) => console.log(err));
 }
 
 function availableToDelete(cardData) {         
@@ -79,21 +80,32 @@ function toggleDeleteButton(element) {
     element.classList.remove('gallery-card__delete_restrict');
 }
 
+function getCardData(cardId) {
+    return apiController.getCards()
+    .then((cards) => {
+        for (let i = 0; i < cards.length; i++) {
+            if(cards[i]._id === cardId) {                
+                return cards[i];
+            }
+        }
+    })
+    .catch((err) => console.log(err));
+}
+
 function likeHandler(card, cardId) {
     
-    apiController.getCardData(cardId)
-    
+    getCardData(cardId)   
     .then ((newCardData) => {
         if(isItLikeOwner(newCardData) === false) {
             // Своего лайка нет - добавляем
             apiController.setLike(cardId)
-            .then((res) => {
-                if(res.ok) {
-                    return res.json()
-                } else {
-                    return Promise.reject(`Ошибка: ${res.status}`);
-                }
-            })
+            // .then((res) => {
+            //     if(res.ok) {
+            //         return res.json()
+            //     } else {
+            //         return Promise.reject(`Ошибка: ${res.status}`);
+            //     }
+            // })
             .then((newCardData) => {
                 renderLike(card, true);
                 setLikeCountToCard(card, newCardData.likes.length);            
@@ -102,14 +114,14 @@ function likeHandler(card, cardId) {
         } else {
             //Свой лайк есть, удаляем его
             apiController.removeLike(cardId)
-            .then((res) => {
-                if(res.ok) {
-                    return res.json()
-                }
-                else {
-                    return Promise.reject(`Ошибка: ${res.status}`);
-                }
-            })
+            // .then((res) => {
+            //     if(res.ok) {
+            //         return res.json()
+            //     }
+            //     else {
+            //         return Promise.reject(`Ошибка: ${res.status}`);
+            //     }
+            // })
             .then ((newCardData) => {
                 setLikeCountToCard(card, newCardData.likes.length);
                 renderLike(card, false);

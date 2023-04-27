@@ -12,10 +12,10 @@ export const popupController = {
 }
 
 popupCloseBtns.forEach(function (btn) {    
-    btn.addEventListener('mousedown', clickCloseHandler);    
+    btn.addEventListener('mousedown', handleClickClose);    
 });
 
-const clickCloseHandler = function (event) {
+const handleClickClose = function (event) {
     const popup = document.querySelector('.popup_opened');   
     
     const isItPopup = event.target.classList.contains('popup');
@@ -28,7 +28,7 @@ const clickCloseHandler = function (event) {
     closePopup(popup);
 }
 
-const keyCloseHandler = function (event) {
+const handleKeyClose = function (event) {
     const popup = document.querySelector('.popup_opened');
 
     if(event.key === 'Escape') {
@@ -38,12 +38,12 @@ const keyCloseHandler = function (event) {
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');    
-    popup.addEventListener('mousedown', clickCloseHandler);
-    window.addEventListener('keydown', keyCloseHandler);
+    popup.addEventListener('mousedown', handleClickClose);
+    window.addEventListener('keydown', handleKeyClose);
 }
 
 function closePopup(popup) {    
-    popup.removeEventListener('mousedown', clickCloseHandler);
-    window.removeEventListener('keydown', keyCloseHandler);
+    popup.removeEventListener('mousedown', handleClickClose);
+    window.removeEventListener('keydown', handleKeyClose);
     popup.classList.remove('popup_opened'); 
 }

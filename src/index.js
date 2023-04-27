@@ -31,8 +31,8 @@ let avatarLink = '';
 let cachedLoadingText = '';
 
 cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', profileSubmitHandler);
-avatarForm.addEventListener('submit', avatarSubmitHandler);
+profileForm.addEventListener('submit', handleProfileSubmit);
+avatarForm.addEventListener('submit', handleAvatarSubmit);
 
 editBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupProfile);
@@ -51,12 +51,12 @@ validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState(disabledButtons);
 
 apiController.getProfileData()
-    .then((res) => {
-        if(res.ok) {
-            return res.json()
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }})
+    // .then((res) => {
+    //     if(res.ok) {
+    //         return res.json()
+    //     } else {
+    //         return Promise.reject(`Ошибка: ${res.status}`);
+    //     }})
     .then((data) => {
         setProfileData(data.name, data.about, data._id, data.avatar)
         avatarLink = data.avatar;        
@@ -64,12 +64,12 @@ apiController.getProfileData()
     .catch((err) => console.log(err));
 
 apiController.getCards()
-    .then((res) => {
-        if(res.ok) {
-            return res.json()
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }})
+    // .then((res) => {
+    //     if(res.ok) {
+    //         return res.json()
+    //     } else {
+    //         return Promise.reject(`Ошибка: ${res.status}`);
+    //     }})
     .then((cards) => setCards(cards))
     .catch((err) => console.log(err))
     
@@ -107,12 +107,12 @@ function createUserCard(evt) {
     
     setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
     apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        .then((res) => {
-            if(res.ok) {
-                return res.json()
-            } else {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }})
+        // .then((res) => {
+        //     if(res.ok) {
+        //         return res.json()
+        //     } else {
+        //         return Promise.reject(`Ошибка: ${res.status}`);
+        //     }})
         .then(function (card) {
             const newCard = cardController.createCard(card);
             addCard(newCard);            
@@ -125,19 +125,19 @@ function createUserCard(evt) {
         })    
 }
 
-function profileSubmitHandler (evt) {
+function handleProfileSubmit (evt) {
     evt.preventDefault(); 
 
     const cachedButton = evt.target.querySelector(validationSetting.submitButtonSelector);
 
     setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
     apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
-        .then((res) => {
-            if(res.ok) {
-                return res.json()
-            } else {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }})
+        // .then((res) => {
+        //     if(res.ok) {
+        //         return res.json()
+        //     } else {
+        //         return Promise.reject(`Ошибка: ${res.status}`);
+        //     }})
         .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, avatarLink))
         .catch((err) => console.log(err))
         .finally(() => {
@@ -146,18 +146,18 @@ function profileSubmitHandler (evt) {
         })    
 }
 
-function avatarSubmitHandler (evt) {
+function handleAvatarSubmit (evt) {
     evt.preventDefault(); 
 
     const avatarLink = editAvatarField.value;    
     apiController.changeAvatar(avatarLink)
-        .then((res) => {
-            if(res.ok) {
-                setAvatar(avatarLink)
-            } else {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-        })
+        // .then((res) => {
+        //     if(res.ok) {
+        //         setAvatar(avatarLink)
+        //     } else {
+        //         return Promise.reject(`Ошибка: ${res.status}`);
+        //     }
+        // })
         .catch((err) => console.log(err))
         .finally(() => {
             popupController.closePopup(popupController.popupAvatar);

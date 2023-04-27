@@ -11,20 +11,32 @@ export const apiController = {
     deleteCard,
     setLike,
     removeLike,
-    getCardData,
     changeAvatar
 }
 
+
+
+function request(linkEndpoint, options) {
+    return fetch(`${PATH}${cohortId}`+linkEndpoint, options).then(checkResponse);
+}
+
+function checkResponse(result) {
+    if (result.ok) {
+        return result.json();
+    }
+    return Promise.reject(`Ошибка ${result.status}`);
+}
+
 function getProfileData() {
-    return fetch(`${PATH}${cohortId}/users/me`, { 
+    return request(`/users/me`, { 
         headers: {
             authorization: auth
-          }
+        }
     })    
 }
 
 function getCards() {
-    return fetch(`${PATH}${cohortId}/cards`, {
+    return request(`/cards`, {
         headers: {
             authorization: auth
           }
@@ -32,7 +44,7 @@ function getCards() {
 }
 
 function editProfileData(newName, newMajor) {
-    return fetch(`${PATH}${cohortId}/users/me`, {
+    return request(`/users/me`, {
         method: 'PATCH',
         headers: {
             authorization: auth,
@@ -46,7 +58,7 @@ function editProfileData(newName, newMajor) {
 }
 
 function sendNewCard(cardLink, cardName) {
-    return fetch(`${PATH}${cohortId}/cards`, {
+    return request(`/cards`, {
         method: 'POST',
         headers: {
           authorization: auth,
@@ -60,7 +72,7 @@ function sendNewCard(cardLink, cardName) {
 }
 
 function deleteCard(cardId) {
-    return fetch(`${PATH}${cohortId}/cards/${cardId}`, {
+    return request(`/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
                 authorization: auth
@@ -69,7 +81,7 @@ function deleteCard(cardId) {
 }
 
 function setLike(cardId) {
-    return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+    return request(`/cards/likes/${cardId}`, { 
         method: 'PUT',
         headers: {
             authorization: auth
@@ -78,7 +90,7 @@ function setLike(cardId) {
 }
 
 function removeLike(cardId) {
-    return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+    return request(`/cards/likes/${cardId}`, { 
         method: 'DELETE',
         headers: {
             authorization: auth
@@ -86,26 +98,8 @@ function removeLike(cardId) {
     })  
 }
 
-function getCardData(cardId) {    
-    return getCards()
-    .then((res) => {
-        if(res.ok) {
-            return res.json()
-        } else {            
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }})
-    .then((cards) => {
-        for (let i = 0; i < cards.length; i++) {
-            if(cards[i]._id === cardId) {                
-                return cards[i];
-            }
-        }
-    })
-    .catch((err) => console.log(err))
-}
-
 function changeAvatar(avatarLink) {    
-    return fetch(`${PATH}${cohortId}/users/me/avatar`, { 
+    return request(`/users/me/avatar`, { 
         method: 'PATCH',
         headers: {
             authorization: auth,
@@ -116,3 +110,105 @@ function changeAvatar(avatarLink) {
           })
     }) 
 }
+
+// function getProfileData() {
+//     return fetch(`${PATH}${cohortId}/users/me`, { 
+//         headers: {
+//             authorization: auth
+//           }
+//     })    
+// }
+
+// function getCards() {
+//     return fetch(`${PATH}${cohortId}/cards`, {
+//         headers: {
+//             authorization: auth
+//           }
+//     })
+// }
+
+// function editProfileData(newName, newMajor) {
+//     return fetch(`${PATH}${cohortId}/users/me`, {
+//         method: 'PATCH',
+//         headers: {
+//             authorization: auth,
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             name: newName,
+//             about: newMajor
+//         })
+//     });
+// }
+
+// function sendNewCard(cardLink, cardName) {
+//     return fetch(`${PATH}${cohortId}/cards`, {
+//         method: 'POST',
+//         headers: {
+//           authorization: auth,
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//           name: cardName,
+//           link: cardLink
+//         })
+//     })
+// }
+
+// function deleteCard(cardId) {
+//     return fetch(`${PATH}${cohortId}/cards/${cardId}`, {
+//             method: 'DELETE',
+//             headers: {
+//                 authorization: auth
+//               }
+//     })
+// }
+
+// function setLike(cardId) {
+//     return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+//         method: 'PUT',
+//         headers: {
+//             authorization: auth
+//           }
+//     })  
+// }
+
+// function removeLike(cardId) {
+//     return fetch(`${PATH}${cohortId}/cards/likes/${cardId}`, { 
+//         method: 'DELETE',
+//         headers: {
+//             authorization: auth
+//           }
+//     })  
+// }
+
+// function getCardData(cardId) {    
+//     return getCards()
+//     .then((res) => {
+//         if(res.ok) {
+//             return res.json()
+//         } else {            
+//             return Promise.reject(`Ошибка: ${res.status}`);
+//         }})
+//     .then((cards) => {
+//         for (let i = 0; i < cards.length; i++) {
+//             if(cards[i]._id === cardId) {                
+//                 return cards[i];
+//             }
+//         }
+//     })
+//     .catch((err) => console.log(err))
+// }
+
+// function changeAvatar(avatarLink) {    
+//     return fetch(`${PATH}${cohortId}/users/me/avatar`, { 
+//         method: 'PATCH',
+//         headers: {
+//             authorization: auth,
+//             'Content-Type': 'application/json'
+//           },
+//         body: JSON.stringify({
+//             avatar: avatarLink
+//           })
+//     }) 
+// }

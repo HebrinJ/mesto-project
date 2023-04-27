@@ -26,7 +26,7 @@ function setValidationListeners(form, inputFieldSelector, submitButtonSelector) 
 
 function isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton) {    
     //Проверка и форматирование текущего поля 
-    currentFieldValidation(inputField, errorContainer);
+    validationCurrentField(inputField, errorContainer);
     
     //Проверка всей формы на валидность
     const formFields = form.querySelectorAll(inputFieldSelector);
@@ -39,7 +39,7 @@ function isFormValid(form, inputField, inputFieldSelector, errorContainer, submi
     });
 }
 
-function currentFieldValidation(inputField, errorContainer) {
+function validationCurrentField(inputField, errorContainer) {
     let validationResult = isFieldValid(inputField);
     
     if(validationResult.validState === true) {
@@ -52,21 +52,21 @@ function currentFieldValidation(inputField, errorContainer) {
 function isFieldValid(inputField, errorContainer) {
     
     if (inputField.getAttribute('type') === 'text') {
-        return textFieldValidation(inputField, errorContainer);
+        return validationTextField(inputField, errorContainer);
 
     } else if (inputField.getAttribute('type') === 'url') {
-        return urlFieldValidation(inputField, errorContainer);
+        return validationUrlField(inputField, errorContainer);
     }
 }
 
-function urlFieldValidation(inputField) {    
+function validationUrlField(inputField) {    
     const validationResult = { 
         validState: inputField.validity.valid,
         errorMessage: inputField.validationMessage };
     return validationResult;
 }
 
-function textFieldValidation(inputField) {
+function validationTextField(inputField) {
     const patternMatch = validationPattern.test(inputField.value);
 
     if(inputField.validity.valid === false) {
