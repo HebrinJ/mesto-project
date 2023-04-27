@@ -21,13 +21,10 @@ const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
 const avatar = document.querySelector('.profile__pict');
 const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
-const loadingText = 'Сохранение...';
-let avatarLink = '';
-let cachedLoadingText = '';
 
 cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', handleProfileSubmit);
-avatarForm.addEventListener('submit', handleAvatarSubmit);
+profileForm.addEventListener('submit', handleProfile);
+avatarForm.addEventListener('submit', handleAvatar);
 
 editBtn.addEventListener('click', function() {
     popupController.openPopup(popupController.popupProfile);
@@ -50,7 +47,62 @@ Promise.all([apiController.getProfileData(), apiController.getCards()])
         setProfileData(profileData.name, profileData.about, profileData._id, profileData.avatar);
         setCards(cards); 
     })
-    .catch((err) => console.log(err));    
+    .catch((err) => console.log(err));
+
+function createUserCard(evt) {
+    function makeRequest() {
+        return apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
+        .then(function (card) {
+            const newCard = cardController.createCard(card);
+            addCard(newCard); 
+            popupController.closePopup(popupController.popupAddCard);    
+        })
+    }
+        
+    handleSubmit(makeRequest, evt);
+}
+
+function handleAvatar(evt) {
+    const avatarLink = editAvatarField.value;
+
+    function makeRequest() {
+        return apiController.changeAvatar(avatarLink)
+        .then((data) => {
+            setAvatar(data.avatar);
+            popupController.closePopup(popupController.popupAvatar);
+        })
+    }
+
+    handleSubmit(makeRequest, evt);
+}
+
+function handleProfile(evt) {
+    function makeRequest() {
+        return apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
+            .then((data) => { 
+                setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, data.avatar);
+                popupController.closePopup(popupController.popupProfile);
+            })
+    }
+
+    handleSubmit(makeRequest, evt);
+}
+
+function handleSubmit (request, evt, loadingText = 'Сохранение...') {
+    evt.preventDefault();
+
+    const initialText = evt.submitter.textContent;
+    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
+    
+    request()
+        .then(() => {
+            evt.target.reset();
+        })
+        .catch((err) => console.error(`Ошибка: ${err}`))
+        .finally(() => {
+            removeLoadingText(evt.submitter, initialText);
+        })
+}
 
 function setCards(cards) {
     cards = cards.reverse();
@@ -73,54 +125,6 @@ function addCard(card) {
     cardGallery.prepend(card);
 }
 
-function createUserCard(evt) {
-    evt.preventDefault();
-
-    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
-    apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        .then(function (card) {
-            const newCard = cardController.createCard(card);
-            addCard(newCard); 
-            popupController.closePopup(popupController.popupAddCard);
-            cardForm.reset();           
-        })
-        .catch((err) => console.log(err))
-        .finally(() => {            
-            removeLoadingText(evt.submitter);
-        })    
-}
-
-function handleProfileSubmit (evt) {
-    evt.preventDefault();
-
-    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
-    apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
-        .then(() => { 
-            setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, avatarLink);
-            popupController.closePopup(popupController.popupProfile);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => {            
-            removeLoadingText(evt.submitter);
-        })    
-}
-
-function handleAvatarSubmit (evt) {
-    evt.preventDefault(); 
-
-    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
-    const avatarLink = editAvatarField.value;    
-    apiController.changeAvatar(avatarLink)
-        .then((data) => {
-            setAvatar(data.avatar);
-            popupController.closePopup(popupController.popupAvatar);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => {            
-            removeLoadingText(evt.submitter);
-        }) 
-}
-
 function setAvatar(link) {   
     avatar.setAttribute('src', link);
 }
@@ -130,7 +134,6 @@ function fillProfileFieldsWhenOpen() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
-function setLoadingStateText(element, newText, oldText) {
-    cachedLoadingText = oldText;
+function setLoadingStateText(element, newText) {    
     element.textContent = newText;
 }

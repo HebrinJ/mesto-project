@@ -139,8 +139,8 @@ function setLikeCountToCard(card, count) {
 }
 
 function renderLike (card, state) {
-    const like = card.querySelector(`.${likeSelector}`);    
-
+    const like = card.querySelector(`.${likeSelector}`);  
+      
     if(state) {
         like.classList.add(likeActiveSelector);
     } else {
