@@ -5,6 +5,7 @@ import { apiController } from './api.js';
 const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
 const fullSizePicture = document.querySelector('.popup__full-pict');
+const pictureLabel = document.querySelector('.popup__pict-label');
 const likeActiveSelector = 'gallery-card__like_active';
 const likeSelector = 'gallery-card__like';
 
@@ -42,7 +43,7 @@ function setCardDataToTemplate(cardData) {
     newCardPic.src = cardData.link;
     newCardPic.alt = `Фотография места: ${cardData.name}`;
     newCard.querySelector('.gallery-card__label-text').textContent = cardData.name;
-    addListenerToCard(newCardPic);
+    addListenerToCard(newCardPic, cardData);
 
     return newCard;
 }
@@ -68,11 +69,12 @@ function availableToDelete(cardData) {
     return false;
 }
 
-function addListenerToCard(card) {
+function addListenerToCard(card, cardData) {
     card.addEventListener('click', function() {
         popupController.openPopup(cardPicturePopup);
         fullSizePicture.src = card.src;
-        fullSizePicture.alt = 'Фотография места';
+        fullSizePicture.alt = cardData.name;
+        pictureLabel.textContent = cardData.name;
     });
 }
 
