@@ -11,20 +11,15 @@ export const popupController = {
     popupAvatar
 }
 
-popupCloseBtns.forEach(function (btn) {    
-    btn.addEventListener('mousedown', handleClickClose);    
-});
-
-const handleClickClose = function (event) {
-    const popup = document.querySelector('.popup_opened');   
-    
+const handleClickClose = function (event) {    
     const isItPopup = event.target.classList.contains('popup');
     const isItCloseButton = event.target.classList.contains('popup__container-close-btn');
-        
+    
     if(!isItPopup && !isItCloseButton) {        
         return;
     }    
     
+    const popup = document.querySelector('.popup_opened');   
     closePopup(popup);
 }
 

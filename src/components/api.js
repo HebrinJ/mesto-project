@@ -14,18 +14,18 @@ export const apiController = {
     changeAvatar
 }
 
-
+import { checkResponse } from "./utils";
 
 function request(linkEndpoint, options) {
     return fetch(`${PATH}${cohortId}`+linkEndpoint, options).then(checkResponse);
 }
 
-function checkResponse(result) {
-    if (result.ok) {
-        return result.json();
-    }
-    return Promise.reject(`Ошибка ${result.status}`);
-}
+// function checkResponse(result) {
+//     if (result.ok) {
+//         return result.json();
+//     }
+//     return Promise.reject(`Ошибка ${result.status}`);
+// }
 
 function getProfileData() {
     return request(`/users/me`, { 
