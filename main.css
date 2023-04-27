@@ -40,7 +40,8 @@
 .popup__container-label{color:#000;font-size:24px;font-weight:900;line-height:29px;margin:0 0 54px;padding:0}@media screen and (max-width:500px){.popup__container-label{font-size:18px;line-height:22px;margin-bottom:75px}}
 .popup__container-label-delete{margin-bottom:20px}
 .popup__container-save-btn{background-color:#000;border:none;border-radius:2px;color:#fff;cursor:pointer;font-size:18px;font-weight:400;height:50px;line-height:22px;margin-top:18px;transition:opacity .3s linear;width:358px}.popup__container-save-btn:hover{opacity:.8}.popup__container-save-btn:disabled{background-color:transparent;border:1px solid #000;border-radius:2px;color:#000;opacity:.2}@media screen and (max-width:500px){.popup__container-save-btn{font-size:14px;font-weight:400;height:46px;line-height:17px;margin-top:15px;width:238px}}
-.popup__pict-container{align-content:center;display:flex;justify-content:center;position:relative}
+.popup__pict-container{align-content:center;display:flex;flex-direction:column;justify-content:center;position:relative}
 .popup__full-pict{max-height:75vh;max-width:75vw;-o-object-fit:cover;object-fit:cover}
+.popup__pict-label{color:#fff;font-size:12px;line-height:15px;margin:10px 0 0}
 .popup_pict-background{background-color:rgba(0,0,0,.9)}
 
