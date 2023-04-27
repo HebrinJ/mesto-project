@@ -2,6 +2,7 @@ import { cardController } from './components/card.js';
 import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
+import { removeLoadingText } from './components/utils.js';
 import './pages/index.css';
 
 export const validationSetting = {
@@ -25,6 +26,7 @@ const inputFieldName = document.querySelector('.popup__container-input_field_nam
 const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
 const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
+const avatar = document.querySelector('.profile__pict');
 const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
 const loadingText = 'Сохранение...';
 let avatarLink = '';
@@ -50,29 +52,12 @@ editAvatarButton.addEventListener('click', function() {
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState(disabledButtons);
 
-apiController.getProfileData()
-    // .then((res) => {
-    //     if(res.ok) {
-    //         return res.json()
-    //     } else {
-    //         return Promise.reject(`Ошибка: ${res.status}`);
-    //     }})
-    .then((data) => {
-        setProfileData(data.name, data.about, data._id, data.avatar)
-        avatarLink = data.avatar;        
+Promise.all([apiController.getProfileData(), apiController.getCards()])
+    .then(([profileData, cards]) => {
+        setProfileData(profileData.name, profileData.about, profileData._id, profileData.avatar);
+        setCards(cards); 
     })
-    .catch((err) => console.log(err));
-
-apiController.getCards()
-    // .then((res) => {
-    //     if(res.ok) {
-    //         return res.json()
-    //     } else {
-    //         return Promise.reject(`Ошибка: ${res.status}`);
-    //     }})
-    .then((cards) => setCards(cards))
-    .catch((err) => console.log(err))
-    
+    .catch((err) => console.log(err));    
 
 function setCards(cards) {
     cards = cards.reverse();
@@ -80,11 +65,6 @@ function setCards(cards) {
     cards.forEach( function(cardData) {
         const newCard = cardController.createCard(cardData);
         addCard(newCard);
-        cardController.setLikeCountToCard(newCard, cardData.likes.length);
-        
-        if(cardController.isItLikeOwner(cardData)) {
-            cardController.renderLike(newCard, true)
-        }
     });
 }
 
@@ -103,70 +83,52 @@ function addCard(card) {
 function createUserCard(evt) {
     evt.preventDefault();
 
-    const cachedButton = evt.target.querySelector(validationSetting.submitButtonSelector);
-    
-    setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
+    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
     apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        // .then((res) => {
-        //     if(res.ok) {
-        //         return res.json()
-        //     } else {
-        //         return Promise.reject(`Ошибка: ${res.status}`);
-        //     }})
         .then(function (card) {
             const newCard = cardController.createCard(card);
-            addCard(newCard);            
+            addCard(newCard); 
+            popupController.closePopup(popupController.popupAddCard);
+            cardForm.reset();           
         })
         .catch((err) => console.log(err))
-        .finally(() => {
-            popupController.closePopup(popupController.popupAddCard);
-            cardForm.reset();
-            removeLoadingText(cachedButton);
+        .finally(() => {            
+            removeLoadingText(evt.submitter);
         })    
 }
 
 function handleProfileSubmit (evt) {
-    evt.preventDefault(); 
+    evt.preventDefault();
 
-    const cachedButton = evt.target.querySelector(validationSetting.submitButtonSelector);
-
-    setLoadingStateText(cachedButton, loadingText, evt.target.textContent);
+    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
     apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
-        // .then((res) => {
-        //     if(res.ok) {
-        //         return res.json()
-        //     } else {
-        //         return Promise.reject(`Ошибка: ${res.status}`);
-        //     }})
-        .then(() => setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, avatarLink))
-        .catch((err) => console.log(err))
-        .finally(() => {
+        .then(() => { 
+            setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, avatarLink);
             popupController.closePopup(popupController.popupProfile);
-            removeLoadingText(cachedButton);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {            
+            removeLoadingText(evt.submitter);
         })    
 }
 
 function handleAvatarSubmit (evt) {
     evt.preventDefault(); 
 
+    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
     const avatarLink = editAvatarField.value;    
     apiController.changeAvatar(avatarLink)
-        // .then((res) => {
-        //     if(res.ok) {
-        //         setAvatar(avatarLink)
-        //     } else {
-        //         return Promise.reject(`Ошибка: ${res.status}`);
-        //     }
-        // })
-        .catch((err) => console.log(err))
-        .finally(() => {
+        .then((data) => {
+            setAvatar(data.avatar);
             popupController.closePopup(popupController.popupAvatar);
         })
+        .catch((err) => console.log(err))
+        .finally(() => {            
+            removeLoadingText(evt.submitter);
+        }) 
 }
 
-function setAvatar(link) {
-    const avatar = document.querySelector('.profile__pict');
-   
+function setAvatar(link) {   
     avatar.setAttribute('src', link);
 }
 
@@ -178,8 +140,4 @@ function fillProfileFieldsWhenOpen() {
 function setLoadingStateText(element, newText, oldText) {
     cachedLoadingText = oldText;
     element.textContent = newText;
-}
-
-function removeLoadingText(element) {
-    element.textContent = cachedLoadingText;
 }

@@ -4,3 +4,7 @@ export function checkResponse(result) {
   }
   return Promise.reject(`Ошибка ${result.status}`);
 }
+
+export function removeLoadingText(element) {
+  element.textContent = cachedLoadingText;
+}

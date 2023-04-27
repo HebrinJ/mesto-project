@@ -17,6 +17,10 @@ function enableValidation(validationSetting)  {
 function setValidationListeners(form, inputFieldSelector, submitButtonSelector) {
     const inputList = Array.from(form.querySelectorAll(inputFieldSelector));  
     const submitButton = form.querySelector(submitButtonSelector);
+
+    form.addEventListener('reset', () => {
+        toggleButtonState(submitButton, true); //true - активация состояния disabled
+    })
     
     inputList.forEach((inputField) => {
         const errorContainer = document.querySelector(`#${inputField.id}-error`)
