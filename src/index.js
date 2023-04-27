@@ -3,15 +3,8 @@ import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
 import { removeLoadingText } from './components/utils.js';
+import { validationSetting } from './components/constants.js';
 import './pages/index.css';
-
-export const validationSetting = {
-    formSelector: '.popup__container-form',
-    inputSelector: '.popup__container-input',
-    submitButtonSelector: '.popup__container-save-btn',
-    errorContainerSelector: '.popup__container-input-error-message',
-    inputErrorStyleSelector: 'popup__container-input_error'
-}
 
 export let profileId = '';
 

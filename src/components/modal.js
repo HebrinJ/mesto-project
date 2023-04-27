@@ -1,6 +1,5 @@
 const popupProfile = document.querySelector('#profile-popup');
 const popupAddCard = document.querySelector('#add-card-popup');
-const popupCloseBtns = document.querySelectorAll('.popup__container-close-btn');
 const popupAvatar = document.querySelector('#change-avatar');
 
 export const popupController = {
