@@ -88,22 +88,6 @@ function handleProfile(evt) {
     handleSubmit(makeRequest, evt);
 }
 
-// function handleSubmit (request, evt, loadingText = 'Сохранение...') {
-//     evt.preventDefault();
-
-//     const initialText = evt.submitter.textContent;
-//     setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
-    
-//     request()
-//         .then(() => {
-//             evt.target.reset();
-//         })
-//         .catch((err) => console.error(`Ошибка: ${err}`))
-//         .finally(() => {
-//             removeLoadingText(evt.submitter, initialText);
-//         })
-// }
-
 function setCards(cards) {
     cards = cards.reverse();
 
@@ -133,7 +117,3 @@ function fillProfileFieldsWhenOpen() {
     inputFieldName.value = profileName.textContent;
     inputFieldMajor.value = profileMajor.textContent;
 }
-
-// function setLoadingStateText(element, newText) {    
-//     element.textContent = newText;
-// }

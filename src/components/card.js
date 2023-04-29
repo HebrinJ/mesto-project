@@ -81,40 +81,26 @@ function toggleDeleteButton(element) {
     element.classList.remove('gallery-card__delete_restrict');
 }
 
-function getCardData(cardId) {
-    return apiController.getCards()
-    .then((cards) => {
-        for (let i = 0; i < cards.length; i++) {
-            if(cards[i]._id === cardId) {                
-                return cards[i];
-            }
-        }
-    })
-    .catch((err) => console.log(err));
-}
-
 function likeHandler(card, cardId) {
+    const likeButton = card.querySelector(`.${likeSelector}`);
     
-    getCardData(cardId)   
-    .then ((newCardData) => {
-        if(isItLikeOwner(newCardData) === false) {
-            // Своего лайка нет - добавляем
-            apiController.setLike(cardId)
-            .then((newCardData) => {
-                renderLike(card, true);
-                setLikeCountToCard(card, newCardData.likes.length);            
-            })
-            .catch((err) => console.log(err))
-        } else {
-            //Свой лайк есть, удаляем его
-            apiController.removeLike(cardId)
-            .then ((newCardData) => {
-                setLikeCountToCard(card, newCardData.likes.length);
-                renderLike(card, false);
-            })
-            .catch((err) => console.log(err))
-        }        
-    })    
+    if(!likeButton.classList.contains(likeActiveSelector)) {
+        // Своего лайка нет - добавляем
+        apiController.setLike(cardId)
+        .then((newCardData) => {
+            renderLike(card, true);
+            setLikeCountToCard(card, newCardData.likes.length);            
+        })
+        .catch((err) => console.log(err))
+    } else {
+        //Свой лайк есть, удаляем его
+        apiController.removeLike(cardId)
+        .then ((newCardData) => {
+            setLikeCountToCard(card, newCardData.likes.length);
+            renderLike(card, false);
+        })
+        .catch((err) => console.log(err))
+    }   
 }
 
 function isItLikeOwner(cardData) {    
@@ -140,7 +126,7 @@ function setLikeCountToCard(card, count) {
 
 function renderLike (card, state) {
     const like = card.querySelector(`.${likeSelector}`);  
-      
+
     if(state) {
         like.classList.add(likeActiveSelector);
     } else {
