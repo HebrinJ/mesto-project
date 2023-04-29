@@ -2,7 +2,7 @@ import { cardController } from './components/card.js';
 import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { apiController } from './components/api.js';
-import { removeLoadingText } from './components/utils.js';
+import { handleSubmit } from './components/utils.js';
 import { validationSetting } from './components/constants.js';
 import './pages/index.css';
 
@@ -88,21 +88,21 @@ function handleProfile(evt) {
     handleSubmit(makeRequest, evt);
 }
 
-function handleSubmit (request, evt, loadingText = 'Сохранение...') {
-    evt.preventDefault();
+// function handleSubmit (request, evt, loadingText = 'Сохранение...') {
+//     evt.preventDefault();
 
-    const initialText = evt.submitter.textContent;
-    setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
+//     const initialText = evt.submitter.textContent;
+//     setLoadingStateText(evt.submitter, loadingText, evt.target.textContent);
     
-    request()
-        .then(() => {
-            evt.target.reset();
-        })
-        .catch((err) => console.error(`Ошибка: ${err}`))
-        .finally(() => {
-            removeLoadingText(evt.submitter, initialText);
-        })
-}
+//     request()
+//         .then(() => {
+//             evt.target.reset();
+//         })
+//         .catch((err) => console.error(`Ошибка: ${err}`))
+//         .finally(() => {
+//             removeLoadingText(evt.submitter, initialText);
+//         })
+// }
 
 function setCards(cards) {
     cards = cards.reverse();
@@ -134,6 +134,6 @@ function fillProfileFieldsWhenOpen() {
     inputFieldMajor.value = profileMajor.textContent;
 }
 
-function setLoadingStateText(element, newText) {    
-    element.textContent = newText;
-}
+// function setLoadingStateText(element, newText) {    
+//     element.textContent = newText;
+// }
