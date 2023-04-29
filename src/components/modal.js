@@ -22,10 +22,9 @@ const handleClickClose = function (event) {
     closePopup(popup);
 }
 
-const handleKeyClose = function (event) {
-    const popup = document.querySelector('.popup_opened');
-
+const handleKeyClose = function (event) {    
     if(event.key === 'Escape') {
+        const popup = document.querySelector('.popup_opened');
         closePopup(popup);
     }
 }
