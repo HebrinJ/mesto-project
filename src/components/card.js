@@ -133,3 +133,5 @@ function renderLike (card, state) {
         like.classList.remove(likeActiveSelector);
     }
 }
+
+//
