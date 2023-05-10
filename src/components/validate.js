@@ -112,4 +112,3 @@ function setDefaultButtonsState(buttons) {
         toggleButtonState(button, true);
     })
 }
-
