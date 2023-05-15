@@ -1,6 +1,6 @@
 import { popupController } from './modal.js';
 import { profileId } from '../index';
-import { apiController } from './api.js';
+import { api } from './api.js';
 
 const templateCard = document.querySelector('#card-template').content;
 const cardPicturePopup = document.querySelector('#pict-popup');
@@ -55,7 +55,7 @@ function setCardDataToTemplate(cardData) {
 }
 
 function deleteCard(cardData, card) {    
-    apiController.deleteCard(cardData._id)
+    api.deleteCard(cardData._id)
         .then(() => card.remove())
         .catch((err) => console.log(err));
 }
@@ -86,7 +86,7 @@ function likeHandler(card, cardId) {
     
     if(!likeButton.classList.contains(likeActiveSelector)) {
         // Своего лайка нет - добавляем
-        apiController.setLike(cardId)
+        api.setLike(cardId)
         .then((newCardData) => {
             renderLike(card, true);
             setLikeCountToCard(card, newCardData.likes.length);            
@@ -94,7 +94,7 @@ function likeHandler(card, cardId) {
         .catch((err) => console.log(err))
     } else {
         //Свой лайк есть, удаляем его
-        apiController.removeLike(cardId)
+        api.removeLike(cardId)
         .then ((newCardData) => {
             setLikeCountToCard(card, newCardData.likes.length);
             renderLike(card, false);
@@ -133,5 +133,3 @@ function renderLike (card, state) {
         like.classList.remove(likeActiveSelector);
     }
 }
-
-//

@@ -1,7 +1,7 @@
 import { cardController } from './components/card.js';
 import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
-import { apiController } from './components/api.js';
+import { api } from './components/api.js';
 import { handleSubmit } from './components/utils.js';
 import { validationSetting } from './components/constants.js';
 import './pages/index.css';
@@ -42,7 +42,7 @@ editAvatarButton.addEventListener('click', function() {
 validationController.enableValidation(validationSetting);
 validationController.setDefaultButtonsState(disabledButtons);
 
-Promise.all([apiController.getProfileData(), apiController.getCards()])
+Promise.all([api.getProfileData(), api.getCards()])
     .then(([profileData, cards]) => {
         setProfileData(profileData.name, profileData.about, profileData._id, profileData.avatar);
         setCards(cards); 
@@ -51,7 +51,7 @@ Promise.all([apiController.getProfileData(), apiController.getCards()])
 
 function createUserCard(evt) {
     function makeRequest() {
-        return apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
+        return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then(function (card) {
             const newCard = cardController.createCard(card);
             addCard(newCard); 
@@ -66,7 +66,7 @@ function handleAvatar(evt) {
     const avatarLink = editAvatarField.value;
 
     function makeRequest() {
-        return apiController.changeAvatar(avatarLink)
+        return api.changeAvatar(avatarLink)
         .then((data) => {
             setAvatar(data.avatar);
             popupController.closePopup(popupController.popupAvatar);
@@ -78,7 +78,7 @@ function handleAvatar(evt) {
 
 function handleProfile(evt) {
     function makeRequest() {
-        return apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
+        return api.editProfileData(inputFieldName.value, inputFieldMajor.value)
             .then((data) => { 
                 setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, data.avatar);
                 popupController.closePopup(popupController.popupProfile);
