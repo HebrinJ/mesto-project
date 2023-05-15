@@ -1,19 +1,16 @@
-import { popupController } from './modal.js';
 import { profileId } from '../index';
 import { api } from './api.js';
 
 const templateCard = document.querySelector('#card-template').content;
-const cardPicturePopup = document.querySelector('#pict-popup');
-const fullSizeImage = document.querySelector('.popup__full-pict');
-const pictureLabel = document.querySelector('.popup__pict-label');
 const likeActiveSelector = 'gallery-card__like_active';
 const likeSelector = 'gallery-card__like';
 const deleteBtnSelector = 'gallery-card__delete';
 
 export class Card {
-    constructor(cardData, cardSelector) {
+    constructor(cardData, cardSelector, handleCardClick) {
         this._cardData = cardData;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     createCard() {     
@@ -55,8 +52,10 @@ export class Card {
         cardImage.src = link;
         cardImage.alt = `Фотография места: ${name}`;
         newCard.querySelector('.gallery-card__label-text').textContent = name;
-
-        this._addListenerToImage(cardImage, name);
+        
+        cardImage.addEventListener('click', function() {
+            this._handleCardClick(cardImage);
+        }.bind(this));
     
         return newCard;
     }
@@ -73,15 +72,6 @@ export class Card {
         }
     
         return false;
-    }
-    
-    _addListenerToImage(image, label) {
-        image.addEventListener('click', function() {
-            popupController.openPopup(cardPicturePopup);
-            fullSizeImage.src = image.src;
-            fullSizeImage.alt = label;
-            pictureLabel.textContent = label;
-        });
     }
     
     _toggleDeleteButton(element) {

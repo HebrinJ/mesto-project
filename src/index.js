@@ -1,4 +1,5 @@
 import { Card } from './components/card.js';
+import { handleCardClick } from './components/modal.js';
 import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { api } from './components/api.js';
@@ -96,7 +97,7 @@ function setCards(cards) {
     //     addCard(newCard);
     // });
     cards.forEach( function(cardData) {
-        const newCard = new Card(cardData,'gallery-card-list-element').createCard();
+        const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard();
         addCard(newCard);
     });
 }

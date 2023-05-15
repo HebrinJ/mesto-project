@@ -1,6 +1,9 @@
 const popupProfile = document.querySelector('#profile-popup');
 const popupAddCard = document.querySelector('#add-card-popup');
 const popupAvatar = document.querySelector('#change-avatar');
+const fullSizeImage = document.querySelector('.popup__full-pict');
+const pictureLabel = document.querySelector('.popup__pict-label');
+const cardPicturePopup = document.querySelector('#pict-popup');
 
 export const popupController = {
     openPopup,
@@ -39,4 +42,11 @@ function closePopup(popup) {
     popup.removeEventListener('mousedown', handleClickClose);
     window.removeEventListener('keydown', handleKeyClose);
     popup.classList.remove('popup_opened'); 
+}
+
+export const handleCardClick = function (image) {    
+    openPopup(cardPicturePopup);
+    fullSizeImage.src = image.src;
+    fullSizeImage.alt = image.alt;
+    pictureLabel.textContent = image.alt;    
 }
