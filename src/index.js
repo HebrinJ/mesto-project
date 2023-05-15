@@ -1,4 +1,4 @@
-import { cardController } from './components/card.js';
+import { Card } from './components/card.js';
 import { validationController } from './components/validate.js';
 import { popupController } from './components/modal.js';
 import { api } from './components/api.js';
@@ -53,7 +53,7 @@ function createUserCard(evt) {
     function makeRequest() {
         return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then(function (card) {
-            const newCard = cardController.createCard(card);
+            const newCard = new Card.createCard(card);
             addCard(newCard); 
             popupController.closePopup(popupController.popupAddCard);    
         })
@@ -91,8 +91,12 @@ function handleProfile(evt) {
 function setCards(cards) {
     cards = cards.reverse();
 
+    // cards.forEach( function(cardData) {
+    //     const newCard = cardController.createCard(cardData);
+    //     addCard(newCard);
+    // });
     cards.forEach( function(cardData) {
-        const newCard = cardController.createCard(cardData);
+        const newCard = new Card(cardData,'gallery-card-list-element').createCard();
         addCard(newCard);
     });
 }
