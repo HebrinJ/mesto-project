@@ -1,6 +1,6 @@
 import { Card } from './components/card.js';
 import { handleCardClick } from './components/modal.js';
-import { validationController } from './components/validate.js';
+import { FormValidator } from './components/formValidator.js';
 import { popupController } from './components/modal.js';
 import { api } from './components/api.js';
 import { handleSubmit } from './components/utils.js';
@@ -21,7 +21,8 @@ const inputFieldMajor = document.querySelector('.popup__container-input_field_ma
 const profileName = document.querySelector('.profile__name');
 const profileMajor = document.querySelector('.profile__major');
 const avatar = document.querySelector('.profile__pict');
-const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
+const forms = Array.from(document.querySelectorAll('.popup__container-form'));
+//const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
 
 cardForm.addEventListener('submit', createUserCard);
 profileForm.addEventListener('submit', handleProfile);
@@ -40,8 +41,13 @@ editAvatarButton.addEventListener('click', function() {
     popupController.openPopup(popupController.popupAvatar);
 })
 
-validationController.enableValidation(validationSetting);
-validationController.setDefaultButtonsState(disabledButtons);
+forms.forEach((form) => {
+    new FormValidator(validationSetting, form).enableValidation();
+})
+//validationController.enableValidation(validationSetting);
+//validationController.setDefaultButtonsState(disabledButtons);
+
+
 
 Promise.all([api.getProfileData(), api.getCards()])
     .then(([profileData, cards]) => {
@@ -54,7 +60,7 @@ function createUserCard(evt) {
     function makeRequest() {
         return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then(function (card) {
-            const newCard = new Card.createCard(card);
+            const newCard = new Card(card,'gallery-card-list-element', handleCardClick).createCard(card);
             addCard(newCard); 
             popupController.closePopup(popupController.popupAddCard);    
         })
@@ -92,10 +98,6 @@ function handleProfile(evt) {
 function setCards(cards) {
     cards = cards.reverse();
 
-    // cards.forEach( function(cardData) {
-    //     const newCard = cardController.createCard(cardData);
-    //     addCard(newCard);
-    // });
     cards.forEach( function(cardData) {
         const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard();
         addCard(newCard);
