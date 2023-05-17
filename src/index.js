@@ -1,38 +1,3 @@
-<<<<<<< HEAD
-import { Card } from './components/card.js';
-import { handleCardClick } from './components/modal.js';
-import { FormValidator } from './components/formValidator.js';
-import { popupController } from './components/modal.js';
-import { api } from './components/api.js';
-import { handleSubmit } from './components/utils.js';
-import { validationSetting } from './components/constants.js';
-import './pages/index.css';
-import { Section } from './components/section.js';
-
-export let profileId = '';
-
-const cardGallery = document.querySelector('.gallery');
-const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
-const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
-const editBtn = document.querySelector('.profile__edit-button');
-const addCardBtn = document.querySelector('.profile__add-button');
-const editAvatarButton = document.querySelector('.profile__overlay');
-const editAvatarField = document.querySelector('.popup__container-input_field_avatar');
-const inputFieldName = document.querySelector('.popup__container-input_field_name');
-const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
-const profileName = document.querySelector('.profile__name');
-const profileMajor = document.querySelector('.profile__major');
-const avatar = document.querySelector('.profile__pict');
-const forms = Array.from(document.querySelectorAll('.popup__container-form'));
-//const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
-
-cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', handleProfile);
-avatarForm.addEventListener('submit', handleAvatar);
-
-editBtn.addEventListener('click', function() {
-    popupController.openPopup(popupController.popupProfile);
-=======
 import { Card } from "./components/card.js";
 import { FormValidator } from "./components/formValidator.js";
 import { PopupWithForm, PopupWithImage } from "./components/modal.js";
@@ -40,6 +5,7 @@ import { api } from "./components/api.js";
 import { handleSubmit } from "./components/utils.js";
 import { validationSetting } from "./components/constants.js";
 import "./pages/index.css";
+import { Section } from './components/section.js';
 
 export let profileId = "";
 
@@ -67,7 +33,6 @@ const forms = Array.from(document.querySelectorAll(".popup__container-form"));
 
 editBtn.addEventListener("click", function () {
     popupController.popupProfile.open();
->>>>>>> origin/feature/popup-oop
     fillProfileFieldsWhenOpen();
 });
 
@@ -98,34 +63,20 @@ Promise.all([api.getProfileData(), api.getCards()])
 function createUserCard(evt, inputsValues) {
     const [inputFieldPlaceValue, inputFieldPictValue] = inputsValues;
     function makeRequest() {
-<<<<<<< HEAD
         return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then(function (cardData) {
             // const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard(card);
             // addCard(newCard); 
             const renderer = (cardData) => { 
-                const newCard = new Card(cardData, 'gallery-card-list-element', handleCardClick).createCard(); 
+                const newCard = new Card(cardData, 'gallery-card-list-element', popupController.popupWithPicture.open).createCard(); 
                 return newCard;
             };
             const items = [cardData];            
             const element = { items, renderer }
             new Section(element, 'gallery').renderAll();
 
-            popupController.closePopup(popupController.popupAddCard);    
+            popupController.popupAddCard.close();   
         })
-=======
-        return api
-            .sendNewCard(inputFieldPictValue, inputFieldPlaceValue)
-            .then(function (card) {
-                const newCard = new Card(
-                    card,
-                    "gallery-card-list-element",
-                    popupController.popupWithPicture.open
-                ).createCard(card);
-                addCard(newCard);
-                popupController.popupAddCard.close();
-            });
->>>>>>> origin/feature/popup-oop
     }
 
     handleSubmit(makeRequest, evt);
@@ -164,7 +115,7 @@ function handleProfile(evt, inputsValues) {
 
 function setCards(items) {
     const renderer = (cardData) => { 
-        const card = new Card(cardData, 'gallery-card-list-element', handleCardClick).createCard(); 
+        const card = new Card(cardData, 'gallery-card-list-element', popupController.popupWithPicture.open).createCard(); 
         return card; 
     };
     
@@ -172,25 +123,6 @@ function setCards(items) {
     const cards = section.renderAll();
     
     cards.forEach((card) => section.addItem(card));
-
-
-    // cards = cards.reverse();
-
-<<<<<<< HEAD
-    // cards.forEach( function(cardData) {
-    //     const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard();
-    //     addCard(newCard);
-    // });
-=======
-    cards.forEach(function (cardData) {
-        const newCard = new Card(
-            cardData,
-            "gallery-card-list-element",
-            popupController.popupWithPicture.open
-        ).createCard();
-        addCard(newCard);
-    });
->>>>>>> origin/feature/popup-oop
 }
 
 function setProfileData(name, major, id, avatarLink) {

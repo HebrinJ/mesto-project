@@ -13,11 +13,7 @@ export class Card {
         this._handleCardClick = handleCardClick;
     }
 
-<<<<<<< HEAD
-    createCard() {    
-=======
     createCard() {
->>>>>>> origin/feature/popup-oop
         const cardData = this._cardData;
         const newCard = this._setDataToElement(cardData);
 
