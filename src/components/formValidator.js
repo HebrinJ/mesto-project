@@ -9,8 +9,7 @@ export class FormValidator {
     }
 
     enableValidation()  {  
-        this._setValidationListeners(this._form, this._inputSelector, this._submitButtonSelector, this._errorContainerSelector);
-        //this._setDefaultButtonsState(this._submitButtonSelector);        
+        this._setValidationListeners(this._form, this._inputSelector, this._submitButtonSelector, this._errorContainerSelector);               
     }
     
     _setValidationListeners(form, inputFieldSelector, submitButtonSelector) {
@@ -25,6 +24,8 @@ export class FormValidator {
             const errorContainer = document.querySelector(`#${inputField.id}-error`)
             inputField.addEventListener('input', function () { this._isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton)}.bind(this) );
         })
+
+        this._toggleButtonState(submitButton, true);
     }
     
     _isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton) {    

@@ -110,8 +110,10 @@ function setCards(items) {
         return card; 
     };
     
-    const element = { items, renderer }
-    new Section(element, 'gallery').renderAll();
+    const section = new Section({ items: items, renderer: renderer }, 'gallery');
+    const cards = section.renderAll();
+    
+    cards.forEach((card) => section.addItem(card));
 
 
     // cards = cards.reverse();
