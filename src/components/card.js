@@ -13,7 +13,7 @@ export class Card {
         this._handleCardClick = handleCardClick;
     }
 
-    createCard() {     
+    createCard() {    
         const cardData = this._cardData;
         const newCard = this._setDataToElement(cardData);
 

@@ -6,6 +6,7 @@ import { api } from './components/api.js';
 import { handleSubmit } from './components/utils.js';
 import { validationSetting } from './components/constants.js';
 import './pages/index.css';
+import { Section } from './components/section.js';
 
 export let profileId = '';
 
@@ -59,9 +60,17 @@ Promise.all([api.getProfileData(), api.getCards()])
 function createUserCard(evt) {
     function makeRequest() {
         return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        .then(function (card) {
-            const newCard = new Card(card,'gallery-card-list-element', handleCardClick).createCard(card);
-            addCard(newCard); 
+        .then(function (cardData) {
+            // const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard(card);
+            // addCard(newCard); 
+            const renderer = (cardData) => { 
+                const newCard = new Card(cardData, 'gallery-card-list-element', handleCardClick).createCard(); 
+                return newCard;
+            };
+            const items = [cardData];            
+            const element = { items, renderer }
+            new Section(element, 'gallery').renderAll();
+
             popupController.closePopup(popupController.popupAddCard);    
         })
     }
@@ -95,13 +104,22 @@ function handleProfile(evt) {
     handleSubmit(makeRequest, evt);
 }
 
-function setCards(cards) {
-    cards = cards.reverse();
+function setCards(items) {
+    const renderer = (cardData) => { 
+        const card = new Card(cardData, 'gallery-card-list-element', handleCardClick).createCard(); 
+        return card; 
+    };
+    
+    const element = { items, renderer }
+    new Section(element, 'gallery').renderAll();
 
-    cards.forEach( function(cardData) {
-        const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard();
-        addCard(newCard);
-    });
+
+    // cards = cards.reverse();
+
+    // cards.forEach( function(cardData) {
+    //     const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard();
+    //     addCard(newCard);
+    // });
 }
 
 function setProfileData(name, major, id, avatarLink) {
