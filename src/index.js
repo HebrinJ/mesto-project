@@ -13,7 +13,7 @@ export let userData = {
     about: "",
     avatar: "",
     _id: "",
-    cohort: ""
+    cohort: "",
 };
 
 const popupController = {
@@ -36,8 +36,12 @@ const profileName = document.querySelector(".profile__name");
 const profileMajor = document.querySelector(".profile__major");
 const avatar = document.querySelector(".profile__pict");
 const forms = Array.from(document.querySelectorAll(".popup__container-form"));
-const inputFieldPict = document.querySelector(".popup__container-input_field_pict");
-const inputFieldPlace = document.querySelector(".popup__container-input_field_place");
+const inputFieldPict = document.querySelector(
+    ".popup__container-input_field_pict"
+);
+const inputFieldPlace = document.querySelector(
+    ".popup__container-input_field_place"
+);
 const gallerySelector = "gallery";
 const nameSelector = "profile__name";
 const majorSelector = "profile__major";
@@ -45,6 +49,8 @@ const galleryCardSelector = "gallery-card-list-element";
 
 const userInfo = new UserInfo({nameSelector, majorSelector});
 //userData = userInfo.getUserInfo(api.getProfileData.bind(api));
+const userInfo = new UserInfo({ nameSelector, majorSelector });
+userData = userInfo.getUserInfo(api.getProfileData.bind(api));
 
 editBtn.addEventListener("click", function () {
     popupController.popupProfile.open();
@@ -65,7 +71,6 @@ forms.forEach((form) => {
 
 Promise.all([api.getProfileData(), api.getCards()])
     .then(([profileData, cards]) => {
-        userData = profileData;
         setProfileData(profileData);
         setCards(cards);
     })
@@ -73,15 +78,16 @@ Promise.all([api.getProfileData(), api.getCards()])
 
 function createUserCard(evt, inputsValues) {
     const [inputFieldPlaceValue, inputFieldPictValue] = inputsValues;
-    function makeRequest() {        
-        return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        .then(function (cardData) {
-            let items = [];   
-            items = [cardData];
-            setCards(items);
+    function makeRequest() {
+        return api
+            .sendNewCard(inputFieldPict.value, inputFieldPlace.value)
+            .then(function (cardData) {
+                let items = [];
+                items = [cardData];
+                setCards(items);
 
-            popupController.popupAddCard.close();   
-        })
+                popupController.popupAddCard.close();
+            });
     }
 
     handleSubmit(makeRequest, evt);
@@ -114,18 +120,25 @@ function handleProfile(evt, inputsValues) {
 }
 
 function setCards(items) {
-    const renderer = (cardData) => { 
-        const card = new Card(cardData, galleryCardSelector, popupController.popupWithPicture.open).createCard(); 
-        return card; 
+    const renderer = (cardData) => {
+        const card = new Card(
+            cardData,
+            galleryCardSelector,
+            popupController.popupWithPicture.open
+        ).createCard();
+        return card;
     };
-    
-    const section = new Section({ items: items, renderer: renderer }, gallerySelector);
+
+    const section = new Section(
+        { items: items, renderer: renderer },
+        gallerySelector
+    );
     const cards = section.renderAll();
-    
+
     cards.forEach((card) => section.addItem(card));
 }
 
-function setProfileData({name, about, avatar}) {    
+function setProfileData({ name, about, avatar }) {
     profileName.textContent = name;
     profileMajor.textContent = about;
 
