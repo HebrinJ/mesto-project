@@ -44,7 +44,7 @@ const majorSelector = "profile__major";
 const galleryCardSelector = "gallery-card-list-element";
 
 const userInfo = new UserInfo({nameSelector, majorSelector});
-userData = userInfo.getUserInfo(api.getProfileData.bind(api));
+//userData = userInfo.getUserInfo(api.getProfileData.bind(api));
 
 editBtn.addEventListener("click", function () {
     popupController.popupProfile.open();
@@ -64,7 +64,8 @@ forms.forEach((form) => {
 });
 
 Promise.all([api.getProfileData(), api.getCards()])
-    .then(([profileData, cards]) => {        
+    .then(([profileData, cards]) => {
+        userData = profileData;
         setProfileData(profileData);
         setCards(cards);
     })
