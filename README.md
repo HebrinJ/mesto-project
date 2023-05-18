@@ -6,6 +6,10 @@
 
 Вячеслав Попов
 
+## Репозиторий соавтора
+
+https://github.com/SergeyRomadin/mesto-project
+
 ## Технологии
 
 Использованы технологии: html, css
