@@ -1,4 +1,4 @@
-import { profileId } from "../index";
+import { userData } from "../index";
 import { api } from "./api.js";
 
 const templateCard = document.querySelector("#card-template").content;
@@ -78,7 +78,7 @@ export class Card {
     }
 
     _availableToDelete(cardData) {
-        if (cardData.owner._id === profileId) {
+        if (cardData.owner._id === userData._id) {
             return true;
         }
 
@@ -117,7 +117,7 @@ export class Card {
         }
 
         for (let i = 0; i < likes.length; i++) {
-            if (likes[i]._id === profileId) {
+            if (likes[i]._id === userData._id) {
                 return true;
             }
         }

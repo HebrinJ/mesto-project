@@ -18,7 +18,7 @@ class Api {
         return fetch(this._baseUrl + linkEndpoint, options).then(checkResponse);
     }
 
-    getProfileData() {
+    getProfileData() {        
         return this._request(`/users/me`, {
             headers: this._headers,
         });
