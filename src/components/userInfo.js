@@ -1,5 +1,3 @@
-//import { userData } from "../index.js";
-
 export class UserInfo {
     constructor( {nameSelector, majorSelector} ) {
         this._nameSelector = nameSelector;
@@ -9,12 +7,12 @@ export class UserInfo {
     getUserInfo(request) {
         const userData = {};
         
-        request().then((data) => {
-            userData.name = data.name;
-            userData.about = data.about;
-            userData.avatar = data.avatar;
-            userData._id = data._id;
-            userData.cohort = data.cohort;
+        request().then(({name, about, avatar, _id, cohort}) => {
+            userData.name = name;
+            userData.about = about;
+            userData.avatar = avatar;
+            userData._id = _id;
+            userData.cohort = cohort;
         });
         
         return userData;

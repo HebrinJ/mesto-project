@@ -16,16 +16,16 @@ export class FormValidator {
         const inputList = Array.from(form.querySelectorAll(inputFieldSelector));  
         const submitButton = form.querySelector(submitButtonSelector);
     
-        form.addEventListener('reset', function () {
+        form.addEventListener("reset", function () {
             this._toggleButtonState(submitButton, true); //true - активация состояния disabled
         }.bind(this))
         
         inputList.forEach((inputField) => {
             const errorContainer = document.querySelector(`#${inputField.id}-error`)
-            inputField.addEventListener('input', function () { this._isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton)}.bind(this) );
+            inputField.addEventListener("input", function () { this._isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton)}.bind(this) );
         })
 
-        this._toggleButtonState(submitButton, true);
+        this._toggleButtonState(submitButton, true);  //true - активация состояния disabled
     }
     
     _isFormValid(form, inputField, inputFieldSelector, errorContainer, submitButton) {    
@@ -55,10 +55,10 @@ export class FormValidator {
     
     _isFieldValid(inputField, errorContainer) {
         
-        if (inputField.getAttribute('type') === 'text') {
+        if (inputField.getAttribute("type") === "text") {
             return this._validationTextField(inputField, errorContainer);
     
-        } else if (inputField.getAttribute('type') === 'url') {
+        } else if (inputField.getAttribute("type") === "url") {
             return this._validationUrlField(inputField, errorContainer);
         }
     }
@@ -81,12 +81,12 @@ export class FormValidator {
         } else if (patternMatch) {
             const validationResult = { 
                 validState: false,
-                errorMessage: 'Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы' };
+                errorMessage: "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" };
             return validationResult;
         } else {
             const validationResult = { 
                 validState: true,
-                errorMessage: '' };
+                errorMessage: "" };
             return validationResult;
         }
         
@@ -99,17 +99,10 @@ export class FormValidator {
     
     _hideInputError(inputField, errorContainer) {
         inputField.classList.remove(this._inputErrorStyleSelector);
-        errorContainer.textContent = '';
+        errorContainer.textContent = "";
     }
     
     _toggleButtonState(button, state) {
         button.disabled = state;
-    }
-    
-    _setDefaultButtonsState(button) {
-           this._toggleButtonState(button, true);
-        // buttons.forEach((button) => {
-        //     this._toggleButtonState(button, true);
-        // })
     }
 }

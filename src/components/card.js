@@ -53,7 +53,7 @@ export class Card {
             .cloneNode(true);
     }
 
-    _setDataToElement({ link, name }) {
+    _setDataToElement({ link, name }) {        
         const newCard = this._getElement();
         const cardImage = newCard.querySelector(".gallery-card__pict");
 

@@ -4,9 +4,9 @@ import { PopupWithForm, PopupWithImage } from "./components/modal.js";
 import { api } from "./components/api.js";
 import { handleSubmit } from "./components/utils.js";
 import { validationSetting } from "./components/constants.js";
-import "./pages/index.css";
 import { Section } from "./components/section.js";
 import { UserInfo } from "./components/userInfo.js";
+import "./pages/index.css";
 
 export let userData = {
     name: "",
@@ -23,7 +23,6 @@ const popupController = {
     popupWithPicture: new PopupWithImage("#pict-popup"),
 };
 
-const cardGallery = document.querySelector(".gallery");
 const editBtn = document.querySelector(".profile__edit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
 const editAvatarButton = document.querySelector(".profile__overlay");
@@ -37,9 +36,15 @@ const profileName = document.querySelector(".profile__name");
 const profileMajor = document.querySelector(".profile__major");
 const avatar = document.querySelector(".profile__pict");
 const forms = Array.from(document.querySelectorAll(".popup__container-form"));
-
+const inputFieldPict = document.querySelector(".popup__container-input_field_pict");
+const inputFieldPlace = document.querySelector(".popup__container-input_field_place");
+const gallerySelector = "gallery";
 const nameSelector = "profile__name";
 const majorSelector = "profile__major";
+const galleryCardSelector = "gallery-card-list-element";
+
+const userInfo = new UserInfo({nameSelector, majorSelector});
+userData = userInfo.getUserInfo(api.getProfileData.bind(api));
 
 editBtn.addEventListener("click", function () {
     popupController.popupProfile.open();
@@ -58,37 +63,21 @@ forms.forEach((form) => {
     new FormValidator(validationSetting, form).enableValidation();
 });
 
-const userInfo = new UserInfo({nameSelector, majorSelector});
-userData = userInfo.getUserInfo(api.getProfileData.bind(api));
-//userInfo.getUserInfo();
-
 Promise.all([api.getProfileData(), api.getCards()])
     .then(([profileData, cards]) => {        
-        setProfileData(profileData);        
+        setProfileData(profileData);
         setCards(cards);
     })
     .catch((err) => console.log(err));
 
-// api.getCards()
-// .then((cards) => {    
-//     setCards(cards);
-// })
-// .catch((err) => console.log(err));
-
 function createUserCard(evt, inputsValues) {
     const [inputFieldPlaceValue, inputFieldPictValue] = inputsValues;
-    function makeRequest() {
+    function makeRequest() {        
         return api.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
         .then(function (cardData) {
-            // const newCard = new Card(cardData,'gallery-card-list-element', handleCardClick).createCard(card);
-            // addCard(newCard); 
-            const renderer = (cardData) => { 
-                const newCard = new Card(cardData, 'gallery-card-list-element', popupController.popupWithPicture.open).createCard(); 
-                return newCard;
-            };
-            const items = [cardData];            
-            const element = { items, renderer }
-            new Section(element, 'gallery').renderAll();
+            let items = [];   
+            items = [cardData];
+            setCards(items);
 
             popupController.popupAddCard.close();   
         })
@@ -125,11 +114,11 @@ function handleProfile(evt, inputsValues) {
 
 function setCards(items) {
     const renderer = (cardData) => { 
-        const card = new Card(cardData, 'gallery-card-list-element', popupController.popupWithPicture.open).createCard(); 
+        const card = new Card(cardData, galleryCardSelector, popupController.popupWithPicture.open).createCard(); 
         return card; 
     };
     
-    const section = new Section({ items: items, renderer: renderer }, 'gallery');
+    const section = new Section({ items: items, renderer: renderer }, gallerySelector);
     const cards = section.renderAll();
     
     cards.forEach((card) => section.addItem(card));
@@ -141,10 +130,6 @@ function setProfileData({name, about, avatar}) {
 
     setAvatar(avatar);
 }
-
-// function addCard(card) {
-//     cardGallery.prepend(card);
-// }
 
 function setAvatar(link) {
     avatar.setAttribute("src", link);
