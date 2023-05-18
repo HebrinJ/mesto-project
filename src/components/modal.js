@@ -4,7 +4,6 @@ const pictureLabel = document.querySelector(".popup__pict-label");
 class Popup {
     constructor(popupSelector) {
         this.popupElement = document.querySelector(popupSelector);
-        console.log(popupSelector, this.popupElement);
     }
     _handleClickClose = (event) => {
         const isItPopup = event.target.classList.contains("popup");
@@ -68,15 +67,17 @@ export class PopupWithForm extends Popup {
         });
         return inputsValues;
     }
+    _handleFormSubmit = (e) => {
+        e.preventDefault();
+        this.handleFormSubmit(e, this._getInputValues());
+    };
     setEventListeners() {
         super.setEventListeners();
-        this.form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            this.handleFormSubmit(e, this._getInputValues());
-        });
+        this.form.addEventListener("submit", this._handleFormSubmit);
     }
     close() {
         super.close();
         this.form.reset();
+        this.form.removeEventListener("submit", this._handleFormSubmit);
     }
 }
