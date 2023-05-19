@@ -1,6 +1,7 @@
 import { Card } from "./components/card.js";
 import { FormValidator } from "./components/formValidator.js";
-import { PopupWithForm, PopupWithImage } from "./components/modal.js";
+import { PopupWithImage } from "./components/PopupWithImage.js";
+import { PopupWithForm } from "./components/PopupWithForm.js";
 import { api } from "./components/api.js";
 import { handleSubmit } from "./components/utils.js";
 import { validationSetting } from "./components/constants.js";
@@ -47,7 +48,7 @@ const nameSelector = "profile__name";
 const majorSelector = "profile__major";
 const galleryCardSelector = "gallery-card-list-element";
 
-const userInfo = new UserInfo({nameSelector, majorSelector});
+const userInfo = new UserInfo({ nameSelector, majorSelector });
 
 editBtn.addEventListener("click", function () {
     popupController.popupProfile.open();
@@ -66,7 +67,10 @@ forms.forEach((form) => {
     new FormValidator(validationSetting, form).enableValidation();
 });
 
-Promise.all([userInfo.getUserInfo(api.getProfileData.bind(api)), api.getCards()])
+Promise.all([
+    userInfo.getUserInfo(api.getProfileData.bind(api)),
+    api.getCards(),
+])
     .then(([profileData, cards]) => {
         userData = profileData;
         setProfileData(profileData);
