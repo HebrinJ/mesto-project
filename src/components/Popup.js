@@ -1,6 +1,3 @@
-const fullSizeImage = document.querySelector(".popup__full-pict");
-const pictureLabel = document.querySelector(".popup__pict-label");
-
 class Popup {
     constructor(popupSelector) {
         this.popupElement = document.querySelector(popupSelector);

@@ -1,4 +1,6 @@
 import { Popup } from "./Popup.js";
+import { fullSizeImage } from "../index.js";
+import { pictureLabel } from "../index.js";
 
 export class PopupWithImage extends Popup {
     constructor(popupSelector) {

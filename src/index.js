@@ -47,6 +47,8 @@ const gallerySelector = "gallery";
 const nameSelector = "profile__name";
 const majorSelector = "profile__major";
 const galleryCardSelector = "gallery-card-list-element";
+export const fullSizeImage = document.querySelector(".popup__full-pict");
+export const pictureLabel = document.querySelector(".popup__pict-label");
 
 const userInfo = new UserInfo({ nameSelector, majorSelector });
 
