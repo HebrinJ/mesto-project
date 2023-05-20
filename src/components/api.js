@@ -1,5 +1,3 @@
-import { checkResponse } from "./utils/utils.js";
-
 const config = {
     baseUrl: `https://nomoreparties.co/v1/plus-cohort-23`,
     headers: {
@@ -15,7 +13,7 @@ class Api {
     }
 
     _request(linkEndpoint, options) {
-        return fetch(this._baseUrl + linkEndpoint, options).then(checkResponse);
+        return fetch(this._baseUrl + linkEndpoint, options).then(this._checkResponse);
     }
 
     getProfileData() {
@@ -81,6 +79,13 @@ class Api {
                 avatar: avatarLink,
             }),
         });
+    }
+
+    _checkResponse(result) {
+        if (result.ok) {
+            return result.json();
+        }
+        return Promise.reject(`Ошибка ${result.status}`);
     }
 }
 

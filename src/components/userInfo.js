@@ -1,4 +1,3 @@
-import { api } from "./api.js";
 
 export class UserInfo {
     constructor( {nameSelector, majorSelector} ) {
@@ -19,12 +18,6 @@ export class UserInfo {
         
         return userData;
     }
-
-    // sendNewUserInfo({ name, major }) {
-    //     api.editProfileData(name, major).then((data) => {
-    //         this.setUserInfo(data.name, data.about);
-    //     });
-    // }
 
     setUserInfo({ name, about }) {
         const nameField = document.querySelector(`.${this._nameSelector}`);
