@@ -1,3 +1,5 @@
+import { api } from "./api.js";
+
 export class UserInfo {
     constructor( {nameSelector, majorSelector} ) {
         this._nameSelector = nameSelector;
@@ -18,13 +20,21 @@ export class UserInfo {
         return userData;
     }
 
-    setUserInfo({ name, major }) {
-        this._api.editProfileData(name, major).then(() => {
-            const nameField = document.querySelector(`.${this._nameSelector}`);
-            const majorField = document.querySelector(`.${this._majorSelector}`);
-            
-            nameField.textContent = name;
-            majorField.textContent = major;
-        });
+    // sendNewUserInfo({ name, major }) {
+    //     api.editProfileData(name, major).then((data) => {
+    //         this.setUserInfo(data.name, data.about);
+    //     });
+    // }
+
+    setUserInfo({ name, about }) {
+        const nameField = document.querySelector(`.${this._nameSelector}`);
+        const majorField = document.querySelector(`.${this._majorSelector}`);
+        
+        nameField.textContent = name;
+        majorField.textContent = about;
+    }
+
+    setAvatar(element, link) {
+        element.setAttribute("src", link);
     }
 }

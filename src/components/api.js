@@ -1,4 +1,4 @@
-import { checkResponse } from "./utils/utils";
+import { checkResponse } from "./utils/utils.js";
 
 const config = {
     baseUrl: `https://nomoreparties.co/v1/plus-cohort-23`,

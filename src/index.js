@@ -4,7 +4,6 @@ import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { api } from "./components/api.js";
 import { handleSubmit } from "./components/utils/utils.js";
-import { validationSetting } from "./components/constants.js";
 import { Section } from "./components/section.js";
 import { UserInfo } from "./components/userInfo.js";
 import "./pages/index.css";
@@ -14,18 +13,19 @@ import {
     editAvatarButton,
     inputFieldName,
     inputFieldMajor,
-    profileName,
-    profileMajor,
+    //profileName,
+    //profileMajor,
     avatar,
     forms,
-    inputFieldPict,
-    inputFieldPlace,
+    //inputFieldPict,
+    //inputFieldPlace,
     gallerySelector,
     nameSelector,
     majorSelector,
     galleryCardSelector,
     fullSizeImage,
     pictureLabel,
+    validationSetting
 } from "./components/utils/constants.js";
 
 export let userData = {
@@ -69,10 +69,11 @@ forms.forEach((form) => {
 Promise.all([
     userInfo.getUserInfo(api.getProfileData.bind(api)),
     api.getCards(),
-])
+    ])
     .then(([profileData, cards]) => {
         userData = profileData;
-        setProfileData(profileData);
+        userInfo.setUserInfo(profileData);
+        userInfo.setAvatar(avatar, profileData.avatar);
         setCards(cards);
     })
     .catch((err) => console.log(err));
@@ -96,7 +97,7 @@ function handleAvatar(evt, link) {
 
     function makeRequest() {
         return api.changeAvatar(avatarLink).then((data) => {
-            setAvatar(data.avatar);
+            userInfo.setAvatar(avatar, data.avatar);
             popupController.popupAvatar.close();
         });
     }
@@ -106,10 +107,11 @@ function handleAvatar(evt, link) {
 function handleProfile(evt, inputsValues) {
     const [inputFieldName, inputFieldMajor] = inputsValues;
     function makeRequest() {
+        
         return api
             .editProfileData(inputFieldName, inputFieldMajor)
-            .then((data) => {
-                setProfileData(data);
+            .then((data) => {                
+                userInfo.setUserInfo(data);
                 popupController.popupProfile.close();
             });
     }
@@ -137,18 +139,7 @@ function setCards(items) {
     cards.forEach((card) => section.addItem(card));
 }
 
-function setProfileData({ name, about, avatar }) {
-    profileName.textContent = name;
-    profileMajor.textContent = about;
-
-    setAvatar(avatar);
-}
-
-function setAvatar(link) {
-    avatar.setAttribute("src", link);
-}
-
 function fillProfileFieldsWhenOpen() {
-    inputFieldName.value = profileName.textContent;
-    inputFieldMajor.value = profileMajor.textContent;
+    inputFieldName.value = userData.name;
+    inputFieldMajor.value = userData.about;
 }
