@@ -81,7 +81,7 @@ function createUserCard(evt, inputsValues) {
     const [inputFieldPlaceValue, inputFieldPictValue] = inputsValues;
     function makeRequest() {
         return api
-            .sendNewCard(inputFieldPict.value, inputFieldPlace.value)
+            .sendNewCard(inputFieldPictValue, inputFieldPlaceValue)
             .then(function (cardData) {
                 setCards([cardData]);
                 popupController.popupAddCard.close();
