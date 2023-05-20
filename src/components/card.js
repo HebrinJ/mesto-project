@@ -1,9 +1,6 @@
 import { userData } from "../index";
 import { api } from "./api.js";
-
-const likeActiveSelector = "gallery-card__like_active";
-const likeSelector = "gallery-card__like";
-const deleteBtnSelector = "gallery-card__delete";
+import { likeActiveSelector, likeSelector, deleteBtnSelector} from "./utils/constants.js"
 
 export class Card {
     constructor(cardData, cardSelector, templateSelector, handleCardClick) {
@@ -17,26 +14,7 @@ export class Card {
         const cardData = this._cardData;
         const newCard = this._setDataToElement(cardData);
 
-        const likeBtn = newCard.querySelector(`.${likeSelector}`);
-
-        likeBtn.addEventListener(
-            "click",
-            function () {
-                this._likeHandler(newCard, cardData._id);
-            }.bind(this)
-        );
-
-        if (this._availableToDelete(cardData)) {
-            const delBtn = newCard.querySelector(`.${deleteBtnSelector}`);
-            this._toggleDeleteButton(delBtn);
-
-            delBtn.addEventListener(
-                "click",
-                function () {
-                    this._deleteCard(cardData._id, newCard);
-                }.bind(this)
-            );
-        }
+        this._setEventListeners(newCard, cardData);
 
         this._setLikeCountToCard(newCard, cardData.likes.length);
 
@@ -61,14 +39,38 @@ export class Card {
         cardImage.alt = `Фотография места: ${name}`;
         newCard.querySelector(".gallery-card__label-text").textContent = name;
 
-        cardImage.addEventListener(
+        return newCard;
+    }
+
+    _setEventListeners(card, cardData) {
+        const likeBtn = card.querySelector(`.${likeSelector}`);
+        const image = card.querySelector(".gallery-card__pict");
+        
+        likeBtn.addEventListener(
             "click",
             function () {
-                this._handleCardClick(cardImage.src, cardImage.alt);
+                this._likeHandler(card, cardData._id);
+            }.bind(this)
+        );
+        
+        image.addEventListener(
+            "click",
+            function () {
+                this._handleCardClick(image.src, image.alt);
             }.bind(this)
         );
 
-        return newCard;
+        if (this._availableToDelete(cardData)) {
+            const delBtn = card.querySelector(`.${deleteBtnSelector}`);
+            this._toggleDeleteButton(delBtn);
+
+            delBtn.addEventListener(
+                "click",
+                function () {
+                    this._deleteCard(cardData._id, card);
+                }.bind(this)
+            );
+        }
     }
 
     _deleteCard(cardId, card) {
