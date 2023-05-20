@@ -1,15 +1,15 @@
 import { Popup } from "./Popup.js";
-import { fullSizeImage } from "../index.js";
-import { pictureLabel } from "../index.js";
 
 export class PopupWithImage extends Popup {
-    constructor(popupSelector) {
+    constructor(popupSelector, fullSizeImage, pictureLabel) {
         super(popupSelector);
+        this._fullSizeImage = fullSizeImage;
+        this._pictureLabel = pictureLabel;
     }
     open = (src, alt) => {
         super.open();
-        fullSizeImage.src = src;
-        fullSizeImage.alt = alt;
-        pictureLabel.textContent = alt;
+        this._fullSizeImage.src = src;
+        this._fullSizeImage.alt = alt;
+        this._pictureLabel.textContent = alt;
     };
 }

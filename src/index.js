@@ -3,11 +3,30 @@ import { FormValidator } from "./components/formValidator.js";
 import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { api } from "./components/api.js";
-import { handleSubmit } from "./components/utils.js";
+import { handleSubmit } from "./components/utils/utils.js";
 import { validationSetting } from "./components/constants.js";
 import { Section } from "./components/section.js";
 import { UserInfo } from "./components/userInfo.js";
 import "./pages/index.css";
+import {
+    editBtn,
+    addCardBtn,
+    editAvatarButton,
+    inputFieldName,
+    inputFieldMajor,
+    profileName,
+    profileMajor,
+    avatar,
+    forms,
+    inputFieldPict,
+    inputFieldPlace,
+    gallerySelector,
+    nameSelector,
+    majorSelector,
+    galleryCardSelector,
+    fullSizeImage,
+    pictureLabel,
+} from "./components/utils/constants.js";
 
 export let userData = {
     name: "",
@@ -21,34 +40,12 @@ const popupController = {
     popupProfile: new PopupWithForm("#profile-popup", handleProfile),
     popupAddCard: new PopupWithForm("#add-card-popup", createUserCard),
     popupAvatar: new PopupWithForm("#change-avatar", handleAvatar),
-    popupWithPicture: new PopupWithImage("#pict-popup"),
+    popupWithPicture: new PopupWithImage(
+        "#pict-popup",
+        fullSizeImage,
+        pictureLabel
+    ),
 };
-
-const editBtn = document.querySelector(".profile__edit-button");
-const addCardBtn = document.querySelector(".profile__add-button");
-const editAvatarButton = document.querySelector(".profile__overlay");
-const inputFieldName = document.querySelector(
-    ".popup__container-input_field_name"
-);
-const inputFieldMajor = document.querySelector(
-    ".popup__container-input_field_major"
-);
-const profileName = document.querySelector(".profile__name");
-const profileMajor = document.querySelector(".profile__major");
-const avatar = document.querySelector(".profile__pict");
-const forms = Array.from(document.querySelectorAll(".popup__container-form"));
-const inputFieldPict = document.querySelector(
-    ".popup__container-input_field_pict"
-);
-const inputFieldPlace = document.querySelector(
-    ".popup__container-input_field_place"
-);
-const gallerySelector = "gallery";
-const nameSelector = "profile__name";
-const majorSelector = "profile__major";
-const galleryCardSelector = "gallery-card-list-element";
-export const fullSizeImage = document.querySelector(".popup__full-pict");
-export const pictureLabel = document.querySelector(".popup__pict-label");
 
 const userInfo = new UserInfo({ nameSelector, majorSelector });
 
@@ -86,10 +83,7 @@ function createUserCard(evt, inputsValues) {
         return api
             .sendNewCard(inputFieldPict.value, inputFieldPlace.value)
             .then(function (cardData) {
-                let items = [];
-                items = [cardData];
-                setCards(items);
-
+                setCards([cardData]);
                 popupController.popupAddCard.close();
             });
     }
@@ -128,6 +122,7 @@ function setCards(items) {
         const card = new Card(
             cardData,
             galleryCardSelector,
+            "#card-template",
             popupController.popupWithPicture.open
         ).createCard();
         return card;

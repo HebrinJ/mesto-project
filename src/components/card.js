@@ -1,16 +1,16 @@
 import { userData } from "../index";
 import { api } from "./api.js";
 
-const templateCard = document.querySelector("#card-template").content;
 const likeActiveSelector = "gallery-card__like_active";
 const likeSelector = "gallery-card__like";
 const deleteBtnSelector = "gallery-card__delete";
 
 export class Card {
-    constructor(cardData, cardSelector, handleCardClick) {
+    constructor(cardData, cardSelector, templateSelector, handleCardClick) {
         this._cardData = cardData;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
+        this._templateCard = document.querySelector(templateSelector).content;
     }
 
     createCard() {
@@ -48,12 +48,12 @@ export class Card {
     }
 
     _getElement() {
-        return templateCard
+        return this._templateCard
             .querySelector(`.${this._cardSelector}`)
             .cloneNode(true);
     }
 
-    _setDataToElement({ link, name }) {        
+    _setDataToElement({ link, name }) {
         const newCard = this._getElement();
         const cardImage = newCard.querySelector(".gallery-card__pict");
 

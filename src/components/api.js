@@ -1,4 +1,4 @@
-import { checkResponse } from "./utils";
+import { checkResponse } from "./utils/utils";
 
 const config = {
     baseUrl: `https://nomoreparties.co/v1/plus-cohort-23`,
@@ -18,7 +18,7 @@ class Api {
         return fetch(this._baseUrl + linkEndpoint, options).then(checkResponse);
     }
 
-    getProfileData() {        
+    getProfileData() {
         return this._request(`/users/me`, {
             headers: this._headers,
         });
