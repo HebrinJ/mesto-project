@@ -1,4 +1,4 @@
-class Popup {
+export class Popup {
     constructor(popupSelector) {
         this.popupElement = document.querySelector(popupSelector);
     }
