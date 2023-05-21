@@ -20,6 +20,7 @@ export const pictureLabel = document.querySelector(".popup__pict-label");
 export const likeActiveSelector = "gallery-card__like_active";
 export const likeSelector = "gallery-card__like";
 export const deleteBtnSelector = "gallery-card__delete";
+export const cardImageSelector = "gallery-card__pict";
 
 export const validationSetting = {    
     inputSelector: '.popup__container-input',

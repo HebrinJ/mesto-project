@@ -1,6 +1,6 @@
 import { userData } from "../index";
 import { api } from "./api.js";
-import { likeActiveSelector, likeSelector, deleteBtnSelector} from "./utils/constants.js"
+import { likeActiveSelector, likeSelector, deleteBtnSelector, cardImageSelector} from "./utils/constants.js"
 
 export class Card {
     constructor(cardData, cardSelector, templateSelector, handleCardClick) {
@@ -12,7 +12,10 @@ export class Card {
 
     createCard() {
         const cardData = this._cardData;
-        const newCard = this._setDataToElement(cardData);
+        const newCard = this._getElement();
+        const cardImage = newCard.querySelector(`.${cardImageSelector}`);
+
+        this._setDataToElement(cardData, newCard, cardImage);
 
         this._setEventListeners(newCard, cardData);
 
@@ -31,20 +34,15 @@ export class Card {
             .cloneNode(true);
     }
 
-    _setDataToElement({ link, name }) {
-        const newCard = this._getElement();
-        const cardImage = newCard.querySelector(".gallery-card__pict");
-
+    _setDataToElement({ link, name }, template, cardImage) {        
         cardImage.src = link;
         cardImage.alt = `Фотография места: ${name}`;
-        newCard.querySelector(".gallery-card__label-text").textContent = name;
-
-        return newCard;
+        template.querySelector(".gallery-card__label-text").textContent = name;
     }
 
     _setEventListeners(card, cardData) {
         const likeBtn = card.querySelector(`.${likeSelector}`);
-        const image = card.querySelector(".gallery-card__pict");
+        const image = card.querySelector(`.${cardImageSelector}`);
         
         likeBtn.addEventListener(
             "click",
