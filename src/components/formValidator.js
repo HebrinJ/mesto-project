@@ -6,6 +6,7 @@ export class FormValidator {
             errorContainerSelector,
             inputErrorStyleSelector,
             validationPattern,
+            inputFieldSelector,
         },
         form
     ) {
@@ -15,6 +16,7 @@ export class FormValidator {
         this._inputErrorStyleSelector = inputErrorStyleSelector;
         this._validationPattern = validationPattern;
         this._form = form;
+        this._formFields = form.querySelectorAll(inputFieldSelector);
     }
 
     enableValidation() {
@@ -44,10 +46,8 @@ export class FormValidator {
             inputField.addEventListener(
                 "input",
                 function () {
-                    this._isFormValid(
-                        form,
-                        inputField,
-                        inputFieldSelector,
+                    this._isFormValid(                        
+                        inputField,                        
                         errorContainer,
                         submitButton
                     );
@@ -58,21 +58,18 @@ export class FormValidator {
         this._toggleButtonState(submitButton, true); //true - активация состояния disabled
     }
 
-    _isFormValid(
-        form,
-        inputField,
-        inputFieldSelector,
+    _isFormValid(        
+        inputField,        
         errorContainer,
         submitButton
     ) {
         //Проверка и форматирование текущего поля
         this._validationCurrentField(inputField, errorContainer);
 
-        //Проверка всей формы на валидность
-        const formFields = form.querySelectorAll(inputFieldSelector);
+        //Проверка всей формы на валидность        
         this._toggleButtonState(submitButton, false);
 
-        formFields.forEach(
+        this._formFields.forEach(
             function (field) {
                 if (this._isFieldValid(field).validState === false) {
                     this._toggleButtonState(submitButton, true); //true - активация состояния disabled

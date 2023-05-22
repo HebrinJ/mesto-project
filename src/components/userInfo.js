@@ -3,6 +3,8 @@ export class UserInfo {
     constructor( {nameSelector, majorSelector} ) {
         this._nameSelector = nameSelector;
         this._majorSelector = majorSelector;
+        this._nameField = document.querySelector(`.${this._nameSelector}`);
+        this._majorField = document.querySelector(`.${this._majorSelector}`);
     }
 
     getUserInfo(request) {
@@ -20,11 +22,8 @@ export class UserInfo {
     }
 
     setUserInfo({ name, about }) {
-        const nameField = document.querySelector(`.${this._nameSelector}`);
-        const majorField = document.querySelector(`.${this._majorSelector}`);
-        
-        nameField.textContent = name;
-        majorField.textContent = about;
+        this._nameField.textContent = name;
+        this._majorField.textContent = about;
     }
 
     setAvatar(element, link) {

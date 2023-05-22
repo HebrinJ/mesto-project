@@ -21,11 +21,13 @@ export const likeActiveSelector = "gallery-card__like_active";
 export const likeSelector = "gallery-card__like";
 export const deleteBtnSelector = "gallery-card__delete";
 export const cardImageSelector = "gallery-card__pict";
+export const cardCountSelector = 'gallery-card__like-count';
 
 export const validationSetting = {    
     inputSelector: '.popup__container-input',
     submitButtonSelector: '.popup__container-save-btn',
     errorContainerSelector: '.popup__container-input-error-message',
     inputErrorStyleSelector: 'popup__container-input_error',
-    validationPattern: /[^a-zа-я\s\-]/i
+    validationPattern: /[^a-zа-я\s\-]/i,
+    inputFieldSelector: '.popup__container-input'
 }
