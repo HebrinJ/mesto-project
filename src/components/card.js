@@ -1,13 +1,25 @@
-import { userData } from "../index";
 import { api } from "./api.js";
-import { likeActiveSelector, likeSelector, deleteBtnSelector, cardImageSelector, cardCountSelector} from "./utils/constants.js"
+import {
+    likeActiveSelector,
+    likeSelector,
+    deleteBtnSelector,
+    cardImageSelector,
+    cardCountSelector,
+} from "./utils/constants.js";
 
 export class Card {
-    constructor(cardData, cardSelector, templateSelector, handleCardClick) {
+    constructor(
+        cardData,
+        userId,
+        cardSelector,
+        templateSelector,
+        handleCardClick
+    ) {
         this._cardData = cardData;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
         this._templateCard = document.querySelector(templateSelector).content;
+        this._userId = userId;
         this.cardImage;
         this.likeBtn;
         this.delBtn;
@@ -17,10 +29,10 @@ export class Card {
     createCard() {
         const cardData = this._cardData;
         const newCard = this._getElement();
-        this.cardImage = newCard.querySelector(`.${cardImageSelector}`);        
+        this.cardImage = newCard.querySelector(`.${cardImageSelector}`);
         this.likeBtn = newCard.querySelector(`.${likeSelector}`);
         this.delBtn = newCard.querySelector(`.${deleteBtnSelector}`);
-        this.countField = newCard.querySelector(`.${cardCountSelector}`);        
+        this.countField = newCard.querySelector(`.${cardCountSelector}`);
 
         this._setDataToElement(cardData, newCard);
 
@@ -41,21 +53,20 @@ export class Card {
             .cloneNode(true);
     }
 
-    _setDataToElement({ link, name }, template) {        
+    _setDataToElement({ link, name }, template) {
         this.cardImage.src = link;
         this.cardImage.alt = `Фотография места: ${name}`;
         template.querySelector(".gallery-card__label-text").textContent = name;
     }
 
-    _setEventListeners(cardData, card) {        
-
+    _setEventListeners(cardData, card) {
         this.likeBtn.addEventListener(
             "click",
             function () {
                 this._likeHandler(card, cardData._id, this.likeBtn);
             }.bind(this)
         );
-        
+
         this.cardImage.addEventListener(
             "click",
             function () {
@@ -63,7 +74,7 @@ export class Card {
             }.bind(this)
         );
 
-        if (this._availableToDelete(cardData)) {            
+        if (this._availableToDelete(cardData)) {
             this._toggleDeleteButton(this.delBtn);
 
             this.delBtn.addEventListener(
@@ -82,7 +93,7 @@ export class Card {
     }
 
     _availableToDelete(cardData) {
-        if (cardData.owner._id === userData._id) {
+        if (cardData.owner._id === this._userId) {
             return true;
         }
 
@@ -93,8 +104,7 @@ export class Card {
         element.classList.remove("gallery-card__delete_restrict");
     }
 
-    _likeHandler(card, cardId) {       
-
+    _likeHandler(card, cardId) {
         if (!this.likeBtn.classList.contains(likeActiveSelector)) {
             // Своего лайка нет - добавляем
             api.setLike(cardId)
@@ -120,7 +130,7 @@ export class Card {
         }
 
         for (let i = 0; i < likes.length; i++) {
-            if (likes[i]._id === userData._id) {
+            if (likes[i]._id === this._userId) {
                 return true;
             }
         }

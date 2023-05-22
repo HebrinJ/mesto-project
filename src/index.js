@@ -21,7 +21,7 @@ import {
     galleryCardSelector,
     fullSizeImage,
     pictureLabel,
-    validationSetting
+    validationSetting,
 } from "./components/utils/constants.js";
 
 export let userData = {
@@ -65,7 +65,7 @@ forms.forEach((form) => {
 Promise.all([
     userInfo.getUserInfo(api.getProfileData.bind(api)),
     api.getCards(),
-    ])
+])
     .then(([profileData, cards]) => {
         userData = profileData;
         userInfo.setUserInfo(profileData);
@@ -103,10 +103,9 @@ function handleAvatar(evt, link) {
 function handleProfile(evt, inputsValues) {
     const [inputFieldName, inputFieldMajor] = inputsValues;
     function makeRequest() {
-        
         return api
             .editProfileData(inputFieldName, inputFieldMajor)
-            .then((data) => {                
+            .then((data) => {
                 userInfo.setUserInfo(data);
                 popupController.popupProfile.close();
             });
@@ -119,6 +118,7 @@ function setCards(items) {
     const renderer = (cardData) => {
         const card = new Card(
             cardData,
+            userData._id,
             galleryCardSelector,
             "#card-template",
             popupController.popupWithPicture.open
