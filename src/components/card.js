@@ -75,7 +75,7 @@ export class Card {
         );
 
         if (this._availableToDelete(cardData)) {
-            this._toggleDeleteButton(this.delBtn);
+            this._toggleDeleteButton();
 
             this.delBtn.addEventListener(
                 "click",
@@ -100,8 +100,8 @@ export class Card {
         return false;
     }
 
-    _toggleDeleteButton(element) {
-        element.classList.remove("gallery-card__delete_restrict");
+    _toggleDeleteButton() {
+        this.delBtn.classList.remove("gallery-card__delete_restrict");
     }
 
     _likeHandler(card, cardId) {
