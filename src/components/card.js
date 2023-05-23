@@ -33,7 +33,7 @@ export class Card {
         this.likeBtn = newCard.querySelector(`.${likeSelector}`);
         this.delBtn = newCard.querySelector(`.${deleteBtnSelector}`);
         this.countField = newCard.querySelector(`.${cardCountSelector}`);
-
+        
         this._setDataToElement(cardData, newCard);
 
         this._setEventListeners(cardData, newCard);
@@ -41,7 +41,7 @@ export class Card {
         this._setLikeCountToCard(cardData.likes.length);
 
         if (this._isItLikeOwner(cardData)) {
-            this._renderLike(newCard, true);
+            this._renderLike(true);
         }
 
         return newCard;
@@ -109,7 +109,7 @@ export class Card {
             // Своего лайка нет - добавляем
             api.setLike(cardId)
                 .then((newCardData) => {
-                    this._renderLike(card, true);
+                    this._renderLike(true);
                     this._setLikeCountToCard(newCardData.likes.length, card);
                 })
                 .catch((err) => console.log(err));
@@ -118,7 +118,7 @@ export class Card {
             api.removeLike(cardId)
                 .then((newCardData) => {
                     this._setLikeCountToCard(newCardData.likes.length);
-                    this._renderLike(card, false);
+                    this._renderLike(false);
                 })
                 .catch((err) => console.log(err));
         }
@@ -142,13 +142,11 @@ export class Card {
         this.countField.textContent = count;
     }
 
-    _renderLike(card, state) {
-        const like = card.querySelector(`.${likeSelector}`);
-
+    _renderLike(state) {        
         if (state) {
-            like.classList.add(likeActiveSelector);
+            this.likeBtn.classList.add(likeActiveSelector);
         } else {
-            like.classList.remove(likeActiveSelector);
+            this.likeBtn.classList.remove(likeActiveSelector);
         }
     }
 }
