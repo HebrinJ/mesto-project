@@ -18,10 +18,10 @@ import {
     gallerySelector,
     nameSelector,
     majorSelector,
-    galleryCardSelector,
     fullSizeImage,
     pictureLabel,
     validationSetting,
+    cardSelectors
 } from "./components/utils/constants.js";
 
 export let userData = {
@@ -119,9 +119,9 @@ function setCards(items) {
         const card = new Card(
             cardData,
             userData._id,
-            galleryCardSelector,
-            "#card-template",
-            popupController.popupWithPicture.open
+            popupController.popupWithPicture.open,
+            cardSelectors,
+            api
         ).createCard();
         return card;
     };

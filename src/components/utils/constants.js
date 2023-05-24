@@ -14,14 +14,18 @@ export const forms = Array.from(
 export const gallerySelector = "gallery";
 export const nameSelector = "profile__name";
 export const majorSelector = "profile__major";
-export const galleryCardSelector = "gallery-card-list-element";
 export const fullSizeImage = document.querySelector(".popup__full-pict");
 export const pictureLabel = document.querySelector(".popup__pict-label");
-export const likeActiveSelector = "gallery-card__like_active";
-export const likeSelector = "gallery-card__like";
-export const deleteBtnSelector = "gallery-card__delete";
-export const cardImageSelector = "gallery-card__pict";
-export const cardCountSelector = 'gallery-card__like-count';
+
+export const cardSelectors = {
+    cardSelector: "gallery-card-list-element",
+    templateSelector: "#card-template",
+    likeActiveSelector: "gallery-card__like_active",
+    likeSelector: "gallery-card__like",
+    deleteBtnSelector: "gallery-card__delete",
+    cardImageSelector: "gallery-card__pict",
+    cardCountSelector: "gallery-card__like-count",
+}
 
 export const validationSetting = {    
     inputSelector: '.popup__container-input',

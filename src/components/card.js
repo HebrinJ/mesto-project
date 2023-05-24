@@ -1,25 +1,30 @@
-import { api } from "./api.js";
-import {
-    likeActiveSelector,
-    likeSelector,
-    deleteBtnSelector,
-    cardImageSelector,
-    cardCountSelector,
-} from "./utils/constants.js";
-
 export class Card {
     constructor(
         cardData,
         userId,
-        cardSelector,
-        templateSelector,
-        handleCardClick
+        handleCardClick,
+        {   
+            cardSelector, 
+            templateSelector,
+            likeActiveSelector,
+            likeSelector,
+            deleteBtnSelector,
+            cardImageSelector,
+            cardCountSelector, 
+        },
+        api        
     ) {
         this._cardData = cardData;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
         this._templateCard = document.querySelector(templateSelector).content;
         this._userId = userId;
+        this._cardImageSelector = cardImageSelector;
+        this._likeActiveSelector = likeActiveSelector;
+        this._likeSelector = likeSelector;
+        this._deleteBtnSelector = deleteBtnSelector;
+        this._cardCountSelector = cardCountSelector;
+        this._api = api;
         this.cardImage;
         this.likeBtn;
         this.delBtn;
@@ -29,10 +34,10 @@ export class Card {
     createCard() {
         const cardData = this._cardData;
         const newCard = this._getElement();
-        this.cardImage = newCard.querySelector(`.${cardImageSelector}`);
-        this.likeBtn = newCard.querySelector(`.${likeSelector}`);
-        this.delBtn = newCard.querySelector(`.${deleteBtnSelector}`);
-        this.countField = newCard.querySelector(`.${cardCountSelector}`);
+        this.cardImage = newCard.querySelector(`.${this._cardImageSelector}`);
+        this.likeBtn = newCard.querySelector(`.${this._likeSelector}`);
+        this.delBtn = newCard.querySelector(`.${this._deleteBtnSelector}`);
+        this.countField = newCard.querySelector(`.${this._cardCountSelector}`);
         
         this._setDataToElement(cardData, newCard);
 
@@ -87,7 +92,7 @@ export class Card {
     }
 
     _deleteCard(cardId, card) {
-        api.deleteCard(cardId)
+        this._api.deleteCard(cardId)
             .then(() => card.remove())
             .catch((err) => console.log(err));
     }
@@ -105,9 +110,9 @@ export class Card {
     }
 
     _likeHandler(card, cardId) {
-        if (!this.likeBtn.classList.contains(likeActiveSelector)) {
+        if (!this.likeBtn.classList.contains(this._likeActiveSelector)) {
             // Своего лайка нет - добавляем
-            api.setLike(cardId)
+            this._api.setLike(cardId)
                 .then((newCardData) => {
                     this._renderLike(true);
                     this._setLikeCountToCard(newCardData.likes.length, card);
@@ -115,7 +120,7 @@ export class Card {
                 .catch((err) => console.log(err));
         } else {
             //Свой лайк есть, удаляем его
-            api.removeLike(cardId)
+            this._api.removeLike(cardId)
                 .then((newCardData) => {
                     this._setLikeCountToCard(newCardData.likes.length);
                     this._renderLike(false);
@@ -144,9 +149,9 @@ export class Card {
 
     _renderLike(state) {        
         if (state) {
-            this.likeBtn.classList.add(likeActiveSelector);
+            this.likeBtn.classList.add(this._likeActiveSelector);
         } else {
-            this.likeBtn.classList.remove(likeActiveSelector);
+            this.likeBtn.classList.remove(this._likeActiveSelector);
         }
     }
 }
