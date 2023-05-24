@@ -1,119 +1,141 @@
-import { cardController } from './components/card.js';
-import { validationController } from './components/validate.js';
-import { popupController } from './components/modal.js';
-import { apiController } from './components/api.js';
-import { handleSubmit } from './components/utils.js';
-import { validationSetting } from './components/constants.js';
-import './pages/index.css';
+import { Card } from "./components/card.js";
+import { FormValidator } from "./components/formValidator.js";
+import { PopupWithImage } from "./components/PopupWithImage.js";
+import { PopupWithForm } from "./components/PopupWithForm.js";
+import { api } from "./components/api.js";
+import { handleSubmit } from "./components/utils/utils.js";
+import { Section } from "./components/section.js";
+import { UserInfo } from "./components/userInfo.js";
+import "./pages/index.css";
+import {
+    editBtn,
+    addCardBtn,
+    editAvatarButton,
+    inputFieldName,
+    inputFieldMajor,
+    avatar,
+    forms,
+    gallerySelector,
+    nameSelector,
+    majorSelector,
+    fullSizeImage,
+    pictureLabel,
+    validationSetting,
+    cardSelectors
+} from "./components/utils/constants.js";
 
-export let profileId = '';
+export let userData = {
+    name: "",
+    about: "",
+    avatar: "",
+    _id: "",
+    cohort: "",
+};
 
-const cardGallery = document.querySelector('.gallery');
-const inputFieldPlace = document.querySelector('.popup__container-input_field_place');
-const inputFieldPict = document.querySelector('.popup__container-input_field_pict');
-const editBtn = document.querySelector('.profile__edit-button');
-const addCardBtn = document.querySelector('.profile__add-button');
-const editAvatarButton = document.querySelector('.profile__overlay');
-const editAvatarField = document.querySelector('.popup__container-input_field_avatar');
-const inputFieldName = document.querySelector('.popup__container-input_field_name');
-const inputFieldMajor = document.querySelector('.popup__container-input_field_major');
-const profileName = document.querySelector('.profile__name');
-const profileMajor = document.querySelector('.profile__major');
-const avatar = document.querySelector('.profile__pict');
-const disabledButtons = document.querySelectorAll(validationSetting.submitButtonSelector+'.default-disabled');
+const popupController = {
+    popupProfile: new PopupWithForm("#profile-popup", handleProfile),
+    popupAddCard: new PopupWithForm("#add-card-popup", createUserCard),
+    popupAvatar: new PopupWithForm("#change-avatar", handleAvatar),
+    popupWithPicture: new PopupWithImage(
+        "#pict-popup",
+        fullSizeImage,
+        pictureLabel
+    ),
+};
 
-cardForm.addEventListener('submit', createUserCard);
-profileForm.addEventListener('submit', handleProfile);
-avatarForm.addEventListener('submit', handleAvatar);
+const userInfo = new UserInfo({ nameSelector, majorSelector });
 
-editBtn.addEventListener('click', function() {
-    popupController.openPopup(popupController.popupProfile);
+editBtn.addEventListener("click", function () {
+    popupController.popupProfile.open();
     fillProfileFieldsWhenOpen();
 });
 
-addCardBtn.addEventListener('click', function() {
-    popupController.openPopup(popupController.popupAddCard);
+addCardBtn.addEventListener("click", function () {
+    popupController.popupAddCard.open();
 });
 
-editAvatarButton.addEventListener('click', function() {
-    popupController.openPopup(popupController.popupAvatar);
-})
+editAvatarButton.addEventListener("click", function () {
+    popupController.popupAvatar.open();
+});
 
-validationController.enableValidation(validationSetting);
-validationController.setDefaultButtonsState(disabledButtons);
+forms.forEach((form) => {
+    new FormValidator(validationSetting, form).enableValidation();
+});
 
-Promise.all([apiController.getProfileData(), apiController.getCards()])
+Promise.all([
+    userInfo.getUserInfo(api.getProfileData.bind(api)),
+    api.getCards(),
+])
     .then(([profileData, cards]) => {
-        setProfileData(profileData.name, profileData.about, profileData._id, profileData.avatar);
-        setCards(cards); 
+        userData = profileData;
+        userInfo.setUserInfo(profileData);
+        userInfo.setAvatar(avatar, profileData.avatar);
+        setCards(cards);
     })
     .catch((err) => console.log(err));
 
-function createUserCard(evt) {
+function createUserCard(evt, inputsValues) {
+    const [inputFieldPlaceValue, inputFieldPictValue] = inputsValues;
     function makeRequest() {
-        return apiController.sendNewCard(inputFieldPict.value, inputFieldPlace.value)
-        .then(function (card) {
-            const newCard = cardController.createCard(card);
-            addCard(newCard); 
-            popupController.closePopup(popupController.popupAddCard);    
-        })
-    }
-        
-    handleSubmit(makeRequest, evt);
-}
-
-function handleAvatar(evt) {
-    const avatarLink = editAvatarField.value;
-
-    function makeRequest() {
-        return apiController.changeAvatar(avatarLink)
-        .then((data) => {
-            setAvatar(data.avatar);
-            popupController.closePopup(popupController.popupAvatar);
-        })
+        return api
+            .sendNewCard(inputFieldPictValue, inputFieldPlaceValue)
+            .then(function (cardData) {
+                setCards([cardData]);
+                popupController.popupAddCard.close();
+            });
     }
 
     handleSubmit(makeRequest, evt);
 }
 
-function handleProfile(evt) {
+function handleAvatar(evt, link) {
+    const [avatarLink] = link;
+
     function makeRequest() {
-        return apiController.editProfileData(inputFieldName.value, inputFieldMajor.value)
-            .then((data) => { 
-                setProfileData(inputFieldName.value, inputFieldMajor.value, profileId, data.avatar);
-                popupController.closePopup(popupController.popupProfile);
-            })
+        return api.changeAvatar(avatarLink).then((data) => {
+            userInfo.setAvatar(avatar, data.avatar);
+            popupController.popupAvatar.close();
+        });
+    }
+    handleSubmit(makeRequest, evt);
+}
+
+function handleProfile(evt, inputsValues) {
+    const [inputFieldName, inputFieldMajor] = inputsValues;
+    function makeRequest() {
+        return api
+            .editProfileData(inputFieldName, inputFieldMajor)
+            .then((data) => {
+                userInfo.setUserInfo(data);
+                popupController.popupProfile.close();
+            });
     }
 
     handleSubmit(makeRequest, evt);
 }
 
-function setCards(cards) {
-    cards = cards.reverse();
+function setCards(items) {
+    const renderer = (cardData) => {
+        const card = new Card(
+            cardData,
+            userData._id,
+            popupController.popupWithPicture.open,
+            cardSelectors,
+            api
+        ).createCard();
+        return card;
+    };
 
-    cards.forEach( function(cardData) {
-        const newCard = cardController.createCard(cardData);
-        addCard(newCard);
-    });
-}
+    const section = new Section(
+        { items: items, renderer: renderer },
+        gallerySelector
+    );
+    const cards = section.renderAll();
 
-function setProfileData(name, major, id, avatarLink) {
-    profileId = id;
-    profileName.textContent = name;
-    profileMajor.textContent = major;
-    
-    setAvatar(avatarLink);
-}
-
-function addCard(card) {    
-    cardGallery.prepend(card);
-}
-
-function setAvatar(link) {   
-    avatar.setAttribute('src', link);
+    cards.forEach((card) => section.addItem(card));
 }
 
 function fillProfileFieldsWhenOpen() {
-    inputFieldName.value = profileName.textContent;
-    inputFieldMajor.value = profileMajor.textContent;
+    inputFieldName.value = userData.name;
+    inputFieldMajor.value = userData.about;
 }
